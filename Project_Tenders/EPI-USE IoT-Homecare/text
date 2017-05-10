@@ -1,1 +1,43 @@
 
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{EPI-USE: IoT-Homecare \\
+The Inevitables
+}
+
+\author{  
+            Peter Rayner\\
+            Dawie Pritchard\\
+            Drew Langley\\
+            Riaan van der Merwe\\
+            Lyle Nel\\
+        }
+
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+
+\section{High level description}
+A high level description of the project including the technologies you would like to
+use to address the project needs. Illustrate with a deployment diagram.
+
+
+\section{development methodology}
+A brief description of the development methodology you intend to follow with particular
+reference to team meetings and the role the client will play during the development
+
+\section{Team details}
+More detail about the team members with particular reference to their current
+skills and knowledge. Describe how the skills needs to for the implementation of the
+project will be fulfilled by the members.
+
+\end{document}
