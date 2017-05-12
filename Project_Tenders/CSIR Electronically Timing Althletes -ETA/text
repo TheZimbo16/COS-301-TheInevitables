@@ -10,7 +10,7 @@ The Inevitables
             Peter Rayner\\
             Dawie Pritchard\\
             Drew Langley\\
-            Riaan van der Merwe\\
+            Hendrik Jan van der Merwe\\
             Lyle Nel\\
         }
 
@@ -39,10 +39,47 @@ reference to team meetings and the role the client will play during the developm
 
 \section{Team member details}
 
-Peter Rayner:
-Front-end developer with knowledge of Artifical Intelligence,data structures,website design,databases and human computer interaction(HCI).
-Knowledge of: C++,C,C#,Java,Javascript,python,assembly,angular.js,SQL and bootstrap.
-Previous industry experience:
-Working at Barclays CIB in big data and analytics.
+\subsection {Peter Rayner}
 
+\textbf{Front-end developer with knowledge of:}
+\begin{itemize}
+ 	\item Artifical Intelligence
+ 	\item data structures 
+ 	\item website design 
+ 	\item databases and human computer interaction(user experience)
+ \end{itemize}
+\textbf{Knowledge of:}
+\begin{itemize}
+	\item C++ 
+	\item C 
+	\item C\# 
+	\item Java 
+	\item Javascript 
+	\item Python 
+	\item Assembly 
+	\item Angular.js  
+	\item Bootstrap
+ \end{itemize}
+\textbf{Previous industry experience:}\\
+Working at Barclays CIB in big data and analytics.
+\\
+\subsection {Hendrik Jan van der Merwe} 
+\textbf{University level knowledge of:}
+\begin{itemize}
+ 	\item Data structures
+ 	\item Databases
+ 	\item Human Computer Interaction focussing on User Experience
+ 	\item System Design
+\end{itemize}
+\textbf{University Level Experience in:}
+\begin{itemize}
+	\item C++
+	\item C\#
+	\item Java
+	\item SQL / MySQL
+	\item PHP
+	\item JavaScript
+	\item HTML / CSS / Bootstrap
+	\item XML
+\end{itemize}
 \end{document}
