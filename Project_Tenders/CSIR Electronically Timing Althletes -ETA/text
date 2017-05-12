@@ -35,9 +35,12 @@ use to address the project needs. Illustrate with a deployment diagram.
 A brief description of the development methodology you intend to follow with particular
 reference to team meetings and the role the client will play during the development
 
-\section{Team details}
-More detail about the team members with particular reference to their current
-skills and knowledge. Describe how the skills needs to for the implementation of the
-project will be fulfilled by the members.
+\section{Team member details}
+
+Peter Rayner:
+Front-end developer with knowledge of Artifical Intelligence,data structures,website design,databases and human computer interaction(user experience).
+Knowledge of: C++,C,C#,Java,Javascript,python,assembly,angular.js and bootstrap.
+Previous industry experience:
+Working at Barclays CIB in big data and analytics.
 
 \end{document}
