@@ -171,5 +171,22 @@ C, C++ including the new C++11, C++14 and C++17 ISO standards, Bash, Python, Jav
 \textbf{Platforms} \\
 I do all of my work in a Linux environment.
 
+\subsection {Drew Langley}
+Third year BIS Multimedia student with experience in UX and HCI, animation and 3D modelling, Web design and databases as well as proficiency in programming. I am currently studying networks, software engineering and Artificial Intelligence. \\ \\
+\textbf{Languages} \\
+\begin{itemize}
+	\item HTML
+	\item CSS 
+	\item JS / AngularJS / NodeJS / JQuery 
+	\item PHP 
+	\item SQL
+	\item MongoDB
+	\item Java 
+	\item C++ 
+	\item C 
+	\item C\# 
+	\item Python 
+	\item Assembly
+\end{itemize}
 
 \end{document}
