@@ -1,7 +1,15 @@
 
 \documentclass{article}
 \usepackage[utf8]{inputenc}
-
+\usepackage{graphicx}
+\usepackage{geometry}
+ \geometry{
+	 a4paper,
+	 total={170mm,257mm},
+	 left=20mm,
+ 	top=20mm,
+ } 
+ 
 \title{EPI-USE: IoT-Homecare \\
 The Inevitables
 }
@@ -10,7 +18,7 @@ The Inevitables
             Peter Rayner\\
             Dawie Pritchard\\
             Drew Langley\\
-            Riaan van der Merwe\\
+            Hendrik Jan van der Merwe\\
             Lyle Nel\\
         }
 
@@ -27,17 +35,130 @@ The Inevitables
 
 
 \section{High level description}
-A high level description of the project including the technologies you would like to
-use to address the project needs. Illustrate with a deployment diagram.
+A home care system that takes advantage of the Internet of Things. The system will make use of existing devices and sensors to deliver a holistic system for monitoring homecare patients.The system will gather details from a patient from the devices and sensors and communicate them in a generic manner using Wi-Fi with the caregivers through a mobile application and EPI-USE's cloud server (EPI-USE IoT Homecare pdf.2017) 
+
+\subsection{Possible Project Name}
 
 
-\section{development methodology}
-A brief description of the development methodology you intend to follow with particular
-reference to team meetings and the role the client will play during the development
+\section{Proposed Solution}
+
+\subsection{Technologies}
+\begin{itemize}
+	\item J2EE
+	\item JDBC
+	\item JPA
+	\item wildfly 10
+	\item GlassFish 4
+\end{itemize}
+
+\subsection{Deployment Diagram}
+\includegraphics[width=20cm,height=11cm,keepaspectratio]{DeploymentDiagram.png} \\
+
+\subsubsection{Description}
+We intend to primarily make use of three types of devices that will be used for the system. These devices will use the Raspberry Pi as a communication device between the webserver containing the application API and the EPI-USE cloud where data will be stored. This will ensure that if the Raspberry Pi breaks or is under certain circumstances rendered inoperable that it be the only loss and that no important data be lost along with it. A mobile application will also be developed for use by the caretaker. This application will gather information and alert care givers if there is an emergency. We will be using a microservices architecture where each microservice can be managed, developed and released independently. \\ \\ \\The devices that will be used are:\\ \\
+\textbf{Infrared Sensors} \\
+There are two ways in which we intend to use theses sensors. The first being a sensored triggered light beneath the bed. When a person gets up from the bed at night a light mounted beneath the bed will be switched on. Giving the person enough light to move around. This is to address the problem of elderly people falling down at night while trying to move around their living space. The next way we intend to use this technology is using these sensors to detect when a person is falling down the stairs and to notify the caregivers when this happens. \\ \\
+\textbf{Remote Control} \\
+A remote control device is to be used by the patient select which meal they would like to eat along with what they want to drink. This information can be used to derive the likes and dislikes of a patient and so help the caregivers understand what the patient likes and dislikes. \\ \\
+\textbf{Cameras} \\
+Cameras are to be used in case of an emergency. If a patient falls down or if an event occurs that might register as an emergency an alarm is triggerd and the caregivers are alerted. Allowing them to observe the patients by means of a camera and determine whether there is in fact an emergency and act upon it.
+
+\section{Development Methodology}
+We will be using the Agile Scrum Methodology. By making a backlog of work to be done and by completing deadlines in short iterations or sprints. We will meet daily by making use of  Slack Messaging Platform to discuss the progress as well as obstacles and how to overcome these obstacles by getting input from each member. We will also define when these deadlines are and make sure we keep to the schedule. We will meet everytime we are done with a deadline to reflect on the work done. \\ \\
+At each deadline or meeting we will make sure we meet with the client to make sure that they are kept up to date with our progress. We will also meet with the client when there are concerns or obstacles to overcome to make sure the client knows  about these obstacles. The client will be kept up to date each week with the progress of the project.
+
+\section{Risk Analysis}
+\subsection{Privacy}
+Strict measures will have to be taken to ensure that the system is in compliance with the POPI Act to protect the information of all users of the system.
+
+\subsection{Security}
+Strict precautions will have to be taken to ensure that the information of each user is kept safe and secure. Precautions will also have to be taken that technology such as the cameras not be misused by the caregivers and that they only use the cameras when necessary.
+
 
 \section{Team details}
-More detail about the team members with particular reference to their current
-skills and knowledge. Describe how the skills needs to for the implementation of the
-project will be fulfilled by the members.
+\subsection{Dawie Pritchard}
+\textbf{skills}
+\begin{itemize}
+ 	\item Human Computer Interaction
+ 	\item Trends, Visual Design 
+ 	\item Multimedia Specialist
+ 	\item Computer Scientist
+\end {itemize}
+\textbf{Technologies known}
+\begin{itemize}
+	\item C
+ 	\item C++
+ 	\item C-Sharp
+ 	\item CSS
+ 	\item Bootstrap
+ 	\item Java
+ 	\item Python
+ 	\item Javascript / AngularJS / ExpressJS / NodeJS / JQUERY
+ 	\item MongoDB / NoSQL
+ 	\item Php
+ 	\item SQL
+ 	\item HTML5
+ 	\item XML
+ \end{itemize}
+\textbf{Stengths} 
+\begin{itemize}
+	\item Front-End
+	\item Back-End development
+\end{itemize}
+
+\subsection {Peter Rayner}
+
+\textbf{Front-end developer with knowledge of:}
+\begin{itemize}
+ 	\item Artifical Intelligence
+ 	\item data structures 
+ 	\item website design 
+ 	\item databases and human computer interaction(user experience)
+ \end{itemize}
+\textbf{Knowledge of:}
+\begin{itemize}
+	\item C++ 
+	\item C 
+	\item C\# 
+	\item Java 
+	\item Javascript 
+	\item Python 
+	\item Assembly 
+	\item Angular.js  
+	\item Bootstrap
+ \end{itemize}
+\textbf{Previous industry experience:}\\
+Working at Barclays CIB in big data and analytics.
+\\
+\subsection {Hendrik Jan van der Merwe} 
+\textbf{University level knowledge of:}
+\begin{itemize}
+ 	\item Data structures
+ 	\item Databases
+ 	\item Human Computer Interaction focussing on User Experience
+ 	\item System Design
+\end{itemize}
+\textbf{University Level Experience in:}
+\begin{itemize}
+	\item C++
+	\item C\#
+	\item Java
+	\item SQL / MySQL
+	\item MongoDB
+	\item PHP
+	\item JavaScript / AJAX / JQuery / NodeJS / ExpressJS
+	\item HTML / CSS / Bootstrap
+	\item XML
+\end{itemize}
+\textbf{Strengths:}
+\begin{itemize}
+	\item Database Design
+	\item Backend Development
+\end{itemize}
+\textbf{Weakness:}
+\begin{itemize}
+	\item UI Design
+\end{itemize}
+
 
 \end{document}
