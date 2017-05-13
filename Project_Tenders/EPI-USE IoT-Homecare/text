@@ -69,10 +69,10 @@ At each deadline or meeting we will make sure we meet with the client to make su
 
 \section{Risk Analysis}
 \subsection{Privacy}
-Strict measures will have to be taken to ensure that the system is in compliance with the POPI Act to protect the information of all users of the system.
+The Protection of Personal Information Act, No 4 of 2013, is applicable in this project due to data collection of personal information. We caution that due diligence be exercised when deploying the system withing a home. The act requires that the data subject gives consent or in the case of a patient with dementia, that the guardian of the patient gives consent for data collection. Compliance with the act has additional implications for security, custody of the collected data and how it may be processed.
 
 \subsection{Security}
-Strict precautions will have to be taken to ensure that the information of each user is kept safe and secure. Precautions will also have to be taken that technology such as the cameras not be misused by the caregivers and that they only use the cameras when necessary.
+There are security concerns regarding the use of cameras and sensors are involved. Precautions will have to be taken to ensure that patients information and access to these cameras and sensors are limited to only those who need access.
 
 
 \section{Team details}
@@ -155,10 +155,21 @@ Working at Barclays CIB in big data and analytics.
 	\item Database Design
 	\item Backend Development
 \end{itemize}
-\textbf{Weakness:}
-\begin{itemize}
-	\item UI Design
-\end{itemize}
+
+\subsection {Lyle Nel}
+\textbf{Qualifications:} \\
+I hold a BTEC in software engineering, which included project management as part of the curriculum.
+I also hold a BSc in Computer Systems, with relevant subjects such as Software Engineering, Operations management, Knowledge management, Professional development, and Artificial intelligence.\\ \\
+\textbf{Digital electronics:} \\
+I have worked with Atmel and ARM microprocessors as well as on the arduino platform. In addition I am familiar with most of the common components of a digital circuit including 7400 series and 4000 series integrated circuits. \\ \\
+\textbf{Computer Hardware:} \\
+I am familiar with all standard consumer hardware and some server hardware. I maintain my own server cluster at home for running experiment. \\ \\
+\textbf{Artificial intelligence} \\
+I am most experienced in genetic algorithms and I am the author of an open source project that cracks passwords using genetic algorithms. The was one of the top 3 trending projects on github and hackernews a while back. See https://github.com/lyle-nel/siga. In general I am very comfortable with solving problems within the domain of AI. \\ \\
+\textbf{Languages} \\
+C, C++ including the new C++11, C++14 and C++17 ISO standards, Bash, Python, Javascript, Java, Lisp and Prolog. The language that I am most comfortable with is C++. When I conduct experiment on large datasets I use a mixture between C++, Python and Bash. \\ \\
+\textbf{Platforms} \\
+I do all of my work in a Linux environment.
 
 
 \end{document}
