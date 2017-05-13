@@ -173,7 +173,7 @@ I do all of my work in a Linux environment.
 
 \subsection {Drew Langley}
 Third year BIS Multimedia student with experience in UX and HCI, animation and 3D modelling, Web design and databases as well as proficiency in programming. I am currently studying networks, software engineering and Artificial Intelligence. \\ \\
-\textbf{Languages} \\
+\textbf{Languages}
 \begin{itemize}
 	\item HTML
 	\item CSS 
@@ -188,5 +188,7 @@ Third year BIS Multimedia student with experience in UX and HCI, animation and 3
 	\item Python 
 	\item Assembly
 \end{itemize}
+\textbf{Experience} \\
+Designed and developed www.ugandaprohunts.com
 
 \end{document}
