@@ -41,7 +41,7 @@ A home care system that takes advantage of the Internet of Things. The system wi
 \subsection{Value added features}
 Here are some features we have thought of which will be plausible for implementation of the homecare system.
 \subsubsection{Underbed Lighting}
-In case someone stands up in the middle of the night. As soon as you get out of bed. Nightlights will go on and you will be able to see where to go without the risk of falling whilst trying to get to the light switch. The nightlights will work via sensors under the bed. And the lights would dim/brighten as soon as they are activated. when the sensor deactivates, the lights would go off.
+In case someone stands up in the middle of the night. As soon as you get out of bed. Nightlights will go on and you will be able to see where to are going without the risk of falling whilst trying to get to the light switch. The nightlights will work via sensors under the bed. And the lights would dim/brighten as soon as they are activated. when the sensor deactivates, the lights would go off.
 \subsubsection{Staircase Sensors}
 There will be sensors placed on a staircase which works on a timer. There would be a maximum and minimum time to get down the stairs. if any of these times are less than or more than it is more than likely that someone has fallen on the staircase and th
 \subsubsection{Remote Control Meal Selection}
@@ -134,6 +134,9 @@ University level skills of:
 	\item Javascript 
 	\item Python 
 	\item Assembly 
+	\item PHP
+	\item mySQL
+	\item postgreSQL
 	\item Angular.js  
 	\item Bootstrap
  \end{itemize}
