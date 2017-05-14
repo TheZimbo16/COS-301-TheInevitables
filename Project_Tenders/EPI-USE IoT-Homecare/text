@@ -38,16 +38,7 @@ The Inevitables
 A home care system that takes advantage of the Internet of Things. The system will make use of existing devices and sensors to deliver a holistic system for monitoring homecare patients.The system will gather details from a patient from the devices and sensors and communicate them in a generic manner using Wi-Fi with the caregivers through a mobile application and EPI-USE's cloud server (EPI-USE IoT Homecare pdf.2017) 
 
 \subsection{Possible Project Name}
-\subsection{Value added features}
-Here are some features we have thought of which will be plausible for implementation of the homecare system.
-\subsubsection{Underbed Lighting}
-In case someone stands up in the middle of the night. As soon as you get out of bed. Nightlights will go on and you will be able to see where to are going without the risk of falling whilst trying to get to the light switch. The nightlights will work via sensors under the bed. And the lights would dim/brighten as soon as they are activated. when the sensor deactivates, the lights would go off.
-\subsubsection{Staircase Sensors}
-There will be sensors placed on a staircase which works on a timer. There would be a maximum and minimum time to get down the stairs. if any of these times are less than or more than it is more than likely that someone has fallen on the staircase and th
-\subsubsection{Remote Control Meal Selection}
-A remote control can be configued to server as a meal planner. Thus a person can choose what they want for breakfast, lunch, dinner if the caretaker gives permission on the meal selection.
-\subsubsection{Cameras for remote monitoring}
-Cameras would be used in case of emergency. Such as if a panic button was pressed for a fall, or a sensor has picked up something that is not consistent with a persons schedule.
+
 \section{Proposed Solution}
 
 \subsection{Technologies}
