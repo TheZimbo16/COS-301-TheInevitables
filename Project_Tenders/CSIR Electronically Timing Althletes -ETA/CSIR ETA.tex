@@ -37,12 +37,17 @@ The Inevitables
 
 
 \section{Introduction}
-From preliminary research we have indentified numerous key issues that need to be addressed in order to realise the product. A good deal of this document is dedicated to proposed solutions to these key issues, most of which lies between the track outdoors and the server indoors. That being said, we have come up with some added value features that we think the athletes will enjoy, which will hopefully lead to faster adoption and usage of the new system. The document is layed out such that we discuss solutions on the front-end first, after which we will move to backend and hardware. 
+From preliminary research we have indentified numerous key issues that need to be addressed in order to realise the product. A good deal of this document is dedicated to proposed solutions to these key issues, most of which lies between the track outdoors and the server indoors. That being said, we have come up with some value added features that we think the athletes will enjoy, which will hopefully lead to faster adoption and usage of the new system. The document is layed out such that we discuss solutions on the front-end first, after which we will move to backend and hardware.
 
-For this project we would like to use a raspberry PI or similar device to be able to allow communication between the RFID reader and the tag. As well as using the
-device to upload data to a centralized database, this can be done using a WIFI network. This database will then be accessed by a website to which the runners will be able to view their individual results and live analysis on the data for the runner, this will be done using PostgreSQL to ensure there are no issues with high usage. This website should be viewable on any device,including mobile.This will be done using the Twitter Bootstrap framework,which can dynamically change the site according to the device size.
+\subsection{Front-end}
+Website which the athletes will make use of will be styled using the Twitter Bootstrap framework in order to accommodate different screen sizes, thereby supporting both mobile and desktop devices.
 
-\section{Proposed Solution}
+\subsection{Persistence}
+We have decided to make use of PostgreSQL as a database. It is well supported, stable and scales relatively well with demand. This however is not set in stone and the team is very comfortable with changing the database if the need arises.
+
+\subsection{Between the track and the server}
+Drawing from how RFID tracking is done for large scale triathlons and similar events, we have identified a few key components. The bill of materials follows at the bottom of this section stipulating the costs of each compomenent. In the case that there are numerous options to consider, we show the best candidates while making recommendations for the most effective component for the job, both functional and cost wise.
+
 \subsection{Technologies}
 \textbf{RFID Communication} \\
 If a Raspberry Pi can be used:  
