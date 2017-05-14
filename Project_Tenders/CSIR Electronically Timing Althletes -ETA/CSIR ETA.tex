@@ -1,5 +1,6 @@
 
 \documentclass{article}
+\usepackage{hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{geometry}
@@ -61,8 +62,8 @@ The receiver gets attached to the mat antenna in order to read the RFID tag as i
 Mobility of the RFID antenna and receiver would be ideal. This however presents new problems that need to be solved. Firstly, the data must end up on the server immediately, since the athlete does not want to wait for the results, so some sort of wireless communication is needed. Secondly, it cannot be powered from the wall, so a battery operated solution is required and thus the PC connected to the reader must also be battery operated.
 \par
 \bigskip
-\nointent
-To solve the first issue we recommend a simple 3G cellular dongle. Coverage is practically as good as it can get and it is very cost effective since traffic between server and receiver is minimal by virtue of it comprising mostly of RFID tag numbers and timings. To address the battery operated problem, we recommend replacing a conventional PC with a power frugal computer such as a raspberry pi. Then for battery operation, a large lithium polymer powerbank can be used, which powers the antenna, receiver and computer. However, it might be more cost effective, yet somewhat less portable, to consider a high capacity deepcycle battery. These batteries are made to withstand being completely drained and they are also much safer that lithium polymer batteries. Since the voltage of the battery will drop as it is drained, we need a simple voltage regulating circuit to maintain clean 12v supply to the components. The simplest way to achieve this is by running 2 batteries in serial which allows for a cheap step down voltage regulator, or we could opt for a lower that 12v deep cycle battery with a step up regulator. The final field kit can be transported in a trunk with wheels since it will be quite heavy.  
+\noindent
+To solve the first issue we recommend a simple 3G cellular dongle. Coverage is practically as good as it can get and it is very cost effective since traffic between server and receiver is minimal by virtue of it comprising mostly of RFID tag numbers and timings. To address the battery operated problem, we recommend replacing a conventional PC with a power frugal computer such as a raspberry pi. Then for battery operation, a large lithium polymer powerbank can be used, which powers the antenna, receiver and computer. However, it might be more cost effective, yet somewhat less portable, to consider a high capacity deepcycle battery. These batteries are made to withstand being completely drained and they are also much safer that lithium polymer batteries. Since the voltage of the battery is 12v and it will drop as it is drained, we need a simple voltage regulating circuit to maintain clean 5v supply to the components. The simplest way to achieve this is using a cheap step down voltage regulator. A quick calculation shows that 5W for the Raspberry pi 2.7W for the RFID receiver and 3W for the 3G dongle will drain the battery at a rate of 2.14 Ah. So with a 50Ah battery, the system should be able to run for approximately 20 hours without a recharge taking into account some loss during stepdown and other factors. The final field kit can be transported in a trunk with wheels since it will be quite heavy, but it will be portable and can be used at any track, even one without infrastructure.
  
 \subsection{Hardware Options}
  \textbf{RFID Tags:} 
@@ -77,7 +78,7 @@ To solve the first issue we recommend a simple 3G cellular dongle. Coverage is p
  \textbf{RFID Readers:} 
   \begin{itemize}
 	\item Impinj Speedway Revolution R420 UHF RFID Reader (4 Port)[6] \quad \$1,585
-	\item ThingMagic M6 UHF RFID Reader (4 Port)[7] \quad \$1,395
+	\item 2x ThingMagic USB Plus+ RFID Reader \quad \$445
 	\item Alien ALR-9900+ Enterprise RFID Reader[8] \quad \$1,774
 \end{itemize} 
  \textbf{Antenna:} 
@@ -86,39 +87,43 @@ To solve the first issue we recommend a simple 3G cellular dongle. Coverage is p
 \end{itemize} 
 \textbf{Radio Transmitter:} 
  \begin{itemize}
-	\item
+	\item 3G Dongle ~\$38.4
 \end{itemize} 
 
- \begin{itemize}
-	\item [1] \url{https://www.atlasrfidstore.com/smartrac-shortdipole-rfid-wet-inlay-monza-r6/ } 
-	\item [2] \url{https://www.atlasrfidstore.com/smartrac-r6-dogbone-rfid-wet-inlay-monza-r6/ }
-	\item [3] \url{https://www.atlasrfidstore.com/alien-squiggle-rfid-white-wet-inlay-aln-9740-higgs-4/}  
-	\item [4] \url{https://www.atlasrfidstore.com/triathlon-uhf-rfid-strap-tag/}
-	\item [5] \url{https://www.atlasrfidstore.com/hutag-xc1-uhf-rfid-tag/}
-	\item [6] \url{https://www.atlasrfidstore.com/impinj-speedway-revolution-r420-uhf-rfid-reader-4-port/} 
-	\item [7] \url{https://www.atlasrfidstore.com/thingmagic-m6-uhf-rfid-reader-4-port/} 
-	\item [8] \url{https://www.atlasrfidstore.com/alien-alr-9900-enterprise-rfid-reader/} 
-	\item [9] \url{https://www.atlasrfidstore.com/times-7-a5530-linear-outdoor-rfid-antenna-fcc-etsi/} 
-\end{itemize}
+\bigskip
+\noindent
+ \textbf{Links to hardware:} 
+ \begin{enumerate}
+	\item \url{https://www.atlasrfidstore.com/smartrac-shortdipole-rfid-wet-inlay-monza-r6/ } 
+	\item \url{https://www.atlasrfidstore.com/smartrac-r6-dogbone-rfid-wet-inlay-monza-r6/ }
+	\item \url{https://www.atlasrfidstore.com/alien-squiggle-rfid-white-wet-inlay-aln-9740-higgs-4/}  
+	\item \url{https://www.atlasrfidstore.com/triathlon-uhf-rfid-strap-tag/}
+	\item \url{https://www.atlasrfidstore.com/hutag-xc1-uhf-rfid-tag/}
+	\item \url{https://www.atlasrfidstore.com/impinj-speedway-revolution-r420-uhf-rfid-reader-4-port/} 
+	\item \url{https://www.atlasrfidstore.com/thingmagic-usb-plus-rfid-reader/} 
+	\item \url{https://www.atlasrfidstore.com/alien-alr-9900-enterprise-rfid-reader/} 
+	\item \url{https://www.atlasrfidstore.com/times-7-a5530-linear-outdoor-rfid-antenna-fcc-etsi/} 
+\end{enumerate}
 \subsection{Proposed Hardware Selection}
  \begin{itemize} 
- 	\item For each athlete x Triathlon UHF RFID Strap Tag \quad \$1.2
- 	\item 2x ThingMagic M6 UHF RFID Reader (4 Port) \quad \$1,395
- 	\item 2x  Times-7 A5530 (Linear) Outdoor RFID Antenna (FCC/ETSI) \quad \$945
- 	\item 2x  Raspberry pi \quad \$53
+ 	\item For each athlete x Triathlon UHF RFID Strap Tag \quad \$1.2=unknown
+ 	\item 2x ThingMagic USB Plus+ RFID Reader \quad \$445=\$890
+ 	\item 2x Times-7 A5530 (Linear) Outdoor RFID Antenna (FCC/ETSI) \quad \$945=\$1890
+ 	\item 2x Raspberry pi \quad \$106
+	\item 2x 3G Dongle ~\$76.8
+	\item 2x Deep Cycle 50Ah Gel battery 12V ~\$323
+	\item 2x Step down regulators ~\$40
  \end{itemize}
  
- Approximate total cost of hardware: \quad  \$
+ Approximate total cost of hardware: \quad  ~\$3325
 
 \subsection{Software Technologies}
-\textbf{RFID Communication} \\
-If a Raspberry Pi can be used:
+\textbf{Backend}
 \begin{itemize}
 	\item JEE
 	\item JDBC
 	\item JPA
-	\item WildFly
-Wildfly 10 will be the server that is used. The application will be coded in j2ee and then deployed on the wildfly server. The JDBC(java database connection) will be set up on wildfly itself using the wildfly API. JPA will be used for accessing, persisting and managing data between the java objects and the database. The wildfly server can be used in conjunction with  the raspberry pi to access the data. 
+	\item Wildfly 10 will be the server that is used. The application will be coded in j2ee and then deployed on the wildfly server. The JDBC(java database connection) will be set up on wildfly itself using the wildfly API. JPA will be used for accessing, persisting and managing data between the java objects and the database. The wildfly server can be used in conjunction with  the raspberry pi to access the data. 
 \end{itemize}
 \textbf{Web Portal} 
 \begin{itemize}
