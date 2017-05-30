@@ -2,8 +2,8 @@
 % Latex Document made by TheInevitables for SRS,  COS 301 2017
 %
 
-
 \documentclass{article}
+
 
 \usepackage{geometry}
 \usepackage[utf8]{inputenc}
@@ -32,8 +32,9 @@ right=25mm,
  
  \title{ Software Requirements Specification \\ COS-301 \\ The Inevitables \\[0.5cm] \includegraphics[width=6cm]{front-page}}
  
- \author{Drew Langley \hfill 11039753 \\ Lyle Nel \hfill 29562695 \\ Dawie Pritchard \hfill 13104340 \\  Peter Rayner \hfill 14001757\\ Hendrik Jan van der Merwe \hfill 15101283 }
+ \author{Drew Langley \hfill 11039753 \\ Lyle Nel \hfill 29562695 \\ Dawie Pritchard \hfill 13104340 \\  Peter Rayner \hfill 14001757\\ Hendrik Jan van der Merwe \hfill 15101283 \\ [1cm]\includegraphics[width=10cm]{group}\\ [1cm] Clients: Morkel Theunissen and Maria Ramaahlo }
 \date{23 May 2017}
+
 
 \begin{document}
 \maketitle
@@ -41,20 +42,89 @@ right=25mm,
 \tableofcontents
 \pagebreak
 
+%%%%%%%%%%%%%%%%%%%%%%% =========== INTRODUCTION ================== %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introduction}
-\subsection{Project background}
-The orientation and navigation of students with visual disabilities is essential to them accessing the academic environment. Whilst, many students with visual disabilities may make use of trained guide dogs or white canes, additional support is required when navigating their way through the many obstacles on campus. This includes but is not limited to poles, low hanging roofs and other objects.
+		Many mobile applications exist to assist their users in successful travel from one location to another, by vehicle, or on foot. \\
+		Though these applications exist and work very well, solutions for disabled persons such as the blind do not exist.\\
+		This document serves to formally introduce and quantify the Object Sensor and Mobile Navigation application, this project is part of the COS 301 (Software Engineering) Capstone project available for bid in 2017. This project was successfully tendered by TheInevitables.
+	
+	\subsection{Purpose}
+		The purpose of this document is to provide a detailed description of the requirements presented by the Object Sensor and Mobile Navigation application, this application is intended to assist disabled persons with navigation around the University of Pretoria. Additionally this document will include possible constraints and technical requirements such as how the system wil interact with external applications, such as the users. Ths document is intended to comply with the IEEE 830-1998 SRS Standard. This document is also intended for use by clients Morkel Theunissen and Maria Ramaahlo for approval such that the system implementation may begin.
+		
+	\subsection{Scope}
+		The orientation and navigation of students with visual disabilities is essential to them accessing the academic environment. Whilst, many students with visual disabilities may make use of trained guide dogs or white canes, additional support is required when navigating their way through the many obstacles on campus. This includes but is not limited to poles, low hanging roofs and other objects.\\
+		The Object Sensor and Mobile Navigation application will make use of GPS, GIS and WiFi access point data to determine the current location of a user and safely navigate them to their destination on the University of Pretoria's campus facilities, this includes but is not limited to lecture halls, laboratories, food courts, ablutions and so on. The system will also make use of bluetooth transmitters which will be used to notify the user of an impending obstacle.
+		
+	\subsection{Definitions, Acronyms and Abbreviations}
+		\begin{itemize}
+			\item IEEE - Institute of Electronic and Electrical Engineers.
+			\item GPS - Global Positioning System.
+			\item GIS - .
+			\item WiFi - Wireless Fidelity.
+		\end{itemize}
+		
+		The DU@UP Object Sensor and Mobile Navigation application will be from hereforth reffered to as OSMN.
+		
+	\subsection{References}
+	
+\newpage
+%	\subsection{Project background}
+%		The orientation and navigation of students with visual disabilities is essential to them accessing the academic environment. Whilst, many students with visual disabilities may make use of trained guide dogs or white canes, additional support is required when navigating their way through the many obstacles on campus. This includes but is not limited to poles, low hanging roofs and other objects.
+%
+%	\subsection{Project vision}
+%The development of mobile communications allows for the development of applications for the independent navigation of persons with visual disabilities. The combination of mobile technologies, navigation systems and low tech devices will assist students to safely and successfully navigate their way on campus.	
+%	
+	\subsection{Overview}
+		These are the sections that follow; \\
+		The Overall Description, which describes the overall system, the modules and the interfaces that exist within the system, the system functions, the characteristics of the users, the systems' possible constraints and the assumptions and dependencies required for the system.\\
+		The Functional Requirements section lists the requirements the system should adhere to and describes use cases.\\
+		The Specific Requirements section is mainly intended for developers and is dedicated to defining the external interface requirements, functional requirements, performance requirements, design constraints, quality requirements and softwre system attributes.\\
+		The development of mobile communications allows for the development of applications for the independent navigation of persons with visual disabilities. The combination of mobile technologies, navigation systems and low tech devices will assist students to safely and successfully navigate their way on campus.	
+		 
 
-\subsection{Project vision}
-The development of mobile communications allows for the development of applications for the independent navigation of persons with visual disabilities. The combination of mobile technologies, navigation systems and low tech devices will assist students to safely and successfully navigate their way on campus.
+%%%%%%%%%%%%%%%%%%%%%%============== OVERALL DESCRIPTION ==============%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section{Overall Description}
 
-\section{System Description}
-\section{Functonal Requirements}
+	\subsection{Product Perspective}
+		Similar to existing navigation applications such as Google Maps and Waze, the OSMN is a standalone mobile application that acts as a campus navigation system for visually impaired students. It encompasses many technologies which will be required to provide the requested and necessary functionality as described in the functional requirements section.\\
+		Obstacles described previously such as poles and low hanging roofs, will be fitted with bluetooth or other transmitters. These transmitters will be used to notify uses of the obstacle's presence when ina certain proximity to the obstacle.\\
+		The system will use the user's smart device's hardware interfaces such as WiFi and GPS to accurately get teh user's location data, and navigate them to their required destination. The system wil also use bluetooth recievers on the smart devices to capture information sent by obstacles so as to notify the user of its proximity.\\
+		
+			
+	
+	\subsection{User Characteristics}
+		The main category of individuals that will make use of OSMN will be visually impaired students of the University of Pretoria.\\
+		These students will interact with the system via the mobile application. This means they will not require information regrding how the software works, however it is important to keep their information safe. The will also be required to have and know how to use a smart device.\\ \\
+		
+		Other users would include maintenance workers and possibly other students? % for normal students too? 
+	
+	
+	
+	\subsection{Constraints}
+		Due to the characteristics of the primary users, large constraints are placed upon the project, such as REQ4: compliance with web accessibility guidelines.
+		Other constraints imposed by the users vision impairment do not allow for conventional interfaces, such as REQ7: voice recognition technology.
+	
+	
+	
+	\subsection{Assumptions and Dependencies}
+		The application will be developed to operate from a user's smart device, these smart devices usually have all the necessary hardware fitted. It is therefore assumed that all users of the OSMN will have access to one of these smart devices. It is hten assumed that these devices have the required hardware dependencies and capabilities to run the application coorectly. Such dependencies and hardware include WiFi, GPS and cellular network data connectivity.\\ \\
+		It is also assumed that the users will be students of the university, therby having access to the information regarding their venues and times is provided to them.\\
+		In terms of usability, it is assumed the users will have knowledge regarding how to use mobile devices and their applications, this includes activating voice controls and so on. \\ \\
+		Assumptions relating to the system itself include the beliefs that the ystem will be kept up to date with the latest venue information and geographical data. It is also assumed that the bluetooth transmitters will alwasy be operational and never fail due to battery etc. These dependencies relate to the accuracy and relaibility of the system and it is therefore assumed that ther will be some form of staff member performing maintenance.\\
+		A final assumption relating to continuous, relaible performance of the application is dependant on server capacity.
+		
+		
+		
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%============= Functional Requirements =================%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Functional Requirements}
 \begin{itemize}
 	\item Navigation through the use of WiFi Access point data
 	\item Functionality across a broad range of mobile devices and operating systems
-	\item The application should be developed to function on Apple iTunes and Google Play stores
+	\item The application should be developed to function on both the iStore and Google's Play Store.
 	\item Compliance with most recent web accessibility guidelines
 	\item The application should be perceivable, operable, understandable and robust
 	\item Obstacle sensors should be Bluetooth enabled
@@ -67,13 +137,25 @@ The development of mobile communications allows for the development of applicati
 
 \subsection{Entity Relationship Diagrams}
 
-\section{External Interface Requirements}
-\section{Technical Requirements}
-\subsection{Performance}
-\subsection{Scalability}
-\subsection{Security}
-\subsection{Maintainability}
-\subsection{Usability}
-\subsection{Availability}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%============= Specific Requirements ================%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Specific Requirements}
+
+	\subsection{External Interface Requirements}
+		Detailed descriptions of each of the system interfaces, user interfaces, ahrdware, software, communications etc.
+		Descriptions should include each input and output, name , format, valid range, timing etc
+	
+	\subsection{Functional Requirements}
+		Detailed descriptions of the functonality of each of the functional requirements - ''The system shall/will/do/perform/provide''
+		
+	\subsection{Performance Requirements}
+		All performance related capabilities of the product.
+	
+	
+	\subsection{Design Constraints}
+		All restrictions on design alternatives such as restrictions imposed by standards and hardware limittions.
+	
+	\subsection{Software System Attributes}
+		description of quality realted requirements, reliability , security etc
 
 \end{document}
