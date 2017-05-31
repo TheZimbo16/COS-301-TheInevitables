@@ -1,10 +1,10 @@
 How do they want the user interface to be? brand new UI or a voice overlay on navUP current app.
 
-Must they be able to navigate using the GPS as they cannot see the map and GPS is only accurate upto 5m radius? if so should it be voice activated and how should we handle the accuracy ?
+Must they be able to navigate using the GPS as they cannot see the map and GPS is only accurate upto 5m radius? if so should it be voice activated and how should we handle the accuracy ? // Comment: the accuracy is a technical point, which the client may not understand. It might be best to mention that accuracy will be a significant obstacle.
 
-For the sensors how are we planning to power them?
+For the sensors how are we planning to power them? //Also, a technical point, which the client will likely not be able to answer. We can give the client options, but the options should be budget and ergonomically constrained for the target users. 
 
-Can we get all the building data to map the university for the GIS modules?
+Can we get all the building data to map the university for the GIS modules?// Who should we approach to get the GIS data of the campus?
 
 Can we get a real server from UP to use?
 
