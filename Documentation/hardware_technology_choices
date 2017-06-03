@@ -1,0 +1,12 @@
+Reach RTK kit:
+	Description: Real time kinematics allows for centimeter resolution global positioning.
+	Relevance to the project: If we can obtain centimeter resolution GPS coordinates then safe routes are possible to map.
+		Conventional GPS is only accurate withing 2m, which not sufficient for obstacle avoidance.
+		In addition, this device can interface with an android device, serving as a substitute for the built in GPS.
+		Furthermore, since this is a complete IMU, we can implement fall detection and response since the fall can be detected by the accelerometer and the location determined by communications with the base station.
+		It has a built in intel edison SOC, so extending and changing the system to our needs will be possible.
+	Cost:$570 for two devices, one is the base station
+	Sensors: GPS, accelerometer, gyroscope
+	Platform: Intel edison
+	Connectivity: Wifi, bluetooth, USB otg, UART, I2C
+
