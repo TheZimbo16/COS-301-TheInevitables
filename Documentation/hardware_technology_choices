@@ -10,3 +10,13 @@ Reach RTK kit:
 	Platform: Intel edison
 	Connectivity: Wifi, bluetooth, USB otg, UART, I2C
 
+
+Low level technology choices:
+	-Bluetooth
+	-UHF RFID
+	-Ultrason sensors
+	-Doppler Radars
+	-Lidar scanners
+	-Time of flight lasers
+	-Infrared proximity sensors
+	-QR codes (this one could be very useful and cheap)
