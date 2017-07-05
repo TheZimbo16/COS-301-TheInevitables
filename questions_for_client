@@ -26,7 +26,7 @@ Second meeting questions:
 Will the blind user be using a cane with the app?
 Will the blind user be using a guide dog with the app?
 Will the blind user be using the app without a dog or a cane?
-What are the main issues the app should address?
+What are the main issues on campus for the blind that the app could address?(Here we will need to manage the client's expectations if it is not feasible)
 That is, what difficulties do blind people have on campus that can be addressed by this app?
 What obstacles did you have in mind?
 May we write the app in such a way that navigation for the blind follow the physically disabled routes exclusively?
@@ -34,6 +34,8 @@ Maybe discuss the line following proposal since we don't know our budget yet.
 Perhaps discuss the progress on the budget.
 When will we get access to blind users in order to finish the SRS?
 For proof of concept may we restrict our development to the android platform? This makes it easier for us to implement the proof of concept features using opencv. We also don't need access to a mac computer to deploy the app for usability testing.
-
+How do blind people who regularly visit campus enter the campus?
+How do blind people who visit campus for the first time find the disability unit?
+What is the protocol for when a blind person visits campus for the first time?
 --------------------------------------------------------------------------------------------------------------------------------------------
 
