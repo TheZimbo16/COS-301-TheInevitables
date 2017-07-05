@@ -1,3 +1,7 @@
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+First Meeting Questions:
+
 How do they want the user interface to be? brand new UI or a voice overlay on navUP current app.
 
 Must they be able to navigate using the GPS as they cannot see the map and GPS is only accurate upto 5m radius? if so should it be voice activated and how should we handle the accuracy ? // Comment: This is a compound question that should be broken up. Also, the accuracy is a technical point, which the client may not understand. It might be best to mention that accuracy will be a significant obstacle. This will only be understood by Morkel
@@ -15,3 +19,21 @@ Have you approached the university for project approval and funding?
 Follow up question. What are the budgetary constraints?
 
 Inform the client of the risks that we have identified. This part can get technical, but there is no way around it since the risk is only visible from a technical standpoint.(see risk_analysis file)
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Second meeting questions:
+Will the blind user be using a cane with the app?
+Will the blind user be using a guide dog with the app?
+Will the blind user be using the app without a dog or a cane?
+What are the main issues the app should address?
+That is, what difficulties do blind people have on campus that can be addressed by this app?
+What obstacles did you have in mind?
+May we write the app in such a way that navigation for the blind follow the physically disabled routes exclusively?
+Maybe discuss the line following proposal since we don't know our budget yet.
+Perhaps discuss the progress on the budget.
+When will we get access to blind users in order to finish the SRS?
+For proof of concept may we restrict our development to the android platform? This makes it easier for us to implement the proof of concept features using opencv. We also don't need access to a mac computer to deploy the app for usability testing.
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
