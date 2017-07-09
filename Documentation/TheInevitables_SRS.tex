@@ -366,7 +366,7 @@ right=25mm,
 			Since neither the mobile application nor the web portal have any designated hardware, it does not have any direct hardware interfaces. The WiFi software in the mobile phone manages the built-in WiFi and the hardware connection to the database server is managed by the underlying operating system on the mobile phone and the web server.
 
 		\subsubsection{Software Interfaces}
-			The mobile application communicates with the WiFi software in order to get signal strength information from multiple WiFi access points to determine (using triangulation) where the user is located. The communication software between the database and mobile application consists of operation concerning creating, reading, removing and modifying the data.
+		The final prototype will likely make use of the OpenCV API for machine vision, while consulting a standard PostgreSQL database system for persistent data such as GIS information. Some of these queries are triggered by interaction with the front-end user interface such as viewing the map and finding the shortest route, while others are automated such as fiducial marker identification.
 
 		\subsubsection{Communication Interfaces}
 			The communication between the different parts of the system are important since they depend on each other. However, in what way the communication is achieved is not important for the system and is therefore handled by the underlying operating systems for both the mobile application and the back-end of the system.
