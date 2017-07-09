@@ -51,13 +51,13 @@ right=25mm,
 		This document serves to formally introduce and quantify the Object Sensor and Mobile Navigation application, this project is part of the COS 301 (Software Engineering) Capstone project available for bid in 2017. This project was successfully tendered by TheInevitables.
 	
 	\subsection{Purpose}
-		The purpose of this document is to provide a detailed description of the requirements presented by the Object Sensor and Mobile Navigation application, this application is intended to assist disabled persons with navigation around the University of Pretoria. Additionally this document will include possible constraints and technical requirements such as how the system wil interact with external applications, such as the users. \par
+		The purpose of this document is to provide a detailed description of the requirements presented by the Object Sensor and Mobile Navigation application, this application is intended to assist the students of the disability unit with navigation around the University of Pretoria. Additionally this document will include possible constraints and technical requirements such as how the system wil interact with external applications, such as the users. \par
 		This document is intended to comply with the IEEE 830-1998 SRS Standard. This document is also intended for use by clients Morkel Theunissen and Maria Ramaahlo for approval such that the system implementation may begin.
 		
 	\subsection{Scope}
-%		The orientation and navigation of students with visual disabilities is essential to them accessing the academic environment. Whilst, many students with visual disabilities may make use of trained guide dogs or white canes, additional support is required when navigating their way through the many obstacles on campus. This includes but is not limited to poles, low hanging roofs and other objects.\\
-%		The Object Sensor and Mobile Navigation application will make use of GPS, GIS and WiFi access point data to determine the current location of a user and safely navigate them to their destination on the University of Pretoria's campus facilities, this includes but is not limited to lecture halls, laboratories, food courts, ablutions and so on. The system will also make use of bluetooth transmitters which will be used to notify the user of an impending obstacle.
-		To be discussed with clients at a later stage.
+%		The orientation and navigation of students with visual disabilities is essential to them accessing the academic environment. Whilst, many students with visual disabilities may make use of trained guide dogs or canes, additional support is required when navigating their way through the many obstacles on campus. This includes but is not limited to poles, low hanging roofs,bollards and other objects.\\
+%		The Object Sensor and Mobile Navigation application will make use of GPS, GIS and WiFi access point data to determine the current location of a user and safely navigate them to their destination on the University of Pretoria's campus facilities, this includes but is not limited to lecture halls, laboratories, food courts, ablutions and so on. The system will also make use of QR codes which will be used to notify the user of an impending obstacle.
+
 		
 	\subsection{Definitions, Acronyms and Abbreviations}
 		\begin{itemize}
@@ -78,7 +78,7 @@ right=25mm,
 	
 \newpage
 %	\subsection{Project background}
-%		The orientation and navigation of students with visual disabilities is essential to them accessing the academic environment. Whilst, many students with visual disabilities may make use of trained guide dogs or white canes, additional support is required when navigating their way through the many obstacles on campus. This includes but is not limited to poles, low hanging roofs and other objects.
+%		The orientation and navigation of students with visual disabilities is essential to them accessing the academic environment. Whilst, many students with visual disabilities may make use of trained guide dogs or  canes, additional support is required when navigating their way through the many obstacles on campus. This includes but is not limited to poles, low hanging roofs ,bollards and other objects.
 %
 %	\subsection{Project vision}
 %The development of mobile communications allows for the development of applications for the independent navigation of persons with visual disabilities. The combination of mobile technologies, navigation systems and low tech devices will assist students to safely and successfully navigate their way on campus.	
@@ -96,18 +96,19 @@ right=25mm,
 \section{Overall Description}
 
 	\subsection{Product Perspective}
-		Similar to existing navigation applications such as Google Maps and Waze, the NavUP is a standalone mobile application that acts as a campus navigation system for students both with and without impairments. It encompasses many technologies which will be required to provide the requested and necessary functionality as described in the functional requirements section.\\ \par
-		Obstacles described previously such as poles and low hanging roofs, will be fitted with bluetooth or other transmitters. These transmitters will be used to notify uses of the obstacle's presence when ina certain proximity to the obstacle.\par
-		The system will use the user's smart device's hardware interfaces such as WiFi and GPS to accurately get the user's location data, and navigate them to their required destination. The system wil also use bluetooth recievers on the smart devices to capture information sent by obstacles so as to notify the user of its proximity.\\
+		Similar to existing navigation applications such as Google Maps and Waze, the NavUP is a standalone mobile application that acts as a campus navigation system for students both with and without disabilities. It encompasses many technologies which will be required to provide the requested and necessary functionality as described in the functional requirements section.\\ \par
+		Obstacles described previously such as poles and low hanging roofs,intersections on campus(between IT Bulding and EB building)  will be fitted with QR codes. These codes will be used to notify users of a certain area of obstacles. when in a certain proximity to those obstacles.\par
+		The system will use the user's smart device's hardware interfaces such as WiFi and GPS to accurately get the user's location data, and navigate them to their required destination. The system wil also use QR codes detected by machine vision on the smart devices to capture information sent by obstacles so as to notify the user of its proximity.\\
 		
 	\subsection{Product Functions}
 		The NavUp system will support a variety of functions, the main function focuses on reliable, accurate navigation and presentation of geographical data, both indoors and outdoors. Other functionality includes providing information, and special routes for students with disabilities.
 		\\ \par
 		The navigational functionality will consist of getting the user's current destination accurately and then determining a suitable route to the venue the user requests.\\ \par
+		Students with visual disabilities already have defined routes which the system must cater for.\\ \par
 		Information provided to users will consist of venue information, geographical information, and information regarding the proximity of obstacles to visually impaired users.\\ \par
 		Users will be given the fastest route to their destination, unless they are physically impaired, which results in a route that takes lifts and wheelchair access into account.\\ \par
 		Due to the project focusing on the assistance of visually and physically impaired students and users, the application will conform to the WCAG to ensure these users with ease of use and accessibility.\\ \par
-		The system will be developed to run on mobile devices, and will be acquired by users from the various ''App Stores''.\\ \par
+		The system will be developed to run on mobile devices, and will be acquired by users from the "Google Play Store".\\ \par
 		The application will be percievable, operable, reliable and follow the University of Pretoria's colour scheme and branding guidelines visually.\\ \par
 		Normal users will have the option to notify the system of a potential hazard or obstacle to impaired students. This will be accomplished by allowing them to drop a location pin and wil work as a crowdsourcing technique to identify and capture dynamic obstacles. \\ \par
 		The application will also be secure to avoid theft or loss of data.
@@ -137,11 +138,11 @@ right=25mm,
 	
 	
 	\subsection{Assumptions and Dependencies}
-		The application will be developed to operate from a user's smart device, these smart devices usually have all the necessary hardware fitted. It is therefore assumed that all users of the NavUP will have access to one of these smart devices. It is hten assumed that these devices have the required hardware dependencies and capabilities to run the application coorectly. Such dependencies and hardware include WiFi, GPS and cellular network data connectivity.\\ \\
-		It is also assumed that the users will be students of the university, therby having access to the information regarding their venues and times is provided to them.\\
+		The application will be developed to operate from a user's smart device, these smart devices usually have all the necessary hardware fitted. It is therefore assumed that all users of the NavUP will have access to one of these smart devices. It is then assumed that these devices have the required hardware dependencies and capabilities to run the application correctly. Such dependencies and hardware include WiFi, GPS and cellular network data connectivity.\\ \\
+		It is also assumed that the users will be students of the university, thereby having access to the information regarding their venues and times is provided to them.\\
 		In terms of usability, it is assumed the users will have knowledge regarding how to use mobile devices and their applications, this includes activating voice controls and so on. \\ \\
-		Assumptions relating to the system itself include the beliefs that the ystem will be kept up to date with the latest venue information and geographical data. It is also assumed that the bluetooth transmitters will alwasy be operational and never fail due to battery etc. These dependencies relate to the accuracy and relaibility of the system and it is therefore assumed that ther will be some form of staff member performing maintenance.\\
-		A final assumption relating to continuous, relaible performance of the application is dependant on server capacity.
+		Assumptions relating to the system itself include the beliefs that thes ystem will be kept up to date with the latest venue information and geographical data. It is also assumed that the QR codes will always be operational and never fail due to battery etc. These dependencies relate to the accuracy and relaibility of the system and it is therefore assumed that there will be some form of staff member performing maintenance.\\
+		A final assumption relating to continuous, relaible performance of the application is dependent on server capacity.
 		
 		
 		
@@ -151,14 +152,14 @@ right=25mm,
 \section{Functional Requirements}
 %\begin{itemize}
 %	\item Navigation through the use of WiFi Access point data
-%	\item Functionality across a broad range of mobile devices and operating systems
-%	\item The application should be developed to function on both the iStore and Google's Play Store.
+%	\item Functionality across Android devices
+%	\item The application should be developed to function on Google's Play Store.
 %	\item Compliance with most recent web accessibility guidelines
 %	\item The application should be perceivable, operable, understandable and robust
-%	\item Obstacle sensors should be Bluetooth enabled
+%	\item Machine vision will be used to detect QR codes
 %	\item Has to make use of voice recognition technology
-%	\item Obstacle sensors should determine localization and distance from user device
-%	\item Obstacle sensors should notify users of impending collision
+%	\item QR Codes should determine localization and distance from user device
+%	\item QR Codes should notify users of impending obstacles such as bollards
 %\end{itemize}
 
 		\subsubsection {REQ1: Navigation}
@@ -168,19 +169,19 @@ right=25mm,
 			The system should allow all kinds of users access to helpful navigational information. These users include students, visually and physically impaired students, staff and guests. This involves accessibility and usability issues.
 			
 		\subsubsection{REQ3: Provide Different Routes}
-			Provide different routes based on the user's needs and preferences. This could be for physically or visually impaired users, or by a request for the fastest route taking stairs, ramps, lifts, wheelchair access and obstacles and possibly traffic into consideration. %This wil require the use of sensors and data capture such as locations of wheelchair ramps/lifts and the Object Sensor section to detect obstacles.
+			Provide different routes based on the user's needs and preferences. This could be for physically or visually impaired users, or by a request for the fastest route taking stairs, ramps, lifts, wheelchair access and obstacles and possibly traffic into consideration. %This wil require the use of QR codes and data capture such as locations of wheelchair ramps/lifts and the machine vision section to detect obstacles.
 			
-		\subsubsection{REQ4: Moblie deployment}
-			The application should be developed to function on the Apple AppStore and Google's Play Store. %Designs for interfaces should be created with mobile platforms in mind.
+		\subsubsection{REQ4: Mobile deployment}
+			The application should be developed to function on Google's Play Store. %Designs for interfaces should be created with mobile platforms in mind.
 		
 		\subsubsection{REQ5: User Profiles}
-			The system should allow users and administrators login capability and maintain certian infromation regarding them securely. %This involves the creation and maintenance of a database to store their information. This databse should be secure to prevent loss/ theft of data and the system should store only relevant data pertaining to security and law issues. Such issues include the POPI act etc.
+			The system should allow users and administrators login capability and maintain certain information regarding them securely. %This involves the creation and maintenance of a database to store their information. This database should be secure to prevent loss/ theft of data and the system should store only relevant data pertaining to security and law issues. Such issues include the POPI act etc.
 			
 		\subsubsection{REQ6: User Data Persistence}
-			The system should allow users to send information to the system (drop a pin). Examples of such information include location data to allow us to crowdsource dynamic obstacles such as spillages or construction obstacles obscuring traffic or creating potential harzards.%This possibly requires a secondary database?
+			The system should allow users to send information to the system (drop a pin). Examples of such information include location data to allow us to crowdsource dynamic obstacles such as spillages or construction obstacles obscuring traffic or creating potential harzards.%
 			
 		\subsubsection{REQ7: Accessibility}
-			The application should cater for users with access difficulties and impariments. This involves voice recognition activation and compliance with the WCAG.
+			The application should cater for users with access difficulties and impairments. This involves voice recognition activation and compliance with the WCAG.
 			Visually impaired users should be informed of impending obstacles to ensure safe navigation to their destination.
 
 		\subsubsection{REQ8: Relaibility}
@@ -190,13 +191,13 @@ right=25mm,
 			The application shoudl integrate with campus services such as the security department or informational systems.
 			
 		\subsubsection{REQ10: Aesthetics}
-			The application appearance should be aesthetically plaesing while conforming to the University of Pretoria's branding styles and colour scheme.
+			The application appearance should be aesthetically pleasing while conforming to the University of Pretoria's branding styles and colour scheme.
 %			
 %		\subsubsection{REQ6: Personalization}
 %			Users should be allowed to save personalized information as well as retrieve it.
 %			
 %		\subsubsection{REQ7: Maintenance}
-%			The system should allow administrators the ability to C.R.U.D it.
+%			The system should allow administrators the ability to C.R.U.D(Create,Read,Update,Delete) it.
 
 
 	\subsection{Possible Nice to Haves?}
@@ -400,7 +401,7 @@ right=25mm,
 				\item Size - The application should not require too much memory in order to operate.
 				\item Users - The nature of some users enforces constraints such as conforming to the WCAG for accessibility issues.
 				\item Sensors - sensors attached to objects should be bluetooth enabled.
-				\item Platform - the system should be accessible on smart devices such as Android and iOS devices.
+				\item Platform - the system should be accessible on  Android  devices.
 				\item Modularity - The system should be modular, thus allowing for high cohesion with low coupling and reducing the dependencies within the system.
 				\item Aesthetics - The system's interfaces should be aesthetically pleasing and follow the UP branding guidelines.
 				\item Fault tolerance - if unavoidable malfunctions occurr,the design should be constrainted such that the system can recover without loss of data or damage.
