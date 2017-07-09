@@ -56,7 +56,7 @@ right=25mm,
 		
 	\subsection{Scope}
 %		The orientation and navigation of students with visual disabilities is essential to them accessing the academic environment. Whilst, many students with visual disabilities may make use of trained guide dogs or canes, additional support is required when navigating their way through the many obstacles on campus. This includes but is not limited to poles, low hanging roofs,bollards and other objects.\\
-%		The Object Sensor and Mobile Navigation application will make use of GPS, GIS and WiFi access point data to determine the current location of a user and safely navigate them to their destination on the University of Pretoria's campus facilities, this includes but is not limited to lecture halls, laboratories, food courts, ablutions and so on. The system will also make use of QR codes which will be used to notify the user of an impending obstacle.
+%		The Object Sensor and Mobile Navigation application will make use of GPS, GIS and WiFi access point data to determine the current location of a user and safely navigate them to their destination on the University of Pretoria's campus facilities, this includes but is not limited to lecture halls, laboratories, food courts, ablutions and so on. The system will also make use of fiducial markers which will be used to notify the user of an impending obstacle.
 
 		
 	\subsection{Definitions, Acronyms and Abbreviations}
@@ -67,7 +67,8 @@ right=25mm,
 			\item WiFi - Wireless Fidelity.
 			\item WCAG - Web Accessibility Guidelines.
 			\item AR Tag - An Augmented Reality Tag that is printable and facilitates physical tagging to be read using machine vision at a later stage.
-			\item Aruco - A specific binary square fiducial marker implementation that that is the main candidate for AR Tagging in this project.
+			\item ArUco - A specific binary square fiducial marker implementation that that is the main candidate for AR Tagging in this project.
+			\item Fiducial marker - A machine readable object in the physical world that is used to tag objects that are deemed relevant the navigation system.
 		\end{itemize}
 		
 		The DU@UP Object Sensor and Mobile Navigation application will be from hereforth reffered to as NavUP.
@@ -99,8 +100,8 @@ right=25mm,
 
 	\subsection{Product Perspective}
 		Similar to existing navigation applications such as Google Maps and Waze, the NavUP is a standalone mobile application that acts as a campus navigation system for students both with and without disabilities. It encompasses many technologies which will be required to provide the requested and necessary functionality as described in the functional requirements section.\\ \par
-		Obstacles described previously such as poles and low hanging roofs,intersections on campus(between IT Bulding and EB building)  will be fitted with QR codes. These codes will be used to notify users of a certain area of obstacles. when in a certain proximity to those obstacles.\par
-		The system will use the user's smart device's hardware interfaces such as WiFi and GPS to accurately get the user's location data, and navigate them to their required destination. The system wil also use QR codes detected by machine vision on the smart devices to capture information sent by obstacles so as to notify the user of its proximity.\\
+		Obstacles described previously such as poles and low hanging roofs,intersections on campus(between IT Bulding and EB building)  will be fitted with fiducial markers. These codes will be used to notify users of a certain area of obstacles. when in a certain proximity to those obstacles.\par
+		The system will use the user's smart device's hardware interfaces such as WiFi and GPS to accurately get the user's location data, and navigate them to their required destination. The system wil also use fiducial markers detected by machine vision on the smart devices to capture information sent by obstacles so as to notify the user of its proximity.\\
 		
 	\subsection{Product Functions}
 		The NavUp system will support a variety of functions, the main function focuses on reliable, accurate navigation and presentation of geographical data, both indoors and outdoors. Other functionality includes providing information, and special routes for students with disabilities.
@@ -143,7 +144,7 @@ right=25mm,
 		The application will be developed to operate from a user's smart device, these smart devices usually have all the necessary hardware fitted. It is therefore assumed that all users of the NavUP will have access to one of these smart devices. It is then assumed that these devices have the required hardware dependencies and capabilities to run the application correctly. Such dependencies and hardware include WiFi, GPS and cellular network data connectivity.\\ \\
 		It is also assumed that the users will be students of the university, thereby having access to the information regarding their venues and times is provided to them.\\
 		In terms of usability, it is assumed the users will have knowledge regarding how to use mobile devices and their applications, this includes activating voice controls and so on. \\ \\
-		Assumptions relating to the system itself include the beliefs that thes ystem will be kept up to date with the latest venue information and geographical data. It is also assumed that the QR codes will always be operational and never fail due to battery etc. These dependencies relate to the accuracy and relaibility of the system and it is therefore assumed that there will be some form of staff member performing maintenance.\\
+		Assumptions relating to the system itself include the beliefs that thes ystem will be kept up to date with the latest venue information and geographical data. It is also assumed that the fiducial markers will always be operational and never fail due to battery etc. These dependencies relate to the accuracy and relaibility of the system and it is therefore assumed that there will be some form of staff member performing maintenance.\\
 		A final assumption relating to continuous, relaible performance of the application is dependent on server capacity.
 		
 		
@@ -158,10 +159,10 @@ right=25mm,
 %	\item The application should be developed to function on Google's Play Store.
 %	\item Compliance with most recent web accessibility guidelines
 %	\item The application should be perceivable, operable, understandable and robust
-%	\item Machine vision will be used to detect QR codes
+%	\item Machine vision will be used to detect fiducial markers
 %	\item Has to make use of voice recognition technology
-%	\item QR Codes should determine localization and distance from user device
-%	\item QR Codes should notify users of impending obstacles such as bollards
+%	\item fiducial markers should determine localization and distance from user device
+%	\item fiducial markers should notify users of impending obstacles such as bollards
 %\end{itemize}
 
 		\subsubsection {REQ1: Navigation}
@@ -171,7 +172,7 @@ right=25mm,
 			The system should allow all kinds of users access to helpful navigational information. These users include students, visually and physically impaired students, staff and guests. This involves accessibility and usability issues.
 			
 		\subsubsection{REQ3: Provide Different Routes}
-			Provide different routes based on the user's needs and preferences. This could be for physically or visually impaired users, or by a request for the fastest route taking stairs, ramps, lifts, wheelchair access and obstacles and possibly traffic into consideration. %This wil require the use of QR codes and data capture such as locations of wheelchair ramps/lifts and the machine vision section to detect obstacles.
+			Provide different routes based on the user's needs and preferences. This could be for physically or visually impaired users, or by a request for the fastest route taking stairs, ramps, lifts, wheelchair access and obstacles and possibly traffic into consideration. %This wil require the use of fiducial markers and data capture such as locations of wheelchair ramps/lifts and the machine vision section to detect obstacles.
 			
 		\subsubsection{REQ4: Mobile deployment}
 			The application should be developed to function on Google's Play Store. %Designs for interfaces should be created with mobile platforms in mind.
