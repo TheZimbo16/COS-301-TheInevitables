@@ -12,15 +12,13 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{graphicx}
-\usepackage{float}
 \usepackage[explicit]{titlesec}
 \usepackage{url}
 
 
 \DeclareGraphicsExtensions{.png}
 \DeclareGraphicsExtensions{.jpg}
-\graphicspath{ {Diagrams/} }
+\graphicspath{ {./Diagrams/} }
 
  \geometry{
  a4paper, 
@@ -32,7 +30,7 @@ right=25mm,
  
  \title{ Software Requirements Specification \\ COS-301 \\ The Inevitables \\[0.5cm] \includegraphics[width=6cm]{front-page}}
  
- \author{Drew Langley \hfill 11039753 \\ Lyle Nel \hfill 29562695 \\ Dawie Pritchard \hfill 13104340 \\  Peter Rayner \hfill 14001757\\ Hendrik Jan van der Merwe \hfill 15101283 \\ [1cm]\includegraphics[width=10cm]{Diagrams/group.JPG}\\ [1cm] Clients: Morkel Theunissen and Maria Ramaahlo }
+ \author{Drew Langley \hfill 11039753 \\ Lyle Nel \hfill 29562695 \\ Dawie Pritchard \hfill 13104340 \\  Peter Rayner \hfill 14001757\\ Hendrik Jan van der Merwe \hfill 15101283 \\ [1cm]\includegraphics[width=10cm]{group}\\ [1cm] Clients: Morkel Theunissen and Maria Ramaahlo }
 \date{23 May 2017}
 
 
@@ -75,7 +73,7 @@ right=25mm,
 	\subsection{References}
 		\begin{itemize}
 			\item IEEE 830-1998 SRS Standard - \url{https://standards.ieee.org/findstds/standard/830-1998.html}
-			\item DU@UP Object Sensor and Mobile Navigation - \url{}
+			\item DU@UP Object Sensor and Mobile Navigation - document supplied by clients, before project tender.
 		\end{itemize}
 	
 \newpage
@@ -201,15 +199,15 @@ right=25mm,
 %		\subsubsection{REQ7: Maintenance}
 %			The system should allow administrators the ability to C.R.U.D(Create,Read,Update,Delete) it.
 
-
-	\subsection{Possible Nice to Haves?}
-	
-			
-		\subsubsection{REQ11: Weekly goals}
-			Provide weekly goals based on the number of steps or distance traveled by the user.
-			
-		\subsubsection{REQ12: Personalization}
-			Users should be allowed to save personalized information as well as retrieve it.
+%
+%	\subsection{Possible Nice to Haves?}
+%	
+%			
+%		\subsubsection{REQ11: Weekly goals}
+%			Provide weekly goals based on the number of steps or distance traveled by the user.
+%			
+%		\subsubsection{REQ12: Personalization}
+%			Users should be allowed to save personalized information as well as retrieve it.
 
 %			
 %		\subsubsection{REQ5: Weekly goals}
@@ -238,7 +236,7 @@ right=25mm,
 %		\subsubsection{REQ6: Personalization}
 %			Users should be allowed to save personalized information as well as retrieve it.
 %		
-
+\newpage
 	\subsection{Use Cases}
 	
 		%%%%%%%%%%%%%%%%%%%%%%======================   UC1    ================%%%%%%%%%%%%%%%%
@@ -351,8 +349,152 @@ right=25mm,
 				\\ \hline
 			\end{tabular}
 		\end{table}
+		
+%%%%%%%%%%%%%%%%%%%%%%======================   UC4    ================%%%%%%%%%%%%%%%%
+		\newpage
+		\subsubsection{Use Case for REQ3: Provide special routes for users with disabilities}
+			\begin{enumerate}
+			\renewcommand{\labelenumi}{{\textbf{\arabic{enumi}.}}}
+			\item Use Case ID: UC4
+			\item Precondition: The user is running the application and requires a special route as they have a disability.
+			\item Postcondition: Client device recieves and displays information regarding the optimal navigational route for the special needs user.
+			\item Actor-System interaction model:
+				\graphicspath{ {./Diagrams/User/} }
+				\begin{figure}[h]
+				\caption{Use Case Diagram - UC4  Provide special routes for users with disabilities}
+				\includegraphics[height = 200px]{getPreferedRoute.png}
+				\end{figure}
+			\end{enumerate}
 
-%	\subsection{Entity Relationship Diagrams}
+		\begin{table}[htb]
+			\centering
+			\caption{UC4 -  Provide special routes for users with disabilities}
+			\label{my-label}
+			\begin{tabular}{|l|l|}
+				\hline
+				\textbf{Actor: User} &
+				\textbf{System: NavUP}
+				 \\ \hline  & 0. The NavUP system displays the main window
+				\\ \hline
+				\begin{tabular}[c]{@{}l@{}}1. The user clicks the Routes button on \\the main menu\end{tabular}       &
+				\begin{tabular}[c]{@{}l@{}}2. The system prompts the user for \\ a destination\end{tabular}
+				\\ \hline
+				\begin{tabular}[c]{@{}l@{}}3. The user enters a destination\end{tabular}       &
+				\begin{tabular}[c]{@{}l@{}}4. The system prompts the user for \\ the type of route they require\end{tabular}
+				\\ \hline
+				\begin{tabular}[c]{@{}l@{}}5. The user selects the ''special needs'' option\end{tabular}       &
+				\begin{tabular}[c]{@{}l@{}}6. The system displays the route and directions\\ to the destination.\end{tabular}
+				\\ \hline
+			\end{tabular}
+		\end{table}
+
+		%%%%%%%%%%%%%%%%%%%%%%======================   UC5   ================%%%%%%%%%%%%%%%%
+		\newpage
+		\subsubsection{Use Case for REQ3: Provide the fastest route to a destination}
+			\begin{enumerate}
+			\renewcommand{\labelenumi}{{\textbf{\arabic{enumi}.}}}
+			\item Use Case ID: UC5
+			\item Precondition: The user running the application and requires the fastest route from one location to the next.
+			\item Postcondition: Client device recieves and displays information regarding the optimal navigational route.
+			\item Actor-System interaction model:
+				\graphicspath{ {./Diagrams/User/} }
+				\begin{figure}[h]
+				\caption{Use Case Diagram - UC5  Providethe fastest route to a destination}
+				\includegraphics[height = 200px]{getPreferedRoute.png}
+		\end{figure}
+			\end{enumerate}
+
+		\begin{table}[htb]
+			\centering
+			\caption{UC5 -  Provide the fastest route to a destination}
+			\label{my-label}
+			\begin{tabular}{|l|l|}
+				\hline
+				\textbf{Actor: User} &
+				\textbf{System: NavUP}
+			 \\ \hline  & 0. The NavUP system displays the main window
+				\\ \hline
+				\begin{tabular}[c]{@{}l@{}}1. The user clicks the Routes button on \\the main menu\end{tabular}       &
+				\begin{tabular}[c]{@{}l@{}}2. The system prompts the user for \\ a destination\end{tabular}
+				\\ \hline
+				\begin{tabular}[c]{@{}l@{}}3. The user enters a destination\end{tabular}       &
+				\begin{tabular}[c]{@{}l@{}}4. The system prompts the user for \\ the type of route they require\end{tabular}
+				\\ \hline
+				\begin{tabular}[c]{@{}l@{}}5. The user selects the ''fastest path'' option\end{tabular}       &
+				\begin{tabular}[c]{@{}l@{}}6. The system displays the route and\\directions to the destination.\end{tabular}
+				\\ \hline
+			\end{tabular}
+		\end{table}
+		
+		%%%%%%%%%%%%%%%%%%%%%%======================   UC6   ================%%%%%%%%%%%%%%%%
+		\newpage
+		\subsubsection{Use Case for REQ5: The user logs into the application}
+			\begin{enumerate}
+			\renewcommand{\labelenumi}{{\textbf{\arabic{enumi}.}}}
+			\item Use Case ID: UC6
+			\item Precondition: The user wishes to log into the application.
+			\item Postcondition: Client device logs the user into the system and displays the user's login page.
+			\item Actor-System interaction model:
+				\graphicspath{ {./Diagrams/User/} }
+				\begin{figure}[h]
+				\caption{Use Case Diagram -  UC6 The user logs into the application}
+				\includegraphics[height = 200px]{Login.png}
+				\end{figure}
+			\end{enumerate}
+
+		\begin{table}[htb]
+			\centering
+			\caption{UC6 - The user logs into the application}
+			\label{my-label}
+			\begin{tabular}{|l|l|}
+				\hline
+				\textbf{Actor: User} &
+				\textbf{System: NavUP}
+				 \\ \hline  & 0. The NavUP system displays the main window
+				\\ \hline
+				\begin{tabular}[c]{@{}l@{}}1. The user clicks the Login button on \\the main menu\end{tabular}       &
+				\begin{tabular}[c]{@{}l@{}}2. The system prompts the user to\\ enter the required login details\end{tabular}
+				\\ \hline
+				\begin{tabular}[c]{@{}l@{}}3. The user enters their login information\end{tabular}       &
+				\begin{tabular}[c]{@{}l@{}}4. The system logs the user into the\\ application and displays the user's user page\end{tabular}
+				\\ \hline
+			\end{tabular}
+		\end{table}
+		
+		%%%%%%%%%%%%%%%%%%%%%%======================   UC7    ================%%%%%%%%%%%%%%%%
+		\newpage
+		\subsubsection{Use Case for REQ6: Allow users the ability to save a location(drop a pin)}
+			\begin{enumerate}
+			\renewcommand{\labelenumi}{{\textbf{\arabic{enumi}.}}}
+			\item Use Case ID: UC7
+			\item Precondition: The user is logged in and wishes to save their location.
+			\item Postcondition: Client device displays storage of a location by showing an icon over the specified position.
+			\item Actor-System interaction model:
+				\graphicspath{ {./Diagrams/User/} }
+				\begin{figure}[h]
+				\caption{Use Case Diagram - UC7  Allow users the ability to save a location(drop a pin)}
+				\includegraphics[width = 400px]{SaveL.png}
+				\end{figure}
+			\end{enumerate}
+
+		\begin{table}[htb]
+			\centering
+			\caption{UC7 - The user saves a location}
+			\label{my-label}
+			\begin{tabular}{|l|l|}
+				\hline
+				\textbf{Actor: User} &
+				\textbf{System: NavUP}
+				 \\ \hline  & 0. The NavUP system displays the user's page.
+				\\ \hline
+				\begin{tabular}[c]{@{}l@{}}1. The user clicks the Save Location\\ button\end{tabular}       &
+				\begin{tabular}[c]{@{}l@{}}2. The system prompts the user to \\enter a description for the saved location\end{tabular}
+				\\ \hline
+				\begin{tabular}[c]{@{}l@{}}3. The user enters a description for the\\ saved location and confirms the action\end{tabular}       &
+				\begin{tabular}[c]{@{}l@{}}4. The system saves the location and \\displays an icon over the location\end{tabular}
+				\\ \hline
+			\end{tabular}
+		\end{table}
 
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%============= Specific Requirements ================%%%%%%%%%%%%%%%%%%%%%%%%%
