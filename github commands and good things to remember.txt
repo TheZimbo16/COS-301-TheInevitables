@@ -26,6 +26,7 @@ step 14: git push
 
 IMPORTANT : ALWAYS PULL BEFORE YOU PUSH TO REMOTE
 step 15: git pull
+#comment on step 15: 'git pull' has a similar caveat of granularity as step 14. "See https://stackoverflow.com/questions/15797183/differences-between-git-pull-commands-when-pulling-from-origin" for more information on this.
 
 How merge works:
 switch to branch where you want to merge in(test stuff into dev so dev is branch)
