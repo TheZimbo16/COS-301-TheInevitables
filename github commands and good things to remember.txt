@@ -22,6 +22,7 @@ step 12: git commit -m "<commit message>" (initial commit)
 step 13: important note if you changed stuff on a branch then git wont let you switch until you have committed
 #comment on step 13: unless you stash the changes, then you can change branches without having to commit anything.
 step 14: git push
+#comment on step 14: As a matter of taste, one could be more explicit in the way you push changes. For example, if master has changed and you want to push changes to the remote master branch you can call 'git push origin master', where origin indicates the remote branch. This higher granularity is usefull since you are always aware of what branch you intend to push changes, thereby avoiding accidental changes to master when that was not intended.
 
 IMPORTANT : ALWAYS PULL BEFORE YOU PUSH TO REMOTE
 step 15: git pull
