@@ -23,7 +23,7 @@ config.devServer = {
         '/employees_rest/': {
             target: 'http://localhost:11080',
             secure: false,
-            pathRewrite: {'^/employees_rest' : '/TenderPlatformRest'}
+            pathRewrite: {'^/employees_rest' : '/NavUPRest'}
         }
     }
 };
