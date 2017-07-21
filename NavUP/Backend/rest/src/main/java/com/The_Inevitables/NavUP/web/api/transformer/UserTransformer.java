@@ -13,8 +13,8 @@ public class UserTransformer implements ApiTransformer{
 	public UserDTO toDTO(User user){
 		UserDTO userDTO = new UserDTO();
 
-		userDTO.setId(user.getId());
-		userDTO.setUsername(user.getUsername());
+		userDTO.setStudentNumber(user.getStudentNumber());
+		userDTO.setStudentName(user.getStudentName());
 		
 		return userDTO;
 	}
@@ -22,8 +22,8 @@ public class UserTransformer implements ApiTransformer{
 	public User toEntity(UserDTO request) {
 		User user = new User();
 		
-		user.setId(request.getId());
-		user.setUsername(request.getUsername());
+		user.setStudentNumber(request.getStudentNumber());
+		user.setStudentName(request.getStudentName());
 		
 		return user;
 	}
@@ -31,8 +31,8 @@ public class UserTransformer implements ApiTransformer{
 	public User getEntity(UserDTO request) {
 		User user = new User();
 		
-		user.getId();
-		user.getUsername();
+		user.getStudentNumber();
+		user.getStudentName();
 		
 		return user;
 	}

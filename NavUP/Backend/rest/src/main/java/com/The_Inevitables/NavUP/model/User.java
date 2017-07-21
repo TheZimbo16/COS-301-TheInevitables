@@ -13,33 +13,106 @@ import javax.persistence.Table;
 @Table(name = "users")
 public class User implements SuperEntity {
 
-	@Column(name = "username")
-	private String username;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID", unique = true, nullable = false, updatable = false)
-	private Long id;
-
 	public User() {
 		super();
 	}
 	
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
+	@Id
+	@Column(name = "usr_studentNumber", unique = true, nullable = false, updatable = false)
+	private int studentNumber;
 	
-	public Long getId() {
-		return id;
+	@Column(name = "usr_studentName")
+	private String studentName;
+	
+	@Column(name = "usr_studentSurname")
+	private String studentSurname;
+	
+	@Column(name = "usr_disabled")
+	private short studentDisabled;
+	
+	@Column(name = "usr_password")
+	private String studentPassword;
+	
+	
+	/*******************************************************/
+	/*				GETTERS AND SETTERS					   */
+	/*******************************************************/
+	
+	public int getStudentNumber()
+	{
+		return studentNumber;
 	}
-
-	public void setId(Long id) {
-		this.id = id;
+	
+	public void setStudentNumber(int number)
+	{
+		this.studentNumber = number;
 	}
+	
+	public String getStudentName() 
+	{
+		return studentName;
+	}
+	
+	public void setStudentName(String studentName) 
+	{
+		this.studentName = studentName;
+	}
+	
+	public String getUserSurname()
+	{
+		return studentSurname;
+	}
+	
+	public void setUserSurname(String surname)
+	{
+		this.studentSurname = surname;
+	}
+	
+	public short getUserDisabled()
+	{
+		return studentDisabled;
+	}
+	
+	public void getUserDisabled(short disabled)
+	{
+		this.studentDisabled = disabled;
+	}
+	
+	public String getUserPassword()
+	{
+		return studentPassword;
+	}
+	
+	public void setUserPassword(String password)
+	{
+		this.studentPassword = password;
+	}
+	
+//	@Column(name = "username")
+//	private String username;
+//	
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//
+//	private Long id;
+//
+//	
+//	
+//	public String getUsername() {
+//		return username;
+//	}
+//
+//	public void setUsername(String username) {
+//		this.username = username;
+//	}
+//
+//	
+//	public Long getId() {
+//		return id;
+//	}
+//
+//	public void setId(Long id) {
+//		this.id = id;
+//	}
 
 }

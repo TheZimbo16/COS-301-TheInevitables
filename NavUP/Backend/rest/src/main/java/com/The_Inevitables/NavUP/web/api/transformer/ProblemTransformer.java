@@ -14,7 +14,7 @@ public class ProblemTransformer implements ApiTransformer{
 		ProblemStatementDTO problemDTO = new ProblemStatementDTO();
 
 		problemDTO.setDescription(problemStatement.getDescription());
-		problemDTO.setId(problemStatement.getId());
+		
 		
 		return problemDTO;
 	}

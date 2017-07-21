@@ -34,7 +34,7 @@ public class UserAPI {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public UserDTO createProblem(UserDTO request){
+	public UserDTO createUser(UserDTO request){
 		User user = userService.createUser(userTransformer.toEntity(request));
 		return userTransformer.toDTO(user);
 	}
