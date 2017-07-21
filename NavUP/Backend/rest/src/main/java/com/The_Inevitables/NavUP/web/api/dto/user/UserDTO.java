@@ -6,17 +6,60 @@ import com.The_Inevitables.NavUP.web.api.dto.problem.DTO;
 public class UserDTO extends DTO implements ApiResponse {
 
 	private static final long serialVersionUID = 1938248728652936986L;
+	
+	private int studentNumber;
+	private String studentName;
+	private String studentSurname;
+	private short studentDisabled;
+	private String studentPassword;
 
-	public String username;
-
-	public String getUsername() {
-		return username;
+	public int getStudentNumber()
+	{
+		return studentNumber;
 	}
-
-	public void setUsername(String username) {
-		this.username = username;
+	
+	public void setStudentNumber(int number)
+	{
+		this.studentNumber = number;
 	}
-
-
-
+	
+	public String getStudentName() 
+	{
+		return studentName;
+	}
+	
+	public void setStudentName(String studentName) 
+	{
+		this.studentName = studentName;
+	}
+	
+	public String getUserSurname()
+	{
+		return studentSurname;
+	}
+	
+	public void setUserSurname(String surname)
+	{
+		this.studentSurname = surname;
+	}
+	
+	public short getUserDisabled()
+	{
+		return studentDisabled;
+	}
+	
+	public void getUserDisabled(short disabled)
+	{
+		this.studentDisabled = disabled;
+	}
+	
+	public String getUserPassword()
+	{
+		return studentPassword;
+	}
+	
+	public void setUserPassword(String password)
+	{
+		this.studentPassword = password;
+	}
 }
