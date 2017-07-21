@@ -1,0 +1,29 @@
+# Eclipse
+.classpath
+.project
+.settings/
+
+#netbeans
+nb-configuration.xml
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+out/
+/bin/
+tmp
+
+npm-debug.log
+npm-debug.log.*
+
+#angular
+node_modules/
+bower_components/
