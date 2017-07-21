@@ -6,17 +6,17 @@ module.exports = function makeWebpackConfig () {
 var config = {};
 
 config.entry = {
-    app: ["./js/controllers/controllers.js"]
+    app: ["./www/js/app.js"]
 };
 
 config.output ={
     path: path.resolve(__dirname, "build"),
-    publicPath: "/app/",
+    publicPath: "/www/",
     filename: "bundle.js"
 };
 
 config.devServer = {
-    contentBase: './',
+    contentBase: './www',
     stats: 'minimal',
     port: 9000,
     proxy: {
