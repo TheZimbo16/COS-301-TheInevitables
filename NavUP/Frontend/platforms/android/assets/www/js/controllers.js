@@ -125,8 +125,8 @@ var refresh = function() {
 refresh();
 
 	$scope.addContact = function() {
-    console.log('add clicked');
-    console.log($scope.contactlist + "here");
+    // console.log('add clicked');
+    console.log($scope.contact);
 	  $http.post('/employees_rest/api/user/', $scope.contact).success(function(response) {
 	    console.log(response);
 	    refresh();
