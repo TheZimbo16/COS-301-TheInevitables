@@ -111,17 +111,8 @@ angular.module('myApp.controllers', [])
   };
 })
 
-.controller('usersCtrl', ['$scope', '$http', function($scope, $ionicModal, $http) {
+.controller('usersCtrl', ['$scope', '$http', function($scope, $http) {
     console.log("Hello World from users controller");
-
-// myApp.config(function($httpProvider) {
-//   /**
-//    * make delete type json
-//    */
-//   $httpProvider.defaults.headers["delete"] = {
-//     'Content-Type': 'application/json;charset=utf-8'
-//   };
-// })
 
 var refresh = function() {
   $http.get('/employees_rest/api/user/get').success(function(response) {
@@ -134,7 +125,8 @@ var refresh = function() {
 refresh();
 
 	$scope.addContact = function() {
-	  console.log($scope.contact);
+    console.log('add clicked');
+    console.log($scope.contactlist + "here");
 	  $http.post('/employees_rest/api/user/', $scope.contact).success(function(response) {
 	    console.log(response);
 	    refresh();

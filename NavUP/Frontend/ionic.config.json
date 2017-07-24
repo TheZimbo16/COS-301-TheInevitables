@@ -8,7 +8,7 @@
   "proxies": [
     {
       "path": "/employees_rest/",
-      "proxyUrl": "http://192.168.1.44:11080/NavUPRest/"
+      "proxyUrl": "http://localhost:11080/NavUPRest/"
     }
   ]
 }
