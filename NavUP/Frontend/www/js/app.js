@@ -22,7 +22,7 @@ angular.module('myApp', ['ionic', 'myApp.controllers', 'myApp.directives'])
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
+    controller: 'LoginCtrl'
   })
 
   .state('app.search', {
@@ -34,30 +34,30 @@ angular.module('myApp', ['ionic', 'myApp.controllers', 'myApp.directives'])
     }
   })
 
-  .state('app.browse', {
-      url: '/browse',
+  .state('app.users', {
+      url: '/users',
       views: {
         'menuContent': {
-          templateUrl: 'templates/browse.html'
+          templateUrl: 'templates/users.html'
         }
       }
     })
-    .state('app.playlists', {
-      url: '/playlists',
+    .state('app.places', {
+      url: '/places',
       views: {
         'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
+          templateUrl: 'templates/places.html',
+          controller: 'PlacesCtrl'
         }
       }
     })
 
   .state('app.single', {
-    url: '/playlists/:playlistId',
+    url: '/place/:placeId',
     views: {
       'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
+        templateUrl: 'templates/place.html',
+        controller: 'PlacesCtrl'
       }
     }
   });

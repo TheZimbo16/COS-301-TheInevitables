@@ -1,0 +1,33 @@
+<ion-view view-title="Places">
+    <ion-content>
+      <div class="">
+          <h1>Venue Management API</h1>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Room Number</th>
+                <th>Building</th>
+                <th>Action</th>
+                <th>&nbsp;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+          <td><input class="form-control" ng-model="place.name"></td><br/>
+                <td><input class="form-control" ng-model="place.location"></td>
+                <td><button class="btn btn-primary" ng-click="addPlace()">Add Place</button>
+                <td><button class="btn btn-info" ng-click="update()">Update</button>&nbsp;&nbsp;<button class="btn btn-info" ng-click="deselect()">Clear</button></td>
+              </tr>
+              <tr ng-repeat="place in places">
+                <td>{{place.name}}</td>
+                <td>{{place.location}}</td>
+                <td><button class="btn btn-danger" ng-click="removePlace()">Remove</button></td>
+                <td><button class="btn btn-warning" ng-click="edit(place.name)">Edit</button></td>
+              </tr>
+            </tbody>
+          </table>
+
+          </div>
+    </ion-content>
+  </ion-view>

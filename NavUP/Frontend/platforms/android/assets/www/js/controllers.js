@@ -1,6 +1,34 @@
 angular.module('myApp.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('MapCtrl', function($scope, $ionicLoading) {
+  console.log("Hello World from map controller");
+  $scope.mapCreated = function(map) {
+    $scope.map = map;
+  };
+
+  $scope.centerOnMe = function () {
+    console.log("Centering");
+    if (!$scope.map) {
+      return;
+    }
+
+    $scope.loading = $ionicLoading.show({
+      content: 'Getting current location...',
+      showBackdrop: false
+    });
+
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      console.log('Got pos', pos);
+      $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+      $scope.loading.hide();
+    }, function (error) {
+      alert('Unable to get location: ' + error.message);
+    });
+  };
+})
+
+.controller('LoginCtrl', function($scope, $ionicModal, $timeout) {
+  console.log("Hello World from login controller");
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -41,7 +69,8 @@ angular.module('myApp.controllers', [])
   };
 })
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('RegisterCtrl', function($scope, $ionicModal, $timeout) {
+  console.log("Hello World from register controller");
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -51,7 +80,7 @@ angular.module('myApp.controllers', [])
   //});
 
   // Form data for the login modal
-  $scope.loginData = {};
+  $scope.RegisterData = {};
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/register.html', {
@@ -82,42 +111,128 @@ angular.module('myApp.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  // $scope.playlists = [
-  //   { title: 'Reggae', id: 1 },
-  //   { title: 'Chill', id: 2 },
-  //   { title: 'Dubstep', id: 3 },
-  //   { title: 'Indie', id: 4 },
-  //   { title: 'Rap', id: 5 },
-  //   { title: 'Cowbell', id: 6 }
-  // ];
-})
+.controller('usersCtrl', ['$scope', '$http', function($scope, $ionicModal, $http) {
+    console.log("Hello World from users controller");
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-})
+// myApp.config(function($httpProvider) {
+//   /**
+//    * make delete type json
+//    */
+//   $httpProvider.defaults.headers["delete"] = {
+//     'Content-Type': 'application/json;charset=utf-8'
+//   };
+// })
 
-.controller('MapCtrl', function($scope, $ionicLoading) {
-  $scope.mapCreated = function(map) {
-    $scope.map = map;
+var refresh = function() {
+  $http.get('/employees_rest/api/user/get').success(function(response) {
+    console.log("I got the data I requested");
+    $scope.contactlist = response;
+    $scope.contact = "";
+  });
+};
+
+refresh();
+
+	$scope.addContact = function() {
+	  console.log($scope.contact);
+	  $http.post('/employees_rest/api/user/', $scope.contact).success(function(response) {
+	    console.log(response);
+	    refresh();
+	  });
+	};
+
+	$scope.remove = function() {
+		$http.defaults.headers["delete"] = {
+			     'Content-Type':'application/json'
+	};
+
+	  $http.delete('/employees_rest/api/user/delete',$scope.contact).success(function(data, status, headers, config) {
+	    refresh();
+	  }).error(function(data, status, headers, config) {
+    });
+	};
+
+	$scope.edit = function(id) {
+	  console.log(id);
+	  $http.get('/employees_rest/webapi/users/' + id).success(function(response) {
+	    $scope.contact = response;
+	  });
+	};
+
+	$scope.update = function() {
+	  console.log($scope.contact._id);
+	  $http.put('/employees_rest/webapi/users/' + $scope.contact._id, $scope.contact).success(function(response) {
+	    refresh();
+	  })
+	};
+
+	$scope.deselect = function() {
+	  $scope.contact = "";
+	}
+
+}])
+
+.controller('PlacesCtrl', ['$scope', '$http', function($scope, $ionicModal, $http) {
+  console.log("Hello World from places controller");
+
+  // myApp.config(function($httpProvider) {
+  //   /**
+  //    * make delete type json
+  //    */
+  //   $httpProvider.defaults.headers["delete"] = {
+  //     'Content-Type': 'application/json;charset=utf-8'
+  //   };
+  // })
+
+  var refresh = function() {
+    $http.get('/employees_rest/api/places/get').success(function(response) {
+      console.log("I got the data I requested");
+      $scope.placeslist = response;
+      $scope.place = "";
+    });
   };
 
-  $scope.centerOnMe = function () {
-    console.log("Centering");
-    if (!$scope.map) {
-      return;
-    }
+  refresh();
 
-    $scope.loading = $ionicLoading.show({
-      content: 'Getting current location...',
-      showBackdrop: false
-    });
+  	$scope.addPlace = function() {
+  	  console.log($scope.place);
+  	  $http.post('/employees_rest/api/places/', $scope.place).success(function(response) {
+  	    console.log(response);
+  	    refresh();
+  	  });
+  	};
 
-    navigator.geolocation.getCurrentPosition(function (pos) {
-      console.log('Got pos', pos);
-      $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-      $scope.loading.hide();
-    }, function (error) {
-      alert('Unable to get location: ' + error.message);
-    });
-  };
-});
+  	$scope.remove = function() {
+  		$http.defaults.headers["delete"] = {
+  			     'Content-Type':'application/json'
+  	};
+
+  	  $http.delete('/employees_rest/api/places/delete',$scope.place).success(function(data, status, headers, config) {
+  	    refresh();
+  	  }).error(function(data, status, headers, config) {
+      });
+  	};
+
+  	$scope.edit = function(id) {
+  	  console.log(id);
+  	  $http.get('/employees_rest/webapi/places/' + id).success(function(response) {
+  	    $scope.contact = response;
+  	  });
+  	};
+
+  	$scope.update = function() {
+  	  console.log($scope.place.name);
+  	  $http.put('/employees_rest/webapi/places/' + $scope.place.name, $scope.place).success(function(response) {
+  	    refresh();
+  	  })
+  	};
+
+  	$scope.deselect = function() {
+  	  $scope.place = "";
+  	}
+
+  }])
+
+// .controller('PlacesCtrl', function($scope, $stateParams) {
+//   console.log("Hello World from place controller");
+// })
