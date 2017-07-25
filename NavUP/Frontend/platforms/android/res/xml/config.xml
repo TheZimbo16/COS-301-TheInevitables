@@ -22,8 +22,8 @@
     <feature name="Geolocation">
         <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
     </feature>
-    <name>ionic-todo</name>
-    <description>An awesome Ionic/Cordova app.</description>
+    <name>NavUP</name>
+    <description>Campus guidance.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content original-src="index.html" src="http://10.0.0.3:8100" />
     <access origin="*" />

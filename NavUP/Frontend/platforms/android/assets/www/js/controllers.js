@@ -112,7 +112,8 @@ angular.module('myApp.controllers', [])
 })
 
 .controller('usersCtrl', ['$scope', '$http', function($scope, $http) {
-    console.log("Hello World from users controller");
+    console.log("Hello World from controller");
+
 
 var refresh = function() {
   $http.get('/employees_rest/api/user/get').success(function(response) {
@@ -125,8 +126,7 @@ var refresh = function() {
 refresh();
 
 	$scope.addContact = function() {
-    // console.log('add clicked');
-    console.log($scope.contact);
+	  console.log($scope.contact);
 	  $http.post('/employees_rest/api/user/', $scope.contact).success(function(response) {
 	    console.log(response);
 	    refresh();

@@ -6,7 +6,7 @@ module.exports = function makeWebpackConfig () {
 var config = {};
 
 config.entry = {
-    app: ["./www/js/app.js"]
+    app: ["./www/controllers/controllers.js"]
 };
 
 config.output ={
