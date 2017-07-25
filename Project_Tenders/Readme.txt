@@ -1,0 +1,15 @@
+
+Team name: The Inevitables
+
+Team members:
+            Peter Rayner
+            Dawie Pritchard
+            Drew Langley
+            Hendrik Jan van der Merwe
+            Lyle Nel
+           
+Tendered projects:
+           CSIR - Electronically Timing Athletes (ETA)
+           EPI-USE_IoT-Homecare
+           DU@UP ObjectSensor and MobileNavigation
+           EPI-USE_3DVRPresentations
