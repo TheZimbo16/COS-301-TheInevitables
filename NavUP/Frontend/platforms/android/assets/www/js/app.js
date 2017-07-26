@@ -37,7 +37,7 @@ angular.module('myApp', ['ionic', 'myApp.controllers', 'myApp.directives'])
         url: '/main',
         views: {
           'menuContent': {
-            templateUrl: '../index.html'
+            templateUrl: 'templates/main.html'
           }
         }
       })

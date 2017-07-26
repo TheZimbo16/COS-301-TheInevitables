@@ -74,6 +74,8 @@ angular.module('myApp.controllers', [])
 
         $scope.guest = function() {
             $location.path("app/search_map");
+            $scope.modal.hide();
+            $scope.modal2.hide();
 
         }
     })

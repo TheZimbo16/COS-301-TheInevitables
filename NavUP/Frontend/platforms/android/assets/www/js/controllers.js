@@ -27,7 +27,7 @@ angular.module('myApp.controllers', [])
         };
     })
 
-    .controller('MenuCtrl', function ($scope, $ionicModal, $timeout, $http) {
+    .controller('MenuCtrl', function ($scope, $ionicModal, $timeout, $location) {
         console.log("Hello World from menu controller");
 
         // Create the login modal that we will use later
@@ -55,10 +55,12 @@ angular.module('myApp.controllers', [])
         // Open the login modal
         $scope.login = function () {
             $scope.modal.show();
+            $scope.modal2.hide();
         };
         // Open the register modal
         $scope.register = function () {
             $scope.modal2.show();
+            $scope.modal.hide();
         };
 
         // Perform the login action when the user submits the login form
@@ -69,6 +71,13 @@ angular.module('myApp.controllers', [])
                 $scope.closeLogin();
             }, 1000);
         };
+
+        $scope.guest = function() {
+            $location.path("app/search_map");
+            $scope.modal.hide();
+            $scope.modal2.hide();
+
+        }
     })
 
     .controller('registerCtrl', ['$scope', '$http', function ($scope, $http, $timeout) {
