@@ -58,7 +58,8 @@ const char* keys  =
         "{c        |       | Camera intrinsic parameters. Needed for camera pose }"
         "{l        | 0.1   | Marker side lenght (in meters). Needed for correct scale in camera pose }"
         "{dp       |       | File of marker detector parameters }"
-        "{r        |       | show rejected candidates too }";
+        "{r        |       | show rejected candidates too }"
+        "{portrait |       | convert video to portrait mode }";
 }
 
 static bool readCameraParameters(std::string filename, cv::Mat &camMatrix, cv::Mat &distCoeffs) {
@@ -139,6 +140,7 @@ int main(int argc, char *argv[]) {
     bool showRejected = parser.has("r");
     bool estimatePose = parser.has("c");
     float markerLength = parser.get<float>("l");
+    bool portrait_mode = parser.has("portrait");
 
     cv::Ptr<cv::aruco::DetectorParameters> detectorParams = cv::aruco::DetectorParameters::create();
     if(parser.has("dp")) {
@@ -196,6 +198,11 @@ int main(int argc, char *argv[]) {
     while(inputVideo.grab()) {
         cv::Mat image, imageCopy;
         inputVideo.retrieve(image);
+        if(portrait_mode)
+        {
+            cv::transpose(image, image);
+            cv::flip(image, image, 1);
+        }
 
         std::vector< int > ids;
         std::vector< std::vector< cv::Point2f > > corners, rejected;
@@ -237,11 +244,12 @@ int main(int argc, char *argv[]) {
                     cv::Matx33f rotation_matrix_float = rotation_matrix;
                     cv::Matx31f ctv = -rotation_matrix_float.t()*tvecs[i];
 
+                    int window_size = 10;
                     avgx.push_front(ctv(0,0));
-                    if(avgx.size()>100)
+                    if(avgx.size()>window_size)
                         avgx.pop_back();
                     avgy.push_front(ctv(1,0));
-                    if(avgy.size()>100)
+                    if(avgy.size()>window_size)
                         avgy.pop_back();
                     float xavg = std::accumulate(avgx.begin(),avgx.end(),0.0)/avgx.size();
                     float yavg = std::accumulate(avgy.begin(),avgy.end(),0.0)/avgy.size();
@@ -250,7 +258,7 @@ int main(int argc, char *argv[]) {
                     std::cerr << "Viewer Y coordinate: " << yavg << std::endl;
 
                     avg.push_front(cv::sqrt(ctv(0,0)*ctv(0,0)+ctv(1,0)*ctv(1,0)));
-                    if(avg.size()>100)
+                    if(avg.size()>window_size)
                         avg.pop_back();
                     std::cerr << "Ground plane distance: " << std::accumulate(avg.begin(),avg.end(),0.0)/avg.size() << std::endl;
 
