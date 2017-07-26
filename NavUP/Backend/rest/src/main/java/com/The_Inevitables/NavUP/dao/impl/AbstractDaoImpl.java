@@ -15,6 +15,7 @@ import com.The_Inevitables.NavUP.model.SuperEntity;
 import com.The_Inevitables.NavUP.model.User;
 import com.The_Inevitables.NavUP.model.LocationType;
 import com.The_Inevitables.NavUP.model.Building;
+import com.The_Inevitables.NavUP.model.Location;
 
 public abstract class AbstractDaoImpl <E extends SuperEntity> {
 
@@ -174,6 +175,26 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	        CriteriaQuery<User> criteria = em.getCriteriaBuilder().createQuery(User.class); 
 	        criteria.from(User.class); 
 	        return em.createQuery(criteria).getResultList(); 
+	 }
+	 
+	 public void deleteLocation(String locationName)
+	 {
+		 try
+			{
+				Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.Location u WHERE u.locationName = :p");
+				query.setParameter("p", locationName).executeUpdate();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+	 }
+	 
+	 public List<Location> getAllLocations()
+	 {
+		 CriteriaQuery<Location> criteria = em.getCriteriaBuilder().createQuery(Location.class); 
+	     criteria.from(Location.class); 
+	     return em.createQuery(criteria).getResultList(); 
 	 }
 	
 	

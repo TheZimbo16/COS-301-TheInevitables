@@ -15,10 +15,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.The_Inevitables.NavUP.model.Building;
 import com.The_Inevitables.NavUP.model.LocationType;
 import com.The_Inevitables.NavUP.service.locationTypes.LocationTypesService;
-import com.The_Inevitables.NavUP.web.api.dto.building.BuildingDTO;
 import com.The_Inevitables.NavUP.web.api.dto.locationTypes.LocationTypeDTO;
 import com.The_Inevitables.NavUP.web.api.transformer.LocationTypeTransformer;
 
@@ -45,7 +43,7 @@ public class LocationTypeAPI {
 	@GET 
 	@Path("get")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<LocationType> getAllBuildings() 
+	public List<LocationType> getAllLocationTypes() 
 	{
 		ArrayList<LocationType> list = (ArrayList<LocationType>) locationTypeService.getAllLocationTypes();
 	    return  list;

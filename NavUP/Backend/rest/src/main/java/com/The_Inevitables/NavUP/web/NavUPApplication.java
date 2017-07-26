@@ -9,6 +9,7 @@ import javax.ws.rs.core.Application;
 import com.The_Inevitables.NavUP.web.api.UserAPI;
 import com.The_Inevitables.NavUP.web.api.BuildingAPI;
 import com.The_Inevitables.NavUP.web.api.LocationTypeAPI;
+import com.The_Inevitables.NavUP.web.api.LocationAPI;
 
 @ApplicationPath("api")
 public class NavUPApplication extends Application {
@@ -26,6 +27,7 @@ public class NavUPApplication extends Application {
 		s.add(UserAPI.class);
 		s.add(BuildingAPI.class);
 		s.add(LocationTypeAPI.class);
+		s.add(LocationAPI.class);
 		
 		return s;
 

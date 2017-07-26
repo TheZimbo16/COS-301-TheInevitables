@@ -20,6 +20,10 @@ public class LocationType implements SuperEntity {
 	
 	@Column(name = "locationDescription")
 	private String locationDescription;
+	
+	public LocationType() {
+		super();
+	}
 
 	
 	/*******************************************************/

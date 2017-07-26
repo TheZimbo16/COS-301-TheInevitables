@@ -3,9 +3,7 @@ package com.The_Inevitables.NavUP.web.api.transformer;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import com.The_Inevitables.NavUP.model.Building;
 import com.The_Inevitables.NavUP.model.LocationType;
-import com.The_Inevitables.NavUP.web.api.dto.building.BuildingDTO;
 import com.The_Inevitables.NavUP.web.api.dto.locationTypes.LocationTypeDTO;;
 
 
