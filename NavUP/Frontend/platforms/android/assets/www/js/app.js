@@ -33,6 +33,14 @@ angular.module('myApp', ['ionic', 'myApp.controllers', 'myApp.directives'])
       }
     }
   })
+      .state('app.main', {
+        url: '/main',
+        views: {
+          'menuContent': {
+            templateUrl: '../index.html'
+          }
+        }
+      })
 
   .state('app.users', {
       url: '/users',
@@ -50,19 +58,19 @@ angular.module('myApp', ['ionic', 'myApp.controllers', 'myApp.directives'])
           controller: 'PlacesCtrl'
         }
       }
-    })
+    });
 
-  .state('app.single', {
-    url: '/place/:placeId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/place.html',
-        controller: 'PlacesCtrl'
-      }
-    }
-  });
+  // .state('app.single', {
+  //   url: '/place/:placeId',
+  //   views: {
+  //     'menuContent': {
+  //       templateUrl: 'templates/place.html',
+  //       controller: 'PlacesCtrl'
+  //     }
+  //   }
+  // });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/search_map');
+  $urlRouterProvider.otherwise('/app/main');
 });
 
 // Ionic Starter App

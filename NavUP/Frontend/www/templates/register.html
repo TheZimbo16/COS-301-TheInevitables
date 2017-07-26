@@ -2,9 +2,6 @@
   <ion-header-bar>
     <h1 class="title">Register</h1>
     <div class="buttons">
-      <button class="button button-clear" ng-click="login()">Login</button>
-    </div>
-    <div class="buttons">
       <button class="button button-clear" ng-click="closeRegister()">Close</button>
     </div>
   </ion-header-bar>
@@ -14,21 +11,40 @@
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Username</span>
-          <input class="form-control" ng-model="registerData.studentNumber">
+          <input type="text" class="form-control" ng-model="registerData.studentNumber">
         </label>
         <!--<label class="item item-input">-->
-          <!--<span class="input-label">Password</span>-->
-          <!--<input type="password" ng-model="registerData.password2">-->
+          <!--<span class="input-label">Username</span>-->
+          <!--<input type="text" class="form-control" ng-model="registerData.studentNumber">-->
+        <!--</label>-->
+        <!--<label class="item item-input">-->
+          <!--<span class="input-label">Username</span>-->
+          <!--<input type="text" class="form-control" ng-model="registerData.studentNumber">-->
+        <!--</label>-->
+        <!--<label class="item item-input">-->
+          <!--<span class="input-label">Username</span>-->
+          <!--<input type="text" class="form-control" ng-model="registerData.studentNumber">-->
+        <!--</label>-->
+        <!--<label class="item item-input">-->
+          <!--<span class="input-label">Username</span>-->
+          <!--<input type="text" class="form-control" ng-model="registerData.studentNumber">-->
         <!--</label>-->
         <!--<label class="item item-input">-->
           <!--<span class="input-label">Password</span>-->
-          <!--<input type="password" ng-model="registerData.password2">-->
+          <!--<input type="password" ng-model="registerData.">-->
+        <!--</label>-->
+        <!--<label class="item item-input">-->
+          <!--<span class="input-label">Password</span>-->
+          <!--<input type="password" ng-model="registerData.">-->
         <!--</label>-->
         <label class="item">
           <button class="button button-block button-positive" type="submit">Register</button>
         </label>
       </div>
     </form>
+      <div class="buttons">
+        <button id="registerButton" class="button button-energized" ng-click="login()">Login</button>
+        <button id="guestButton" class="button button-balanced" ng-click="guest()">Guest</button>
       </div>
   </ion-content>
 </ion-modal-view>
