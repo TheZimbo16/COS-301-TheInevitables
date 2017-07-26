@@ -83,7 +83,7 @@ angular.module('myApp.controllers', [])
     })
 
     .controller('usersCtrl', ['$scope', '$http', function ($scope, $http) {
-        console.log("Hello World from controller");
+        console.log("Hello World from users controller");
 
 
         var refresh = function () {
