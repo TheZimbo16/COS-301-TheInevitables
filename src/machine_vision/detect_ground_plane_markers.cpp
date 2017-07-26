@@ -178,10 +178,13 @@ int main(int argc, char *argv[]) {
     int waitTime;
     if(!video.empty()) {
         inputVideo.open(video);
-        waitTime = 1;
+	//process video in realtime even if it can be done faster
+	int fps = inputVideo.get(CV_CAP_PROP_FPS);
+        waitTime = 1000/fps;
     } else {
         inputVideo.open(camId);
         waitTime = 10;
+
 //        inputVideo.set(CV_CAP_PROP_FRAME_WIDTH,640);
 //        inputVideo.set(CV_CAP_PROP_FRAME_HEIGHT,480);
     }
