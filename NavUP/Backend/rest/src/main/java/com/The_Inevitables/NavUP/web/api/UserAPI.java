@@ -49,11 +49,10 @@ public class UserAPI {
 	 
 	 @DELETE
 	 @Path("delete")
-	 @Produces({"application/json"})
-	 @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML,MediaType.TEXT_PLAIN})
-	 public UserDTO deleteProblem(UserDTO request){
-			User user = userService.removeUser(userTransformer.toEntity(request));
-			return userTransformer.toDTO(user);
+	 @Produces(MediaType.APPLICATION_JSON)
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 public void deleteProblem(UserDTO request){
+			userService.removeUser(request.getStudentNumber());
 		}
 		
 

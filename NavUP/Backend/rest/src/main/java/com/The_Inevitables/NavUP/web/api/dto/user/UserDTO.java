@@ -48,7 +48,7 @@ public class UserDTO extends DTO implements ApiResponse {
 		return studentDisabled;
 	}
 	
-	public void getUserDisabled(short disabled)
+	public void setUserDisabled(short disabled)
 	{
 		this.studentDisabled = disabled;
 	}

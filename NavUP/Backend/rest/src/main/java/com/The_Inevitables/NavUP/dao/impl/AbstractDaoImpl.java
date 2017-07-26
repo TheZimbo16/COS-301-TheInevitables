@@ -29,9 +29,10 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 		return entity;
 	}
 	
-	public E delete(E entity){
-		em.remove(em.contains(entity) ? entity : em.merge(entity));
-		return entity;
+	public void delete(int studentNo){
+		
+		Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.User u WHERE u.studentNumber = :p");
+		query.setParameter("p", studentNo).executeUpdate();
 	}
 	
 
