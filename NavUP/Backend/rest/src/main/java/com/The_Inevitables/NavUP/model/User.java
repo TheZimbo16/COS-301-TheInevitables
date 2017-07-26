@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "users")
+@Table(name = "Users")
 public class User implements SuperEntity {
 
 	public User() {
@@ -18,19 +18,19 @@ public class User implements SuperEntity {
 	}
 	
 	@Id
-	@Column(name = "usr_studentNumber", unique = true, nullable = false, updatable = false)
+	@Column(name = "studentNumber", unique = true, nullable = false, updatable = false)
 	private int studentNumber;
 	
-	@Column(name = "usr_studentName")
+	@Column(name = "studentName")
 	private String studentName;
 	
-	@Column(name = "usr_studentSurname")
+	@Column(name = "studentSurname")
 	private String studentSurname;
 	
-	@Column(name = "usr_disabled")
+	@Column(name = "studentDisabled")
 	private short studentDisabled;
 	
-	@Column(name = "usr_password")
+	@Column(name = "studentPassword")
 	private String studentPassword;
 	
 	
@@ -73,7 +73,7 @@ public class User implements SuperEntity {
 		return studentDisabled;
 	}
 	
-	public void getUserDisabled(short disabled)
+	public void setUserDisabled(short disabled)
 	{
 		this.studentDisabled = disabled;
 	}

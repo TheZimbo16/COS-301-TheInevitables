@@ -15,6 +15,9 @@ public class UserTransformer implements ApiTransformer{
 
 		userDTO.setStudentNumber(user.getStudentNumber());
 		userDTO.setStudentName(user.getStudentName());
+		userDTO.setUserDisabled(user.getUserDisabled());
+		userDTO.setUserPassword(user.getUserPassword());
+		userDTO.setUserSurname(user.getUserSurname());
 		
 		return userDTO;
 	}
@@ -24,6 +27,9 @@ public class UserTransformer implements ApiTransformer{
 		
 		user.setStudentNumber(request.getStudentNumber());
 		user.setStudentName(request.getStudentName());
+		user.setUserDisabled(request.getUserDisabled());
+		user.setUserPassword(request.getUserPassword());
+		user.setUserSurname(request.getUserSurname());
 		
 		return user;
 	}
@@ -33,6 +39,10 @@ public class UserTransformer implements ApiTransformer{
 		
 		user.getStudentNumber();
 		user.getStudentName();
+		user.getUserDisabled();
+		user.getUserPassword();
+		user.getUserSurname();
+		
 		
 		return user;
 	}

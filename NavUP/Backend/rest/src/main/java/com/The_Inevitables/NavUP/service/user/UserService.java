@@ -24,8 +24,8 @@ public class UserService  {
 		return userDAO.update(entity);
 	}
 	
-	public User removeUser(User entity) {
-		return userDAO.delete(entity);
+	public void removeUser(int studentNo) {
+		userDAO.delete(studentNo);
 	}
 	
 	public List<User >findAllUsers() {
