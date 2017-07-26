@@ -32,4 +32,9 @@ public class UserService  {
 		return userDAO.findAllCustomers();
 	}
 	
+	public User verifyUser(int studentNo, String password)
+	{
+		return userDAO.verifyUser(studentNo, password);
+	}
+	
 }
