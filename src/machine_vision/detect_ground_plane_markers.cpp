@@ -59,7 +59,8 @@ const char* keys  =
         "{l        | 0.1   | Marker side lenght (in meters). Needed for correct scale in camera pose }"
         "{dp       |       | File of marker detector parameters }"
         "{r        |       | show rejected candidates too }"
-        "{portrait |       | convert video to portrait mode }";
+        "{portrait |       | convert video to portrait mode }"
+        "{ground_plane |       | do ground-plane triangulation of markers. If not specified, default to wall-plane triangulation }";
 }
 
 static bool readCameraParameters(std::string filename, cv::Mat &camMatrix, cv::Mat &distCoeffs) {
@@ -141,6 +142,7 @@ int main(int argc, char *argv[]) {
     bool estimatePose = parser.has("c");
     float markerLength = parser.get<float>("l");
     bool portrait_mode = parser.has("portrait");
+    bool ground_plane = parser.has("ground_plane");
 
     cv::Ptr<cv::aruco::DetectorParameters> detectorParams = cv::aruco::DetectorParameters::create();
     if(parser.has("dp")) {
@@ -194,6 +196,7 @@ int main(int argc, char *argv[]) {
     std::deque<float> avg;
     std::deque<float> avgx;
     std::deque<float> avgy;
+    std::deque<float> avgz;
 
     while(inputVideo.grab()) {
         cv::Mat image, imageCopy;
@@ -227,11 +230,17 @@ int main(int argc, char *argv[]) {
 
 //                    auto euclid_distance = cv::norm(tvecs[i]);
 //                    auto euclid_distance = cv::sqrt(tvecs[i][0]*tvecs[i][0]+tvecs[i][1]*tvecs[i][1]+tvecs[i][2]*tvecs[i][2]);
-                    auto euclid_distance = tvecs[i][2];
+                    float euclid_distance;
+                    if(ground_plane)//z axis
+                        euclid_distance = tvecs[i][2];
+                    else//x and z axis
+                        euclid_distance = cv::sqrt(tvecs[i][0]*tvecs[i][0]+tvecs[i][2]*tvecs[i][2]);
+                        
 
                     std::cerr << "X coordinate: " << tvecs[i][0] << std::endl;
                     std::cerr << "Y coordinate: " << tvecs[i][1] << std::endl;
                     std::cerr << "Z coordinate: " << tvecs[i][2] << std::endl;
+                    std::cerr << "Euclidean distance: " << euclid_distance << std::endl;
 
 
                     int width = inputVideo.get(CV_CAP_PROP_FRAME_WIDTH);
@@ -248,19 +257,47 @@ int main(int argc, char *argv[]) {
                     avgx.push_front(ctv(0,0));
                     if(avgx.size()>window_size)
                         avgx.pop_back();
-                    avgy.push_front(ctv(1,0));
-                    if(avgy.size()>window_size)
-                        avgy.pop_back();
+                    if(ground_plane)
+                    {
+                        avgy.push_front(ctv(1,0));
+                        if(avgy.size()>window_size)
+                            avgy.pop_back();
+                    }
+                    else
+                    {
+                        avgz.push_front(ctv(2,0));
+                        if(avgz.size()>window_size)
+                            avgz.pop_back();
+                    }
+                    
                     float xavg = std::accumulate(avgx.begin(),avgx.end(),0.0)/avgx.size();
-                    float yavg = std::accumulate(avgy.begin(),avgy.end(),0.0)/avgy.size();
-                    cv::circle(imageCopy,CvPoint((width/2)+xavg*100,(height/2)+yavg*100),5,CV_RGB(255,0,0), -1, CV_AA);
+                    float yavg;
+                    float zavg;
+                    if(ground_plane)
+                        yavg = std::accumulate(avgy.begin(),avgy.end(),0.0)/avgy.size();
+                    else
+                        zavg = std::accumulate(avgz.begin(),avgz.end(),0.0)/avgz.size();
+                    
+                    if(ground_plane)
+                        cv::circle(imageCopy,CvPoint((width/2)+xavg*100,(height/2)+yavg*100),5,CV_RGB(255,0,0), -1, CV_AA);
+                    else
+                        cv::circle(imageCopy,CvPoint((width/2)+xavg*100,(height/2)+zavg*100),5,CV_RGB(255,0,0), -1, CV_AA);
                     std::cerr << "Viewer X coordinate: " << xavg << std::endl;
                     std::cerr << "Viewer Y coordinate: " << yavg << std::endl;
 
-                    avg.push_front(cv::sqrt(ctv(0,0)*ctv(0,0)+ctv(1,0)*ctv(1,0)));
+                    if(ground_plane)
+                        avg.push_front(cv::sqrt(ctv(0,0)*ctv(0,0)+ctv(1,0)*ctv(1,0)));
+                    else
+                        avg.push_front(cv::sqrt(ctv(0,0)*ctv(0,0)+ctv(2,0)*ctv(2,0)));
+
                     if(avg.size()>window_size)
                         avg.pop_back();
-                    std::cerr << "Ground plane distance: " << std::accumulate(avg.begin(),avg.end(),0.0)/avg.size() << std::endl;
+                        
+                    if(ground_plane)
+                        std::cerr << "Ground plane distance: ";
+                    else
+                        std::cerr << "Wall plane distance: ";
+                    std::cerr << std::accumulate(avg.begin(),avg.end(),0.0)/avg.size() << std::endl;
 
                     std::cerr << "Rotation: " << cv::norm(rvecs[i]) << std::endl;
                 }
