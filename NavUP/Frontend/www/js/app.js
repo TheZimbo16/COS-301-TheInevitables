@@ -22,7 +22,7 @@ angular.module('myApp', ['ionic', 'myApp.controllers', 'myApp.directives'])
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
-    controller: 'LoginCtrl'
+    controller: 'MenuCtrl'
   })
 
   .state('app.search', {
@@ -38,7 +38,7 @@ angular.module('myApp', ['ionic', 'myApp.controllers', 'myApp.directives'])
       url: '/users',
       views: {
         'menuContent': {
-          templateUrl: 'templates/users.html',
+          templateUrl: 'templates/users.html'
         }
       }
     })
