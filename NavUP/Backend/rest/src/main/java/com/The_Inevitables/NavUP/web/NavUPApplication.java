@@ -6,8 +6,8 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-
 import com.The_Inevitables.NavUP.web.api.UserAPI;
+import com.The_Inevitables.NavUP.web.api.BuildingAPI;
 
 @ApplicationPath("api")
 public class NavUPApplication extends Application {
@@ -23,6 +23,7 @@ public class NavUPApplication extends Application {
 
 		// jackson json provider can be added here
 		s.add(UserAPI.class);
+		s.add(BuildingAPI.class);
 		
 		return s;
 

@@ -13,6 +13,7 @@ import javax.persistence.metamodel.EntityType;
 
 import com.The_Inevitables.NavUP.model.SuperEntity;
 import com.The_Inevitables.NavUP.model.User;
+import com.The_Inevitables.NavUP.model.Building;
 
 public abstract class AbstractDaoImpl <E extends SuperEntity> {
 
@@ -27,6 +28,77 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	public E update(E entity){
 		em.merge(entity);
 		return entity;
+	}
+	
+	public Building getBuildingByName(String buildingName)
+	{
+		Building building = null;
+		
+		try
+		{
+			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.Building u WHERE u.buildingName = :p");
+			query.setParameter("p", buildingName);
+			building = (Building) query.getSingleResult();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return building;
+	}
+	
+	public Building getBuildingByAbrev(String abrev)
+	{
+		Building building = null;
+		
+		try
+		{
+			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.Building u WHERE u.buildingAbreviation = :p");
+			query.setParameter("p", abrev);
+			building = (Building) query.getSingleResult();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return building;
+	}
+	
+	//removes a building
+	public void deleteByName(String buildingName)
+	{
+		try
+		{
+			Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.Building u WHERE u.buildingName = :p");
+			query.setParameter("p", buildingName).executeUpdate();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteByAbrev(String buildingName)
+	{
+		try
+		{
+			Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.Building u WHERE u.buildingAbreviation = :p");
+			query.setParameter("p", buildingName).executeUpdate();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	//finds and returns all buildings
+	public List<Building> findAllBuildings()
+	{
+		CriteriaQuery<Building> criteria = em.getCriteriaBuilder().createQuery(Building.class); 
+        criteria.from(Building.class); 
+        return em.createQuery(criteria).getResultList(); 
 	}
 	
 	public void delete(int studentNo){
