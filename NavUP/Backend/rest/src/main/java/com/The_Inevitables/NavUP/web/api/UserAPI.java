@@ -54,8 +54,15 @@ public class UserAPI {
 	 public void deleteProblem(UserDTO request){
 			userService.removeUser(request.getStudentNumber());
 		}
-		
-
-	
+	 
+	 @POST
+	 @Path("verify")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 public UserDTO verifyUser(int studentNo, String password)
+	 {
+		 User user = userService.verifyUser(studentNo, password);
+		 return userTransformer.toDTO(user);
+	 }
 	
 }

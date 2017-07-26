@@ -30,12 +30,52 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	}
 	
 	public void delete(int studentNo){
-		
-		Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.User u WHERE u.studentNumber = :p");
-		query.setParameter("p", studentNo).executeUpdate();
+		try
+		{
+			Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.User u WHERE u.studentNumber = :p");
+			query.setParameter("p", studentNo).executeUpdate();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
-
+	public User verifyUser(int studentNo, String password)
+	{
+		User user = getUser(studentNo);
+//		if(user != null)
+//		{
+//			if(user.getUserPassword().equals(password))
+//			{
+//				return true;
+//			}
+//			else
+//			{
+//				return false;
+//			}
+//		}
+		
+		return user;
+	}
+	
+	public User getUser(int studentNo)
+	{
+		User user = null;
+		
+		try
+		{
+			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.Users u WHERE c.studentNumber = :p");
+			user = (User) query.getSingleResult();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
+	
 	 public List<User> findAllCustomers() { 
 	        CriteriaQuery<User> criteria = em.getCriteriaBuilder().createQuery(User.class); 
 	        criteria.from(User.class); 
