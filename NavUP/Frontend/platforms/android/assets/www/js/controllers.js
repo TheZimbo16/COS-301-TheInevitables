@@ -43,6 +43,13 @@ angular.module('myApp.controllers', [])
             $scope.modal2 = modal2;
         });
 
+        $ionicModal.fromTemplateUrl('templates/loginWrong.html', {
+            scope: $scope
+        }).then(function (modal3) {
+            $scope.modal3 = modal3;
+        });
+
+
         // Triggered in the login modal to close it
         $scope.closeLogin = function () {
             $scope.modal.hide();
@@ -64,13 +71,13 @@ angular.module('myApp.controllers', [])
         };
 
         // Perform the login action when the user submits the login form
-        $scope.doLogin = function () {
-            console.log('Doing login', $scope.loginData);
-
-            $timeout(function () {
-                $scope.closeLogin();
-            }, 1000);
-        };
+        // $scope.doLogin = function () {
+        //     console.log('Doing login', $scope.loginData);
+        //
+        //     $timeout(function () {
+        //         $scope.closeLogin();
+        //     }, 1000);
+        // };
 
         $scope.guest = function() {
             $location.path("app/search_map");
@@ -89,22 +96,25 @@ angular.module('myApp.controllers', [])
 
             $http.post('/employees_rest/api/user/', $scope.registerData).success(function (response) {
                 console.log(response);
+                $scope.modal2.hide();
             });
 
             $timeout(function () {
                 $scope.closeRegister();
             }, 1000);
         };
-
-
     }])
 
-    .controller('loginCtrl', ['$scope', '$http', function ($scope, $http, $timeout) {
+    .controller('loginCtrl', ['$scope','$ionicModal', '$http', function ($scope, $ionicModal, $http, $timeout) {
         console.log("Hello World from login controller");
 
         $scope.loginData = "";
         $scope.doLogin = function () {
             console.log('Doing login', $scope.loginData);
+
+            $http.post('/employees_rest/api/user/verify', $scope.loginData).success(function (response) {
+                console.log(response);
+            });
 
             $timeout(function () {
                 $scope.closeLogin();
