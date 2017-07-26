@@ -27,12 +27,8 @@ angular.module('myApp.controllers', [])
         };
     })
 
-    .controller('MenuCtrl', function ($scope, $ionicModal, $timeout) {
+    .controller('MenuCtrl', function ($scope, $ionicModal, $timeout, $http) {
         console.log("Hello World from menu controller");
-
-        // Form data for the login modal
-        $scope.loginData = {};
-        $scope.registerData = {};
 
         // Create the login modal that we will use later
         $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -73,14 +69,41 @@ angular.module('myApp.controllers', [])
                 $scope.closeLogin();
             }, 1000);
         };
+    })
+
+    .controller('registerCtrl', ['$scope', '$http', function ($scope, $http, $timeout) {
+        console.log("Hello World from register controller");
+
+        $scope.registerData = "";
         $scope.doRegister = function () {
-            console.log('Doing login', $scope.registerData);
+            console.log('Doing register', $scope.registerData);
+
+            $http.post('/employees_rest/api/user/', $scope.registerData).success(function (response) {
+                console.log(response);
+            });
 
             $timeout(function () {
                 $scope.closeRegister();
             }, 1000);
         };
-    })
+
+
+    }])
+
+    .controller('loginCtrl', ['$scope', '$http', function ($scope, $http, $timeout) {
+        console.log("Hello World from login controller");
+
+        $scope.loginData = "";
+        $scope.doLogin = function () {
+            console.log('Doing login', $scope.loginData);
+
+            $timeout(function () {
+                $scope.closeLogin();
+            }, 1000);
+        };
+
+
+    }])
 
     .controller('usersCtrl', ['$scope', '$http', function ($scope, $http) {
         console.log("Hello World from users controller");
@@ -97,6 +120,7 @@ angular.module('myApp.controllers', [])
         refresh();
 
         $scope.addContact = function () {
+
             console.log($scope.contact);
             $http.post('/employees_rest/api/user/', $scope.contact).success(function (response) {
                 console.log(response);

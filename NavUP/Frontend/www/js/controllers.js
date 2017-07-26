@@ -27,12 +27,8 @@ angular.module('myApp.controllers', [])
         };
     })
 
-    .controller('MenuCtrl', function ($scope, $ionicModal, $timeout, $http) {
+    .controller('MenuCtrl', function ($scope, $ionicModal, $timeout, $location) {
         console.log("Hello World from menu controller");
-
-        // Form data for the login modal
-        $scope.loginData = {};
-        $scope.registerData = "";
 
         // Create the login modal that we will use later
         $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -59,10 +55,12 @@ angular.module('myApp.controllers', [])
         // Open the login modal
         $scope.login = function () {
             $scope.modal.show();
+            $scope.modal2.hide();
         };
         // Open the register modal
         $scope.register = function () {
             $scope.modal2.show();
+            $scope.modal.hide();
         };
 
         // Perform the login action when the user submits the login form
@@ -74,9 +72,13 @@ angular.module('myApp.controllers', [])
             }, 1000);
         };
 
+        $scope.guest = function() {
+            $location.path("app/search_map");
+
+        }
     })
 
-    .controller('registerCtrl', ['$scope', '$http', function ($scope, $http) {
+    .controller('registerCtrl', ['$scope', '$http', function ($scope, $http, $timeout) {
         console.log("Hello World from register controller");
 
         $scope.registerData = "";
@@ -89,6 +91,21 @@ angular.module('myApp.controllers', [])
 
             $timeout(function () {
                 $scope.closeRegister();
+            }, 1000);
+        };
+
+
+    }])
+
+    .controller('loginCtrl', ['$scope', '$http', function ($scope, $http, $timeout) {
+        console.log("Hello World from login controller");
+
+        $scope.loginData = "";
+        $scope.doLogin = function () {
+            console.log('Doing login', $scope.loginData);
+
+            $timeout(function () {
+                $scope.closeLogin();
             }, 1000);
         };
 
