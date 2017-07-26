@@ -65,7 +65,7 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 		
 		try
 		{
-			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.User WHERE u.studentNumber = :p");
+			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.User u WHERE u.studentNumber = :p");
 			query.setParameter("p", studentNo);
 			user = (User) query.getSingleResult();
 		}
