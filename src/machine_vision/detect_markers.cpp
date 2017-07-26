@@ -61,7 +61,8 @@ const char* keys  =
         "{r        |       | show rejected candidates too }"
         "{portrait |       | convert video to portrait mode }"
         "{ground_plane |       | do ground-plane triangulation of markers. If not specified, default to wall-plane triangulation }"
-        "{mirror   |       | mirror mode for debugging purposes}";;
+        "{mirror   |       | mirror mode for debugging purposes}"
+        "{dot_size   | 20    | Size of the green and red dot}";
 }
 
 static bool readCameraParameters(std::string filename, cv::Mat &camMatrix, cv::Mat &distCoeffs) {
@@ -114,9 +115,9 @@ void custom_drawAxis(cv::InputOutputArray _image, cv::InputArray _cameraMatrix, 
     axisPoints.push_back(cv::Point3f(0, length, 0));
     axisPoints.push_back(cv::Point3f(0, 0, length));
 
-    cv::Matx31f rot;//normalise the Rodrigues rotation vector
-    cv::normalize(_rvec.getMat(), rot);
-    axisPoints.push_back(cv::Point3f(rot(0,0)*length, rot(1,0)*length, rot(2,0)*length));
+//    cv::Matx31f rot;//normalise the Rodrigues rotation vector
+//    cv::normalize(_rvec.getMat(), rot);
+//    axisPoints.push_back(cv::Point3f(rot(0,0)*length, rot(1,0)*length, rot(2,0)*length));
 
     std::vector< cv::Point2f > imagePoints;
     cv::projectPoints(axisPoints, _rvec, _tvec, _cameraMatrix, _distCoeffs, imagePoints);
@@ -126,7 +127,7 @@ void custom_drawAxis(cv::InputOutputArray _image, cv::InputArray _cameraMatrix, 
     cv::line(_image, imagePoints[0], imagePoints[2], cv::Scalar(0, 255, 0), 3);
     cv::line(_image, imagePoints[0], imagePoints[3], cv::Scalar(255, 0, 0), 3);
     //Rodrigues vector direction
-    cv::line(_image, imagePoints[0], imagePoints[4], cv::Scalar(255, 255, 0), 3);
+//    cv::line(_image, imagePoints[0], imagePoints[4], cv::Scalar(255, 255, 0), 3);
 }
 
 int main(int argc, char *argv[]) {
@@ -145,6 +146,7 @@ int main(int argc, char *argv[]) {
     bool portrait_mode = parser.has("portrait");
     bool ground_plane = parser.has("ground_plane");
     bool mirror = parser.has("mirror");
+    int dot_size = parser.get<int>("dot_size");
 
     cv::Ptr<cv::aruco::DetectorParameters> detectorParams = cv::aruco::DetectorParameters::create();
     if(parser.has("dp")) {
@@ -248,7 +250,7 @@ int main(int argc, char *argv[]) {
                     int width = inputVideo.get(CV_CAP_PROP_FRAME_WIDTH);
                     int height = inputVideo.get(CV_CAP_PROP_FRAME_HEIGHT);
 
-                    cv::circle(imageCopy,CvPoint((width/2),(height/2)),5,CV_RGB(0,255,0), -1, CV_AA);
+                    cv::circle(imageCopy,CvPoint((width/2),(height/2)),dot_size,CV_RGB(0,255,0), -1, CV_AA);
 
                     cv::Mat rotation_matrix;
                     cv::Rodrigues(rvecs[i],rotation_matrix);
@@ -281,9 +283,9 @@ int main(int argc, char *argv[]) {
                         zavg = std::accumulate(avgz.begin(),avgz.end(),0.0)/avgz.size();
                     
                     if(ground_plane)
-                        cv::circle(imageCopy,CvPoint((width/2)+xavg*100,(height/2)+yavg*100),5,CV_RGB(255,0,0), -1, CV_AA);
+                        cv::circle(imageCopy,CvPoint((width/2)+xavg*100,(height/2)+yavg*100),dot_size,CV_RGB(255,0,0), -1, CV_AA);
                     else
-                        cv::circle(imageCopy,CvPoint((width/2)+xavg*100,(height/2)+zavg*100),5,CV_RGB(255,0,0), -1, CV_AA);
+                        cv::circle(imageCopy,CvPoint((width/2)+xavg*100,(height/2)+zavg*100),dot_size,CV_RGB(255,0,0), -1, CV_AA);
                     std::cerr << "Viewer X coordinate: " << xavg << std::endl;
                     std::cerr << "Viewer Y coordinate: " << yavg << std::endl;
 
