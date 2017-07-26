@@ -41,22 +41,22 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 		}
 	}
 	
-	public User verifyUser(int studentNo, String password)
+	public boolean verifyUser(int studentNo, String password)
 	{
 		User user = getUser(studentNo);
-//		if(user != null)
-//		{
-//			if(user.getUserPassword().equals(password))
-//			{
-//				return true;
-//			}
-//			else
-//			{
-//				return false;
-//			}
-//		}
+		if(user != null)
+		{
+			if(user.getUserPassword().equals(password))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
 		
-		return user;
+		return false;
 	}
 	
 	public User getUser(int studentNo)

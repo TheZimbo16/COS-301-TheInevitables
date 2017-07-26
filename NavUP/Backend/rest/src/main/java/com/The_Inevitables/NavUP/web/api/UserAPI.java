@@ -59,10 +59,15 @@ public class UserAPI {
 	 @Path("verify")
 	 @Produces(MediaType.APPLICATION_JSON)
 	 @Consumes(MediaType.APPLICATION_JSON)
-	 public User verifyUser(UserDTO request)
+	 public boolean verifyUser(UserDTO request)
 	 {
-		 User user = userService.getUser(request.getStudentNumber());
-		 return user;
+		 return userService.verifyUser(request.getStudentNumber(), request.getUserPassword());
 	 }
+	 
+//	 public User verifyUser(UserDTO request)
+//	 {
+//		 User user = userService.getUser(request.getStudentNumber());
+//		 return user;
+//	 }
 	
 }

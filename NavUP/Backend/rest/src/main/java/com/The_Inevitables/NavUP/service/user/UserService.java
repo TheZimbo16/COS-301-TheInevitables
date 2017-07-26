@@ -31,8 +31,14 @@ public class UserService  {
 	public List<User >findAllUsers() {
 		return userDAO.findAllCustomers();
 	}
+	
 	public User getUser(int studentNo){
 		return userDAO.getUser(studentNo);
+	}
+	
+	public boolean verifyUser(int studentNo, String password)
+	{
+		return userDAO.verifyUser(studentNo, password);
 	}
 	
 }
