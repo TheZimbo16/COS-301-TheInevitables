@@ -60,7 +60,8 @@ const char* keys  =
         "{dp       |       | File of marker detector parameters }"
         "{r        |       | show rejected candidates too }"
         "{portrait |       | convert video to portrait mode }"
-        "{ground_plane |       | do ground-plane triangulation of markers. If not specified, default to wall-plane triangulation }";
+        "{ground_plane |       | do ground-plane triangulation of markers. If not specified, default to wall-plane triangulation }"
+        "{mirror   |       | mirror mode for debugging purposes}";;
 }
 
 static bool readCameraParameters(std::string filename, cv::Mat &camMatrix, cv::Mat &distCoeffs) {
@@ -143,6 +144,7 @@ int main(int argc, char *argv[]) {
     float markerLength = parser.get<float>("l");
     bool portrait_mode = parser.has("portrait");
     bool ground_plane = parser.has("ground_plane");
+    bool mirror = parser.has("mirror");
 
     cv::Ptr<cv::aruco::DetectorParameters> detectorParams = cv::aruco::DetectorParameters::create();
     if(parser.has("dp")) {
@@ -206,7 +208,7 @@ int main(int argc, char *argv[]) {
             cv::transpose(image, image);
             cv::flip(image, image, 1);
         }
-
+            
         std::vector< int > ids;
         std::vector< std::vector< cv::Point2f > > corners, rejected;
         std::vector< cv::Vec3d > rvecs, tvecs;
@@ -306,6 +308,8 @@ int main(int argc, char *argv[]) {
 
         if(showRejected && rejected.size() > 0)
             cv::aruco::drawDetectedMarkers(imageCopy, rejected, cv::noArray(), cv::Scalar(100, 0, 255));
+        if(mirror)
+            cv::flip(imageCopy, imageCopy, 1);
         cv::imshow("out", imageCopy);
         char key = (char)cv::waitKey(waitTime);
         if(key == 27) break;
