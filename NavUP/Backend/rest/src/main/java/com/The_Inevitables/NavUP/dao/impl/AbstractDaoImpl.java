@@ -13,6 +13,7 @@ import javax.persistence.metamodel.EntityType;
 
 import com.The_Inevitables.NavUP.model.SuperEntity;
 import com.The_Inevitables.NavUP.model.User;
+import com.The_Inevitables.NavUP.model.LocationType;
 import com.The_Inevitables.NavUP.model.Building;
 
 public abstract class AbstractDaoImpl <E extends SuperEntity> {
@@ -91,6 +92,26 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	public void deleteLocationType(String locationTypeName)
+	{
+		try
+		{
+			Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.LocationType u WHERE u.locationDescription = :p");
+			query.setParameter("p", locationTypeName).executeUpdate();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public List<LocationType> getAllLocationTypes()
+	{
+		CriteriaQuery<LocationType> criteria = em.getCriteriaBuilder().createQuery(LocationType.class); 
+        criteria.from(LocationType.class); 
+        return em.createQuery(criteria).getResultList();
 	}
 	
 	//finds and returns all buildings

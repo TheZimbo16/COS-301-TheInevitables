@@ -5,10 +5,10 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import com.The_Inevitables.NavUP.model.Building;
+import com.The_Inevitables.NavUP.model.LocationType;
 
 @Stateless
 @LocalBean
-public class BuildingDao extends AbstractDaoImpl<Building>{
+public class LocationTypesDao extends AbstractDaoImpl<LocationType>{
 
 }

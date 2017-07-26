@@ -5,9 +5,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import com.The_Inevitables.NavUP.dao.impl.ProblemStatementDao;
 import com.The_Inevitables.NavUP.dao.impl.BuildingDao;
-import com.The_Inevitables.NavUP.model.ProblemStatement;
 import com.The_Inevitables.NavUP.model.Building;
 
 

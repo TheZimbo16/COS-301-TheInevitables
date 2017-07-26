@@ -18,7 +18,6 @@ import javax.ws.rs.core.MediaType;
 import com.The_Inevitables.NavUP.model.Building;
 import com.The_Inevitables.NavUP.service.building.BuildingService;
 import com.The_Inevitables.NavUP.web.api.dto.building.BuildingDTO;
-import com.The_Inevitables.NavUP.web.api.dto.user.UserDTO;
 import com.The_Inevitables.NavUP.web.api.transformer.BuildingTransformer;
 
 @Path("building")
