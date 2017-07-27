@@ -1,7 +1,11 @@
 package com.The_Inevitables.NavUP.web.api.dto.location;
 
+import java.util.List;
+
 import com.The_Inevitables.NavUP.model.Building;
+import com.The_Inevitables.NavUP.model.Location;
 import com.The_Inevitables.NavUP.model.LocationType;
+import com.The_Inevitables.NavUP.model.User;
 import com.The_Inevitables.NavUP.web.api.dto.ApiResponse;
 import com.The_Inevitables.NavUP.web.api.dto.problem.DTO;
 
@@ -18,6 +22,16 @@ public class LocationDTO extends DTO implements ApiResponse {
 	private float longitude;
 	private float latitude;
 	private String tagId;
+	private Building parent;
+	
+	public Building getParent() {
+		return parent;
+	}
+
+
+	public void setParent(Building parent) {
+		this.parent = parent;
+	}
 	
 	public long getLocationId() {
 		return locationId;

@@ -51,7 +51,7 @@ public class BuildingAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void deleteBuildingByName(BuildingDTO request){
-			buildingService.removeBuildingByName(request.getBuildingName());
+			buildingService.removeBuildingByName(request.getName());
 	}
 	
 	@DELETE
@@ -59,7 +59,7 @@ public class BuildingAPI {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void deleteBuildingByAbrev(BuildingDTO request){
-			buildingService.removeBuildingByAbrev(request.getBuildingAbreviation());
+			buildingService.removeBuildingByAbrev(request.getDescriptio());
 	}
 	
 	 @POST
@@ -68,7 +68,7 @@ public class BuildingAPI {
 	 @Consumes(MediaType.APPLICATION_JSON)
 	 public Building findBuildingByName(BuildingDTO request)
 	 {
-		 return buildingService.getBuildingByName(request.getBuildingName());
+		 return buildingService.getBuildingByName(request.getName());
 	 }
 	 
 	 @POST
@@ -77,7 +77,7 @@ public class BuildingAPI {
 	 @Consumes(MediaType.APPLICATION_JSON)
 	 public Building findBuildingByAbbrev(BuildingDTO request)
 	 {
-		 return buildingService.getBuildingByAbrev(request.getBuildingAbreviation());
+		 return buildingService.getBuildingByAbrev(request.getDescriptio());
 	 }
 	
 	

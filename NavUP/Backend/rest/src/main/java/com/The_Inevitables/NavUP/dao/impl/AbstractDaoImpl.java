@@ -15,6 +15,8 @@ import com.The_Inevitables.NavUP.model.SuperEntity;
 import com.The_Inevitables.NavUP.model.User;
 import com.The_Inevitables.NavUP.model.LocationType;
 import com.The_Inevitables.NavUP.model.Building;
+import com.The_Inevitables.NavUP.model.Coordinates;
+import com.The_Inevitables.NavUP.model.GeoJSON;
 import com.The_Inevitables.NavUP.model.Location;
 
 public abstract class AbstractDaoImpl <E extends SuperEntity> {
@@ -30,6 +32,16 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	public E update(E entity){
 		em.merge(entity);
 		return entity;
+	}
+	//=====================================================================================================================================
+	//										BUILDING QUERIES
+	//=====================================================================================================================================
+	//finds and returns all buildings
+	public List<Building> findAllBuildings()
+	{
+		CriteriaQuery<Building> criteria = em.getCriteriaBuilder().createQuery(Building.class); 
+        criteria.from(Building.class); 
+        return em.createQuery(criteria).getResultList(); 
 	}
 	
 	public Building getBuildingByName(String buildingName)
@@ -94,7 +106,9 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 			e.printStackTrace();
 		}
 	}
-	
+	//======================================================================================================================================
+	//										LOCATION QUERIES
+	//======================================================================================================================================
 	public void deleteLocationType(String locationTypeName)
 	{
 		try
@@ -115,14 +129,28 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
         return em.createQuery(criteria).getResultList();
 	}
 	
-	//finds and returns all buildings
-	public List<Building> findAllBuildings()
-	{
-		CriteriaQuery<Building> criteria = em.getCriteriaBuilder().createQuery(Building.class); 
-        criteria.from(Building.class); 
-        return em.createQuery(criteria).getResultList(); 
-	}
-	
+	 public void deleteLocation(String locationName)
+	 {
+		 try
+			{
+				Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.Location u WHERE u.locationName = :p");
+				query.setParameter("p", locationName).executeUpdate();
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+	 }
+	 
+	 public List<Location> getAllLocations()
+	 {
+		 CriteriaQuery<Location> criteria = em.getCriteriaBuilder().createQuery(Location.class); 
+	     criteria.from(Location.class); 
+	     return em.createQuery(criteria).getResultList(); 
+	 }
+	//======================================================================================================================================
+	//											USER QUERIES
+	//======================================================================================================================================
 	public void delete(int studentNo){
 		try
 		{
@@ -176,26 +204,43 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	        criteria.from(User.class); 
 	        return em.createQuery(criteria).getResultList(); 
 	 }
+	 //======================================================================================================================================
+	 //											GEOJSON QUERIES
+	 //======================================================================================================================================
 	 
-	 public void deleteLocation(String locationName)
-	 {
-		 try
+	 
+	 
+	 public GeoJSON findAllObjects() { 
+		 GeoJSON obj = null;
+			try
 			{
-				Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.Location u WHERE u.locationName = :p");
-				query.setParameter("p", locationName).executeUpdate();
+				Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.GeoJSON u");
+				obj = (GeoJSON) query.getSingleResult();
 			}
 			catch(Exception e)
 			{
 				e.printStackTrace();
 			}
+			
+			return obj;
 	 }
 	 
-	 public List<Location> getAllLocations()
-	 {
-		 CriteriaQuery<Location> criteria = em.getCriteriaBuilder().createQuery(Location.class); 
-	     criteria.from(Location.class); 
-	     return em.createQuery(criteria).getResultList(); 
-	 }
+	 
+	 
+	 
+	 //======================================================================================================================================
+	 // 										Coordinates Queries
+	 //======================================================================================================================================
+	 
+	 public List<Coordinates> findAllCoordinates()
+		{
+			CriteriaQuery<Coordinates> criteria = em.getCriteriaBuilder().createQuery(Coordinates.class); 
+	        criteria.from(Coordinates.class); 
+	        return (List<Coordinates>) em.createQuery(criteria).getSingleResult(); 
+		}
+	 
+	 
+	//======================================================================================================================================
 	
 	
 }

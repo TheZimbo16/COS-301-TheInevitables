@@ -24,6 +24,7 @@ public class LocationTransformer implements ApiTransformer{
 		locationDTO.setLatitude(location.getLatitude());
 		locationDTO.setLongitude(location.getLongitude());
 		locationDTO.setTagId(location.getTagId());
+		locationDTO.setParent(location.getParent());
 		
 		return locationDTO;
 	}
@@ -41,6 +42,7 @@ public class LocationTransformer implements ApiTransformer{
 		location.setLatitude(request.getLatitude());
 		location.setLongitude(request.getLongitude());
 		location.setTagId(request.getTagId());
+		location.setParent(request.getParent());
 		
 		return location;
 	}

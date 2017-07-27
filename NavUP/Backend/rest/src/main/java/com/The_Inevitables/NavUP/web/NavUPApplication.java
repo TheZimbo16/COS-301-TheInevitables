@@ -7,7 +7,9 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import com.The_Inevitables.NavUP.web.api.UserAPI;
+import com.The_Inevitables.NavUP.web.api.geoJSONAPI;
 import com.The_Inevitables.NavUP.web.api.BuildingAPI;
+import com.The_Inevitables.NavUP.web.api.CoordinatesAPI;
 import com.The_Inevitables.NavUP.web.api.LocationTypeAPI;
 import com.The_Inevitables.NavUP.web.api.LocationAPI;
 
@@ -26,9 +28,8 @@ public class NavUPApplication extends Application {
 		// jackson json provider can be added here
 		s.add(UserAPI.class);
 		s.add(BuildingAPI.class);
-		s.add(LocationTypeAPI.class);
-		s.add(LocationAPI.class);
-		
+		s.add(CoordinatesAPI.class);
+		s.add(geoJSONAPI.class);
 		return s;
 
 	}

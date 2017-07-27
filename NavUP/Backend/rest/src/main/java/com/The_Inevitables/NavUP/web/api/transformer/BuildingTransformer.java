@@ -14,8 +14,8 @@ public class BuildingTransformer implements ApiTransformer {
 		BuildingDTO buildingDTO = new BuildingDTO();
 		
 		buildingDTO.setBuildingId(build.getBuildingId());
-		buildingDTO.setBuildingName(build.getBuildingName());
-		buildingDTO.setBuildingAbreviation(build.getBuildingAbreviation());
+		buildingDTO.setName(build.getName());
+		buildingDTO.setDescriptio(build.getDescriptio());
 		
 		return buildingDTO;
 	}
@@ -24,8 +24,8 @@ public class BuildingTransformer implements ApiTransformer {
 		Building building = new Building();
 		
 		building.setBuildingId(request.getBuildingId());
-		building.setBuildingName(request.getBuildingName());
-		building.setBuildingAbreviation(request.getBuildingAbreviation());
+		building.setName(request.getName());
+		building.setDescriptio(request.getDescriptio());
 		
 		return building;
 	}

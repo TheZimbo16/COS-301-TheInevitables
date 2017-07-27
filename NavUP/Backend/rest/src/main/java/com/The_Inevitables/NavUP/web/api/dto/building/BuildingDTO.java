@@ -8,9 +8,10 @@ public class BuildingDTO extends DTO implements ApiResponse {
 	private static final long serialVersionUID = 4123116456737543994L;
 	
 	private Long buildingId;
-	private String buildingName;
-	private String buildingAbreviation;
+	private String Name;
+	private String Descriptio;
 	
+
 	public Long getBuildingId() {
 		return buildingId;
 	}
@@ -19,20 +20,19 @@ public class BuildingDTO extends DTO implements ApiResponse {
 		this.buildingId = buildingId;
 	}
 
-	public String getBuildingName() {
-		return buildingName;
+	public String getName() {
+		return Name;
 	}
 
-	public void setBuildingName(String buildingName) {
-		this.buildingName = buildingName;
+	public void setName(String name) {
+		Name = name;
 	}
 
-	public String getBuildingAbreviation() {
-		return buildingAbreviation;
+	public String getDescriptio() {
+		return Descriptio;
 	}
 
-	public void setBuildingAbreviation(String buildingAbreviation) {
-		this.buildingAbreviation = buildingAbreviation;
+	public void setDescriptio(String descriptio) {
+		Descriptio = descriptio;
 	}
-
 }

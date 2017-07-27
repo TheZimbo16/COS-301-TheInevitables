@@ -9,6 +9,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "Buildings")
 public class Building implements SuperEntity {
@@ -16,17 +18,17 @@ public class Building implements SuperEntity {
 	public Building() {
 		super();
 	}
-	
+	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "buildingId", unique = true, nullable = false, updatable = false)
 	private Long buildingId;
 	
-	@Column(name = "buildingName")
-	private String buildingName;
+	@Column(name = "Name")
+	private String Name;
 	
-	@Column(name = "buildingAbreviation")
-	private String buildingAbreviation;
+	@Column(name = "Descriptio")
+	private String Descriptio;
 	
 	
 
@@ -42,20 +44,21 @@ public class Building implements SuperEntity {
 		this.buildingId = buildingId;
 	}
 
-	public String getBuildingName() {
-		return buildingName;
+	public String getName() {
+		return Name;
 	}
 
-	public void setBuildingName(String buildingName) {
-		this.buildingName = buildingName;
+	public void setName(String name) {
+		Name = name;
 	}
 
-	public String getBuildingAbreviation() {
-		return buildingAbreviation;
+	public String getDescriptio() {
+		return Descriptio;
 	}
 
-	public void setBuildingAbreviation(String buildingAbreviation) {
-		this.buildingAbreviation = buildingAbreviation;
+	public void setDescriptio(String descriptio) {
+		Descriptio = descriptio;
 	}
+
 	
 }
