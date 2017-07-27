@@ -1,0 +1,95 @@
+{
+    "locationName" : "String",			//string containing location name
+    "floorNumber" : int,				//floor number of the location
+    "locationTypeId" : int,			//locationTypeId should reference an existing locationTypeId in locationType
+    "buildingId" : int,				//buildingId should reference an existing building id in Building
+    "roomNumber" : int,
+    "longitude" : float,
+    "latitude" : float,
+    "tagId" : int						//id of the Tag that will be fixed to a location
+}
+
+*************************************************************************************************************************************
+//EXAMPLE
+
+LocationType : 
+{
+	[
+		{
+			"locationId" : 1,
+    		"locationDescription" : "Point"
+    	},
+    	{
+    		"locationId" : 2,
+    		"locationDescription" : "Door"
+    	},
+    	{
+    		"locationId" : 3
+    		"locationDescription" : "Stairs"
+    	},
+    	{
+    		"locationId" : 4
+    		"locationDescription" : "Room"
+    	}
+	]
+}
+
+Building :
+{
+	[
+		{
+			"buildingId" : 1,
+		    "buildingName": "Information Technology",
+		    "buildingAbreviation": "IT"
+		},
+		{
+			"buildingId" : 2,
+		    "buildingName": "Engineering 3",
+		    "buildingAbreviation": "ENG 3"
+		},
+		{
+			"buildingId" : 3,
+		    "buildingName": "Client Services Centre",
+		    "buildingAbreviation": "CSC"
+		},
+		{
+			"buildingId" : 4,
+		    "buildingName": "Centenary",
+		    "buildingAbreviation": "CENT"
+		},
+	]
+}
+
+
+//If you want to add Centenary 3 as a location:
+// building: Centenary
+// LocationType: Room
+
+{
+    "locationName" : "Centenary 3",			
+    "floorNumber" : 0,						
+    "locationTypeId" : 4,					
+    "buildingId" : 4,						
+    "roomNumber" : 3,
+    "longitude" : 2.6,
+    "latitude" : 2.6,
+    "tagId" : 0 (if not tag present)		
+}
+
+
+//If you want to add a Point on the route:
+//name: None
+//building: None
+//LocationType: Point
+
+{
+    "locationName" : "",			
+    "floorNumber" : 0,						
+    "locationTypeId" : 1,					
+    "buildingId" : 0,						
+    "roomNumber" : 0,
+    "longitude" : 2.6,
+    "latitude" : 2.6,
+    "tagId" : 153243 (Id of the tag)		
+}
+
