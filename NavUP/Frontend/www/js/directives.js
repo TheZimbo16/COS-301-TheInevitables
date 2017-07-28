@@ -14,6 +14,7 @@ angular.module('myApp.directives', [])
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     };
                     var map = new google.maps.Map($element[0], mapOptions);
+                    map.data.loadGeoJson('/employees_rest/api/geoJSON/get');
 
                     $scope.onCreate({map: map});
 
