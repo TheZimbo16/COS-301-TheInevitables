@@ -42,7 +42,7 @@ public class GeoJSONAPI {
 	@GET 
 	@Path("get")
 	@Produces(MediaType.APPLICATION_JSON)
-	public GeoJSON getAllObjects() {
+	public List<GeoJSON> getAllObjects() {
 		return geoJSONService.getAllObjects();
 	       
 	}

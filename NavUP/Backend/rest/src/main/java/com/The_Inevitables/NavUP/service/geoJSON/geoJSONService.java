@@ -18,7 +18,7 @@ public class GeoJSONService {
   	return geoJSONdao.create(entity);
   }
   
-  public GeoJSON getAllObjects()
+  public List<GeoJSON> getAllObjects()
   {
   	return geoJSONdao.findAllGeoJSON();
   }

@@ -269,11 +269,11 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	//======================================================================================================================================
 	// 										GeoJSON Queries
 	//======================================================================================================================================
-	public GeoJSON findAllGeoJSON()
+	public List<GeoJSON> findAllGeoJSON()
 	{
 		CriteriaQuery<GeoJSON> criteria = em.getCriteriaBuilder().createQuery(GeoJSON.class); 
         criteria.from(GeoJSON.class); 
-        return (GeoJSON) em.createQuery(criteria).getSingleResult();
+        return em.createQuery(criteria).getResultList();
 	}
 	
 }
