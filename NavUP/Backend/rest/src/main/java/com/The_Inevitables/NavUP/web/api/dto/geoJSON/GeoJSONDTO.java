@@ -14,37 +14,33 @@ public class GeoJSONDTO extends DTO implements ApiResponse{
 	private int geoJSONiD;
 	private String type;
 	private CRS crs;
-	private Feature features;
-	
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public CRS getCrs() {
-		return crs;
-	}
-
-	public void setCrs(CRS crs) {
-		this.crs = crs;
-	}
-
-	public Feature getFeatures() {
-		return features;
-	}
-
-	public void setFeatures(Feature feature) {
-		this.features = feature;
-	}
+	private List<Feature> features;
 	
 	public int getGeoJSONiD() {
 		return geoJSONiD;
 	}
-
 	public void setGeoJSONiD(int geoJSONiD) {
 		this.geoJSONiD = geoJSONiD;
 	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public CRS getCrs() {
+		return crs;
+	}
+	public void setCrs(CRS crs) {
+		this.crs = crs;
+	}
+	public List<Feature> getFeatures() {
+		return features;
+	}
+	public void setFeatures(List<Feature> features) {
+		this.features = features;
+	}
+	
 }
+
+

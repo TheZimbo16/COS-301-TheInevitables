@@ -1,5 +1,10 @@
 package com.The_Inevitables.NavUP.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -17,7 +23,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "Features")
 public class Feature implements SuperEntity {
-
+	@JsonIgnore
+	@ManyToOne
+    @JoinColumn(name = "geoJSONiD",referencedColumnName="geoJSONiD")
+    private GeoJSON geoJSON;
+	
+	
+	
 	public Feature() {
 		super();
 	}
@@ -74,5 +86,19 @@ public class Feature implements SuperEntity {
 	public void setGeometry(Coordinates geometry) {
 		this.geometry = geometry;
 	}
+
+	public GeoJSON getGeoJSON() {
+		return geoJSON;
+	}
+
+	public void setGeoJSON(GeoJSON geoJSON) {
+		this.geoJSON = geoJSON;
+	}
+
+
+
+
+	
+
 	
 }

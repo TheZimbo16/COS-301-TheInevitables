@@ -213,20 +213,12 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	 //											Feature QUERIES
 	 //======================================================================================================================================
 
-	 public List<Feature> findAllObjects() { 
-		List<Feature> obj = null;
-			try
-			{
-				Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.Feature u");
-				obj = query.getResultList();
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
-			
-			return obj;
-	 }
+		public List<Feature> findAllObjects()
+		{
+			CriteriaQuery<Feature> criteria = em.getCriteriaBuilder().createQuery(Feature.class); 
+	        criteria.from(Feature.class); 
+	        return  em.createQuery(criteria).getResultList();
+		}
 	 
 	 
 	 
@@ -275,5 +267,9 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
         criteria.from(GeoJSON.class); 
         return em.createQuery(criteria).getSingleResult();
 	}
+	
+	
+
+	
 	
 }
