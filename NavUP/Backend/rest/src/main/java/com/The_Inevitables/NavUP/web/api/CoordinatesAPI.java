@@ -43,9 +43,8 @@ public class CoordinatesAPI {
 	 @GET 
 	 @Path("get")
 	 @Produces(MediaType.APPLICATION_JSON)
-	 public List<Coordinates> getAllCustomers() {
-		ArrayList<Coordinates> list = (ArrayList<Coordinates>) coordinatesService.getAllCoords();
-	        return  list;
+	 public List<Coordinates> getAllCoordinates() {
+		 return  coordinatesService.getAllCoords();
 	 } 
 	 
 	

@@ -7,7 +7,6 @@ import javax.ejb.Stateless;
 
 import com.The_Inevitables.NavUP.dao.impl.CRSNameDao;
 import com.The_Inevitables.NavUP.model.CRSName;
-import com.The_Inevitables.NavUP.model.Coordinates;
 
 
 @Stateless
@@ -21,7 +20,7 @@ public class CRSNameService {
 	    	return crsNameDao.create(entity);
 	    }
 	    
-	    public String getCrsName()
+	    public CRSName getCrsName()
 	    {
 	    	return crsNameDao.getCrsName();
 	    }

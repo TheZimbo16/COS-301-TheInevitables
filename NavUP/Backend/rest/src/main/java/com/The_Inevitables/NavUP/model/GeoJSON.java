@@ -30,11 +30,13 @@ public class GeoJSON implements SuperEntity{
 	private String type;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "crs", referencedColumnName = "crsId",insertable = false, updatable = false)
+	@JoinColumn(name = "crs", referencedColumnName = "crsId")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private CRS crs;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "features", referencedColumnName = "featureId",insertable = false, updatable = false)
+	@JoinColumn(name = "features", referencedColumnName = "featureId")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Feature features;
 
 	public String getType() {

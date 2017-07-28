@@ -7,6 +7,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.The_Inevitables.NavUP.model.CRSName;
+
 @Path("crsname")
 @RequestScoped
 public class CRSNameAPI {
@@ -20,7 +22,7 @@ public class CRSNameAPI {
 	@GET 
 	@Path("get")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getCRSName()
+	public CRSName getCRSName()
 	{
 		return crsNameService.getCrsName();
 	}

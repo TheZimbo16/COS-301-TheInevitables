@@ -31,7 +31,7 @@ public class CRS implements SuperEntity {
 	private String type;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "properties", referencedColumnName = "crsNameId",insertable = false, updatable = false)
+	@JoinColumn(name = "properties", referencedColumnName = "crsNameId")
 	private CRSName properties;
 
 	public int getCrsId() {

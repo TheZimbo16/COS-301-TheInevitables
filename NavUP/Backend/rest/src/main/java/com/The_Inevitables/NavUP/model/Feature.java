@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,12 +32,14 @@ public class Feature implements SuperEntity {
 	private String type;
 	
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "buildingid", referencedColumnName = "buildingId",insertable = false, updatable = false)
+	@OneToOne(cascade = CascadeType.ALL)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JoinColumn(name = "buildingId", referencedColumnName = "buildingId")
 	private Building properties;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "coordinatesid", referencedColumnName = "coordinatesId",insertable = false, updatable = false)
+	@OneToOne(cascade = CascadeType.ALL)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JoinColumn(name = "coordinatesId", referencedColumnName = "coordinatesId")
 	private Coordinates geometry;
 
 	public Long getFeatureId() {

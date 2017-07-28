@@ -1,6 +1,7 @@
 package com.The_Inevitables.NavUP.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -45,7 +46,7 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	{
 		CriteriaQuery<Building> criteria = em.getCriteriaBuilder().createQuery(Building.class); 
         criteria.from(Building.class); 
-        return em.createQuery(criteria).getResultList(); 
+        return (List<Building>) em.createQuery(criteria).getResultList(); 
 	}
 	
 	public Building getBuildingByName(String buildingName)
@@ -238,7 +239,7 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	{
 		CriteriaQuery<Coordinates> criteria = em.getCriteriaBuilder().createQuery(Coordinates.class); 
         criteria.from(Coordinates.class); 
-        return (List<Coordinates>) em.createQuery(criteria).getSingleResult(); 
+        return  em.createQuery(criteria).getResultList();
 	}
 	 
 	 
@@ -246,11 +247,11 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	 //======================================================================================================================================
 	 // 										CRSName Queries
 	 //======================================================================================================================================
-	public String getCrsName()
+	public CRSName getCrsName()
     {
 		CriteriaQuery<CRSName> criteria = em.getCriteriaBuilder().createQuery(CRSName.class); 
         criteria.from(CRSName.class); 
-        return em.createQuery(criteria).getSingleResult().toString();
+        return em.createQuery(criteria).getSingleResult();
     }
 	
 	

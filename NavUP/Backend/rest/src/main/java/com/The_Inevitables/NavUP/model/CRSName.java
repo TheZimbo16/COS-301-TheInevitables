@@ -46,6 +46,5 @@ public class CRSName implements SuperEntity
 
 	public void setName(String name) {
 		this.name = name;
-		this.name = "urn:ogc:def:crs:OGC:1.3:CRS84";
 	}
 }

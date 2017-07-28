@@ -37,7 +37,7 @@ public class BuildingService {
     
     public List<Building> getAllBuildings()
     {
-    	return buildingDao.findAllBuildings();
+    	return (List<Building>) buildingDao.findAllBuildings();
     }
     
     public Building getBuildingByName(String name)
