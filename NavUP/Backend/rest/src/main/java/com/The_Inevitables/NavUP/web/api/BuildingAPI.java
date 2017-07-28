@@ -42,8 +42,7 @@ public class BuildingAPI {
 	@Path("get")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Building> getAllBuildings() {
-		ArrayList<Building> list = (ArrayList<Building>) buildingService.getAllBuildings();
-	        return  list;
+	        return  (List<Building>) buildingService.getAllBuildings();
 	}
 	
 	@DELETE

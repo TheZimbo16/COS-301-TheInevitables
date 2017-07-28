@@ -1,51 +1,25 @@
-package com.The_Inevitables.NavUP.web.api.dto.geoJSON;
+package com.The_Inevitables.NavUP.web.api.dto.feature;
 
 import com.The_Inevitables.NavUP.model.Building;
 import com.The_Inevitables.NavUP.model.Coordinates;
 import com.The_Inevitables.NavUP.web.api.dto.ApiResponse;
 import com.The_Inevitables.NavUP.web.api.dto.problem.DTO;
 
-public class geoJSONDTO extends DTO implements ApiResponse {
+public class FeatureDTO extends DTO implements ApiResponse {
 
 	private static final long serialVersionUID = 4123116456737543994L;
 	
-	private int buildingId;
-	private int coordinatesId;
 	private String type;
-	private Long geoJSONId;
+	private Long featureId;
 	private Building properties;
 	private Coordinates geometry;
 	
-	public Long getGeoJSONId() {
-		return geoJSONId;
-	}
-
-	public void setGeoJSONId(Long geoJSONId) {
-		this.geoJSONId = geoJSONId;
-	}
-
-	public int getBuildingId() {
-		return buildingId;
-	}
-
-	public void setBuildingId(int buildingId) {
-		this.buildingId = buildingId;
-	}
-
 	public String getType() {
 		return type;
 	}
 
 	public void setType(String type) {
 		this.type = type;
-	}
-
-	public int getCoordinatesId() {
-		return coordinatesId;
-	}
-
-	public void setCoordinatesId(int coordinatesId) {
-		this.coordinatesId = coordinatesId;
 	}
 
 	public Building getProperties() {
@@ -62,6 +36,14 @@ public class geoJSONDTO extends DTO implements ApiResponse {
 
 	public void setGeometry(Coordinates geometry) {
 		this.geometry = geometry;
+	}
+
+	public Long getFeatureId() {
+		return featureId;
+	}
+
+	public void setFeatureId(Long featureId) {
+		this.featureId = featureId;
 	}
 
 }

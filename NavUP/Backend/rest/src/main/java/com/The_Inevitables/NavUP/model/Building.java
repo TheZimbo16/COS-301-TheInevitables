@@ -18,6 +18,7 @@ public class Building implements SuperEntity {
 	public Building() {
 		super();
 	}
+	
 	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

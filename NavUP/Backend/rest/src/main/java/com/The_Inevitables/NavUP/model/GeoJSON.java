@@ -1,5 +1,7 @@
 package com.The_Inevitables.NavUP.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,110 +11,66 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "GeoJSON")
-public class GeoJSON implements SuperEntity {
-
+public class GeoJSON implements SuperEntity{
+	
 	public GeoJSON() {
 		super();
 	}
+	
 	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "geoJSONId", unique = true, nullable = false, updatable = false)
-	private Long geoJSONId;
-	
-	@JsonIgnore
-	@Column(name = "buildingId")
-	private int buildingId;
-	
+	@Column(name = "geoJSONiD")
+	private int geoJSONiD;
 	
 	@Column(name = "type")
 	private String type;
 	
-	
-	@JsonIgnore
-	@Column(name = "coordinatesId")
-	private int coordinatesId;
-	
-
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "buildingid", referencedColumnName = "buildingId",insertable = false, updatable = false)
-	private Building properties;
+	@JoinColumn(name = "crs", referencedColumnName = "crsId")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private CRS crs;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "coordinatesid", referencedColumnName = "coordinatesId",insertable = false, updatable = false)
-	private Coordinates geometry;
-
-	public Long getGeoJSONId() {
-		return geoJSONId;
-	}
-
-	public void setGeoJSONId(Long geoJSONId) {
-		this.geoJSONId = geoJSONId;
-	}
-
-	public int getBuildingId() {
-		return buildingId;
-	}
-
-	public void setBuildingId(int buildingId) {
-		this.buildingId = buildingId;
-	}
+	@OneToMany(mappedBy="geoJSON", cascade = {CascadeType.ALL})
+	
+    private List<Feature> features;
 
 	public String getType() {
 		return type;
 	}
 
 	public void setType(String type) {
-		this.type = "Feature";
+		this.type = type;
 	}
 
-	public int getCoordinatesId() {
-		return coordinatesId;
+	public CRS getCrs() {
+		return crs;
 	}
 
-	public void setCoordinatesId(int coordinatesId) {
-		this.coordinatesId = coordinatesId;
+	public void setCrs(CRS crs) {
+		this.crs = crs;
 	}
 
-	public Building getProperties() {
-		return properties;
+	public int getGeoJSONiD() {
+		return geoJSONiD;
 	}
 
-	public void setProperties(Building properties) {
-		this.properties = properties;
+	public void setGeoJSONiD(int geoJSONiD) {
+		this.geoJSONiD = geoJSONiD;
 	}
 
-	public Coordinates getGeometry() {
-		return geometry;
+	public List<Feature> getFeatures() {
+		return features;
 	}
 
-	public void setGeometry(Coordinates geometry) {
-		this.geometry = geometry;
+	public void setFeatures(List<Feature> features) {
+		this.features = features;
 	}
 
-
-
-	
-
-		
-	
-	
-	/*******************************************************/
-	/*				GETTERS AND SETTERS					   */
-	/*******************************************************/
-
-
-
-	
-	
-
-	
-
-	
 }

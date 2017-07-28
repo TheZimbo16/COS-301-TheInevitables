@@ -7,8 +7,11 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import com.The_Inevitables.NavUP.web.api.UserAPI;
-import com.The_Inevitables.NavUP.web.api.geoJSONAPI;
+import com.The_Inevitables.NavUP.web.api.FeatureAPI;
+import com.The_Inevitables.NavUP.web.api.GeoJSONAPI;
+import com.The_Inevitables.NavUP.model.GeoJSON;
 import com.The_Inevitables.NavUP.web.api.BuildingAPI;
+import com.The_Inevitables.NavUP.web.api.CRSAPI;
 import com.The_Inevitables.NavUP.web.api.CoordinatesAPI;
 import com.The_Inevitables.NavUP.web.api.LocationTypeAPI;
 import com.The_Inevitables.NavUP.web.api.LocationAPI;
@@ -29,7 +32,9 @@ public class NavUPApplication extends Application {
 		s.add(UserAPI.class);
 		s.add(BuildingAPI.class);
 		s.add(CoordinatesAPI.class);
-		s.add(geoJSONAPI.class);
+		s.add(FeatureAPI.class);
+		s.add(CRSAPI.class);
+		s.add(GeoJSONAPI.class);
 		return s;
 
 	}
