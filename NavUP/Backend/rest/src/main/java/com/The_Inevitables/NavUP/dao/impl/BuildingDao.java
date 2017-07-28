@@ -1,7 +1,5 @@
 package com.The_Inevitables.NavUP.dao.impl;
 
-import java.util.List;
-
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 

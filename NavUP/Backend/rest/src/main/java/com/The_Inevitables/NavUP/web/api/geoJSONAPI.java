@@ -14,38 +14,38 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import com.The_Inevitables.NavUP.model.Building;
 import com.The_Inevitables.NavUP.model.GeoJSON;
-
-import com.The_Inevitables.NavUP.web.api.dto.geoJSON.geoJSONDTO;
-
+import com.The_Inevitables.NavUP.service.geoJSON.GeoJSONService;
+import com.The_Inevitables.NavUP.web.api.dto.geoJSON.GeoJSONDTO;
+import com.The_Inevitables.NavUP.web.api.transformer.GeoJSONTransformer;
 
 @Path("geoJSON")
 @RequestScoped
-public class geoJSONAPI {
+public class GeoJSONAPI {
 	
 	@EJB
-	com.The_Inevitables.NavUP.service.geoJSON.geoJSONService GeoJSONService;
+	com.The_Inevitables.NavUP.service.geoJSON.GeoJSONService geoJSONService;
 	
 	@EJB
-	com.The_Inevitables.NavUP.web.api.transformer.geoJSONTransformer GeoJSONTransformer;
+	com.The_Inevitables.NavUP.web.api.transformer.GeoJSONTransformer geoJSONTransformer;
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public geoJSONDTO createObject(geoJSONDTO request){
-		GeoJSON geojsonObj = GeoJSONService.createObject(GeoJSONTransformer.toEntity(request));
-		return GeoJSONTransformer.toDTO(geojsonObj);
+	public GeoJSONDTO createBuilding(GeoJSONDTO request){
+		GeoJSON geoJSON = geoJSONService.createObject(geoJSONTransformer.toEntity(request));
+		return geoJSONTransformer.toDTO(geoJSON);
 	}
 	
 	@GET 
 	@Path("get")
 	@Produces(MediaType.APPLICATION_JSON)
 	public GeoJSON getAllObjects() {
-		GeoJSON list =  (GeoJSON) GeoJSONService.getAllObjects();
-	        return  list;
+		return geoJSONService.getAllObjects();
+	       
 	}
-
-	 
 	
 	
 }

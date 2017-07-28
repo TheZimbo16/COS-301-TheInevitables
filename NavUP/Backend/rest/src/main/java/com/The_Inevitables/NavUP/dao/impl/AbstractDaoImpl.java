@@ -1,5 +1,6 @@
 package com.The_Inevitables.NavUP.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -15,7 +16,10 @@ import com.The_Inevitables.NavUP.model.SuperEntity;
 import com.The_Inevitables.NavUP.model.User;
 import com.The_Inevitables.NavUP.model.LocationType;
 import com.The_Inevitables.NavUP.model.Building;
+import com.The_Inevitables.NavUP.model.CRS;
+import com.The_Inevitables.NavUP.model.CRSName;
 import com.The_Inevitables.NavUP.model.Coordinates;
+import com.The_Inevitables.NavUP.model.Feature;
 import com.The_Inevitables.NavUP.model.GeoJSON;
 import com.The_Inevitables.NavUP.model.Location;
 
@@ -205,17 +209,15 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	        return em.createQuery(criteria).getResultList(); 
 	 }
 	 //======================================================================================================================================
-	 //											GEOJSON QUERIES
+	 //											Feature QUERIES
 	 //======================================================================================================================================
-	 
-	 
-	 
-	 public GeoJSON findAllObjects() { 
-		 GeoJSON obj = null;
+
+	 public List<Feature> findAllObjects() { 
+		List<Feature> obj = null;
 			try
 			{
-				Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.GeoJSON u");
-				obj = (GeoJSON) query.getSingleResult();
+				Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.Feature u");
+				obj = query.getResultList();
 			}
 			catch(Exception e)
 			{
@@ -232,15 +234,45 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	 // 										Coordinates Queries
 	 //======================================================================================================================================
 	 
-	 public List<Coordinates> findAllCoordinates()
-		{
-			CriteriaQuery<Coordinates> criteria = em.getCriteriaBuilder().createQuery(Coordinates.class); 
-	        criteria.from(Coordinates.class); 
-	        return (List<Coordinates>) em.createQuery(criteria).getSingleResult(); 
-		}
+	public List<Coordinates> findAllCoordinates()
+	{
+		CriteriaQuery<Coordinates> criteria = em.getCriteriaBuilder().createQuery(Coordinates.class); 
+        criteria.from(Coordinates.class); 
+        return (List<Coordinates>) em.createQuery(criteria).getSingleResult(); 
+	}
 	 
 	 
-	//======================================================================================================================================
+	 
+	 //======================================================================================================================================
+	 // 										CRSName Queries
+	 //======================================================================================================================================
+	public String getCrsName()
+    {
+		CriteriaQuery<CRSName> criteria = em.getCriteriaBuilder().createQuery(CRSName.class); 
+        criteria.from(CRSName.class); 
+        return em.createQuery(criteria).getSingleResult().toString();
+    }
 	
+	
+	
+	//======================================================================================================================================
+	// 										CRS Queries
+	//======================================================================================================================================
+	public CRS getCRS()
+	{
+		CriteriaQuery<CRS> criteria = em.getCriteriaBuilder().createQuery(CRS.class); 
+        criteria.from(CRS.class); 
+        return em.createQuery(criteria).getSingleResult();
+	}
+	
+	//======================================================================================================================================
+	// 										GeoJSON Queries
+	//======================================================================================================================================
+	public GeoJSON findAllGeoJSON()
+	{
+		CriteriaQuery<GeoJSON> criteria = em.getCriteriaBuilder().createQuery(GeoJSON.class); 
+        criteria.from(GeoJSON.class); 
+        return (GeoJSON) em.createQuery(criteria).getSingleResult();
+	}
 	
 }

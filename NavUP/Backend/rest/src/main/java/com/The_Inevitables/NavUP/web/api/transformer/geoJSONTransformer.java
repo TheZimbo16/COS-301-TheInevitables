@@ -3,40 +3,34 @@ package com.The_Inevitables.NavUP.web.api.transformer;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-
 import com.The_Inevitables.NavUP.model.GeoJSON;
-import com.The_Inevitables.NavUP.web.api.dto.geoJSON.geoJSONDTO;
+import com.The_Inevitables.NavUP.web.api.dto.geoJSON.GeoJSONDTO;
 
 @Stateless
 @LocalBean
-public class geoJSONTransformer implements ApiTransformer {
+public class GeoJSONTransformer implements ApiTransformer {
 
-	public geoJSONDTO toDTO(GeoJSON obj){
-		geoJSONDTO geoJSONdto= new geoJSONDTO();
+
+	public GeoJSONDTO toDTO(GeoJSON geoJson){
+		GeoJSONDTO geoJSONDTO = new GeoJSONDTO();
 		
-		geoJSONdto.setBuildingId(obj.getBuildingId());
-		geoJSONdto.setGeoJSONId(obj.getGeoJSONId());
-		geoJSONdto.setCoordinatesId(obj.getCoordinatesId());
-		geoJSONdto.setType(obj.getType());
-		geoJSONdto.setProperties(obj.getProperties());
-		geoJSONdto.setGeometry(obj.getGeometry());
+		geoJSONDTO.setGeoJSONiD(geoJson.getGeoJSONiD());
+		geoJSONDTO.setType(geoJson.getType());
+		geoJSONDTO.setCrs(geoJson.getCrs());
+		geoJSONDTO.setFeatures(geoJson.getFeatures());
 		
-		
-		return geoJSONdto;
+		return geoJSONDTO;
 	}
 	
-	public GeoJSON toEntity(geoJSONDTO request) {
-		GeoJSON geojsonObj = new GeoJSON();
+	public GeoJSON toEntity(GeoJSONDTO request) {
+		GeoJSON geoJson = new GeoJSON();
 		
-		geojsonObj.setBuildingId(request.getBuildingId());
-		geojsonObj.setGeoJSONId(request.getGeoJSONId());
-		geojsonObj.setProperties(request.getProperties());
-		geojsonObj.setType(request.getType());
-		geojsonObj.setGeometry(request.getGeometry());
-		geojsonObj.setCoordinatesId(request.getCoordinatesId());
+		geoJson.setGeoJSONiD(request.getGeoJSONiD());
+		geoJson.setType(request.getType());
+		geoJson.setCrs(request.getCrs());
+		geoJson.setFeatures(request.getFeatures());
 		
-		return geojsonObj;
+		return geoJson;
 	}
 	
-
 }
