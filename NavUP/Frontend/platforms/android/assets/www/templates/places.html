@@ -6,22 +6,26 @@
           <table class="table">
             <thead>
               <tr>
-                <th>Room Number</th>
-                <th>Building</th>
-                <th>Action</th>
-                <th>&nbsp;</th>
+                <th>Location Name</th>
+                <th>location ID</th>
+                <th>Longitude</th>
+                <th>Latitude</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-          <td><input class="form-control" ng-model="place.name"></td><br/>
-                <td><input class="form-control" ng-model="place.location"></td>
+          <td><input class="form-control" ng-model="place.locationName"></td><br/>
+                <td><input class="form-control" ng-model="place.locationId"></td><br/>
+                  <td><input class="form-control" ng-model="place.longitude"></td><br/>
+                  <td><input class="form-control" ng-model="place.latitude"></td>
                 <td><button class="btn btn-primary" ng-click="addPlace()">Add Place</button>
                 <td><button class="btn btn-info" ng-click="update()">Update</button>&nbsp;&nbsp;<button class="btn btn-info" ng-click="deselect()">Clear</button></td>
               </tr>
-              <tr ng-repeat="place in places">
-                <td>{{place.name}}</td>
-                <td>{{place.location}}</td>
+              <tr ng-repeat="place in placeslist">
+                <td>{{place.locationName}}</td>
+                <td>{{place.locationId}}</td>
+                <td>{{place.longitude}}</td>
+                <td>{{place.latitude}}</td>
                 <td><button class="btn btn-danger" ng-click="removePlace()">Remove</button></td>
                 <td><button class="btn btn-warning" ng-click="edit(place.name)">Edit</button></td>
               </tr>

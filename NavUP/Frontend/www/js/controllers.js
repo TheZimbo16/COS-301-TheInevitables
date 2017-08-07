@@ -79,7 +79,7 @@ angular.module('myApp.controllers', [])
         //     }, 1000);
         // };
 
-        $scope.guest = function() {
+        $scope.guest = function () {
             $location.path("app/search_map");
             $scope.modal.hide();
             $scope.modal2.hide();
@@ -116,8 +116,7 @@ angular.module('myApp.controllers', [])
             $http.post('/employees_rest/api/user/verify', $scope.loginData).success(function (response) {
                 console.log(response);
 
-                if(response == true)
-                {
+                if (response == true) {
                     $location.path("app/search_map");
                 }
                 else {
@@ -187,7 +186,7 @@ angular.module('myApp.controllers', [])
 
     }])
 
-    .controller('PlacesCtrl', ['$scope', '$http', function ($scope, $ionicModal, $http) {
+    .controller('PlacesCtrl', ['$scope', '$http', function ($scope, $http) {
         console.log("Hello World from places controller");
 
         // myApp.config(function($httpProvider) {
@@ -200,7 +199,7 @@ angular.module('myApp.controllers', [])
         // })
 
         var refresh = function () {
-            $http.get('/employees_rest/api/places/get').success(function (response) {
+            $http.get('/employees_rest/api/location/get').success(function (response) {
                 console.log("I got the data I requested");
                 $scope.placeslist = response;
                 $scope.place = "";
@@ -211,7 +210,7 @@ angular.module('myApp.controllers', [])
 
         $scope.addPlace = function () {
             console.log($scope.place);
-            $http.post('/employees_rest/api/places/', $scope.place).success(function (response) {
+            $http.post('/employees_rest/api/location/', $scope.place).success(function (response) {
                 console.log(response);
                 refresh();
             });
