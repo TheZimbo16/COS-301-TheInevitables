@@ -1,5 +1,7 @@
 package com.The_Inevitables.NavUP.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -37,9 +40,9 @@ public class GeoJSON implements SuperEntity{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private CRS crs;
 	
-	@OneToMany(mappedBy="geoJSON", cascade = {CascadeType.ALL})
-	
-    private List<Feature> features;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "features", referencedColumnName = "featureId")
+	private Collection<Feature> features = new ArrayList<Feature>();
 
 	public String getType() {
 		return type;
@@ -57,6 +60,16 @@ public class GeoJSON implements SuperEntity{
 		this.crs = crs;
 	}
 
+
+
+	public Collection<Feature> getFeatures() {
+		return features;
+	}
+
+	public void setFeatures(Collection<Feature> features) {
+		this.features = features;
+	}
+
 	public int getGeoJSONiD() {
 		return geoJSONiD;
 	}
@@ -65,12 +78,8 @@ public class GeoJSON implements SuperEntity{
 		this.geoJSONiD = geoJSONiD;
 	}
 
-	public List<Feature> getFeatures() {
-		return features;
-	}
 
-	public void setFeatures(List<Feature> features) {
-		this.features = features;
-	}
+
+
 
 }

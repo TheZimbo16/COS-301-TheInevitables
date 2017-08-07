@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
+import javax.transaction.Transactional;
 
 import com.The_Inevitables.NavUP.model.SuperEntity;
 import com.The_Inevitables.NavUP.model.User;
@@ -261,11 +262,22 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	//======================================================================================================================================
 	// 										GeoJSON Queries
 	//======================================================================================================================================
+	@Transactional 
 	public GeoJSON findAllGeoJSON()
 	{
-		CriteriaQuery<GeoJSON> criteria = em.getCriteriaBuilder().createQuery(GeoJSON.class); 
-        criteria.from(GeoJSON.class); 
-        return em.createQuery(criteria).getSingleResult();
+		GeoJSON geoJSON = null;
+		
+		try
+		{
+			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.GeoJSON u left join fetch u.features");
+			geoJSON = (GeoJSON) query.getSingleResult();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return geoJSON;
 	}
 	
 	

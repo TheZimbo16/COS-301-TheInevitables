@@ -1,5 +1,6 @@
 package com.The_Inevitables.NavUP.web.api.dto.geoJSON;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.The_Inevitables.NavUP.model.CRS;
@@ -14,7 +15,7 @@ public class GeoJSONDTO extends DTO implements ApiResponse{
 	private int geoJSONiD;
 	private String type;
 	private CRS crs;
-	private List<Feature> features;
+	private Collection<Feature> features;
 	
 	public int getGeoJSONiD() {
 		return geoJSONiD;
@@ -34,11 +35,11 @@ public class GeoJSONDTO extends DTO implements ApiResponse{
 	public void setCrs(CRS crs) {
 		this.crs = crs;
 	}
-	public List<Feature> getFeatures() {
+	public Collection<Feature> getFeatures() {
 		return features;
 	}
-	public void setFeatures(List<Feature> features) {
-		this.features = features;
+	public void setFeatures(Collection<Feature> collection) {
+		this.features = collection;
 	}
 	
 }

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,11 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "Features")
 public class Feature implements SuperEntity {
-	@JsonIgnore
-	@ManyToOne
-    @JoinColumn(name = "geoJSONiD",referencedColumnName="geoJSONiD")
-    private GeoJSON geoJSON;
-	
+
 	
 	
 	public Feature() {
@@ -87,13 +83,6 @@ public class Feature implements SuperEntity {
 		this.geometry = geometry;
 	}
 
-	public GeoJSON getGeoJSON() {
-		return geoJSON;
-	}
-
-	public void setGeoJSON(GeoJSON geoJSON) {
-		this.geoJSON = geoJSON;
-	}
 
 
 

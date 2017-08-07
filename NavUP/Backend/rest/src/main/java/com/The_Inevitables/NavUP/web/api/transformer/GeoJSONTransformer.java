@@ -1,8 +1,11 @@
 package com.The_Inevitables.NavUP.web.api.transformer;
 
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import com.The_Inevitables.NavUP.model.Feature;
 import com.The_Inevitables.NavUP.model.GeoJSON;
 import com.The_Inevitables.NavUP.web.api.dto.geoJSON.GeoJSONDTO;
 
