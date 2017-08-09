@@ -1,252 +1,193 @@
-angular.module('myApp.controllers', [])
+angular.module('app.controllers', [])
 
-    .controller('MapCtrl', function ($scope, $ionicLoading) {
-        console.log("Hello World from map controller");
-        $scope.mapCreated = function (map) {
-            $scope.map = map;
-        };
-
-        $scope.centerOnMe = function () {
-            console.log("Centering");
-            if (!$scope.map) {
-                return;
-            }
-
-            $scope.loading = $ionicLoading.show({
-                content: 'Getting current location...',
-                showBackdrop: false
-            });
-
-            navigator.geolocation.getCurrentPosition(function (pos) {
-                console.log('Got pos', pos);
-                $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
-                $scope.loading.hide();
-            }, function (error) {
-                alert('Unable to get location: ' + error.message);
-            });
-        };
-    })
-
-    .controller('MenuCtrl', function ($scope, $ionicModal, $timeout, $location) {
-        console.log("Hello World from menu controller");
-
-        // Create the login modal that we will use later
-        $ionicModal.fromTemplateUrl('templates/login.html', {
-            scope: $scope
-        }).then(function (modal) {
-            $scope.modal = modal;
-        });
-
-        $ionicModal.fromTemplateUrl('templates/register.html', {
-            scope: $scope
-        }).then(function (modal2) {
-            $scope.modal2 = modal2;
-        });
-
-        $ionicModal.fromTemplateUrl('templates/loginWrong.html', {
-            scope: $scope
-        }).then(function (modal3) {
-            $scope.modal3 = modal3;
-        });
+.controller('navUPCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
 
 
-        // Triggered in the login modal to close it
-        $scope.closeLogin = function () {
-            $scope.modal.hide();
-        };
-        // Triggered in the register modal to close it
-        $scope.closeRegister = function () {
-            $scope.modal2.hide();
-        };
+}])
 
-        // Open the login modal
-        $scope.login = function () {
-            $scope.modal.show();
-            $scope.modal2.hide();
-        };
-        // Open the register modal
-        $scope.register = function () {
-            $scope.modal2.show();
-            $scope.modal.hide();
-        };
+  .controller('loginCtrl', ['$scope', '$http', '$timeout', '$location', function ($scope, $http, $timeout, $location) {
+    console.log("Hello World from login controller");
 
-        // Perform the login action when the user submits the login form
-        // $scope.doLogin = function () {
-        //     console.log('Doing login', $scope.loginData);
-        //
-        //     $timeout(function () {
-        //         $scope.closeLogin();
-        //     }, 1000);
-        // };
+    $scope.loginData = "";
+    $scope.doLogin = function () {
+      //console.log("login clicked");
+      console.log('Doing login', $scope.loginData);
 
-        $scope.guest = function () {
-            $location.path("app/search_map");
-            $scope.modal.hide();
-            $scope.modal2.hide();
+      $http.post('/employees_rest/api/user/verify', $scope.loginData).success(function (response) {
+        console.log(response);
 
+        if (response == true) {
+          console.log("login correct");
+          $location.path("/menu");
         }
-    })
-
-    .controller('registerCtrl', ['$scope', '$http', function ($scope, $http, $timeout) {
-        console.log("Hello World from register controller");
-
-        $scope.registerData = "";
-        $scope.doRegister = function () {
-            console.log('Doing register', $scope.registerData);
-
-            $http.post('/employees_rest/api/user/', $scope.registerData).success(function (response) {
-                console.log(response);
-                $scope.modal2.hide();
-                $scope.modal.show();
-            });
-
-            $timeout(function () {
-                $scope.closeRegister();
-            }, 1000);
-        };
-    }])
-
-    .controller('loginCtrl', ['$scope', '$http', '$timeout', '$location', function ($scope, $http, $timeout, $location) {
-        console.log("Hello World from login controller");
-
-        $scope.loginData = "";
-        $scope.doLogin = function () {
-            console.log('Doing login', $scope.loginData);
-
-            $http.post('/employees_rest/api/user/verify', $scope.loginData).success(function (response) {
-                console.log(response);
-
-                if (response == true) {
-                    $location.path("app/search_map");
-                }
-                else {
-                    $scope.modal3.show();
-                }
-            });
-
-            $timeout(function () {
-                $scope.closeLogin();
-            }, 1000);
-        };
-
-
-    }])
-
-    .controller('usersCtrl', ['$scope', '$http', function ($scope, $http) {
-        console.log("Hello World from users controller");
-
-
-        var refresh = function () {
-            $http.get('/employees_rest/api/user/get').success(function (response) {
-                console.log("I got the data I requested");
-                $scope.contactlist = response;
-                $scope.contact = "";
-            });
-        };
-
-        refresh();
-
-        $scope.addContact = function () {
-
-            console.log($scope.contact);
-            $http.post('/employees_rest/api/user/', $scope.contact).success(function (response) {
-                console.log(response);
-                refresh();
-            });
-        };
-
-        $scope.remove = function () {
-            $http.defaults.headers["delete"] = {
-                'Content-Type': 'application/json'
-            };
-
-            $http.delete('/employees_rest/api/user/delete', $scope.contact).success(function (data, status, headers, config) {
-                refresh();
-            }).error(function (data, status, headers, config) {
-            });
-        };
-
-        $scope.edit = function (id) {
-            console.log(id);
-            $http.get('/employees_rest/webapi/users/' + id).success(function (response) {
-                $scope.contact = response;
-            });
-        };
-
-        $scope.update = function () {
-            console.log($scope.contact._id);
-            $http.put('/employees_rest/webapi/users/' + $scope.contact._id, $scope.contact).success(function (response) {
-                refresh();
-            })
-        };
-
-        $scope.deselect = function () {
-            $scope.contact = "";
+        else {
+          //$scope.modal3.show();
         }
+      });
 
-    }])
+      // $timeout(function () {
+      //   $location.path("app/login");
+      // }, 1000);
+    };
 
-    .controller('PlacesCtrl', ['$scope', '$http', function ($scope, $http) {
-        console.log("Hello World from places controller");
 
-        // myApp.config(function($httpProvider) {
-        //   /**
-        //    * make delete type json
-        //    */
-        //   $httpProvider.defaults.headers["delete"] = {
-        //     'Content-Type': 'application/json;charset=utf-8'
-        //   };
-        // })
+  }])
 
-        var refresh = function () {
-            $http.get('/employees_rest/api/location/get').success(function (response) {
-                console.log("I got the data I requested");
-                $scope.placeslist = response;
-                $scope.place = "";
-            });
-        };
+  .controller('signupCtrl', ['$scope', '$http', '$timeout', '$location', function ($scope, $http, $timeout, $location) {
+    console.log("Hello World from register controller");
 
-        refresh();
+    $scope.registerData = "";
+    $scope.doRegister = function () {
+      console.log('Doing register', $scope.registerData);
 
-        $scope.addPlace = function () {
-            console.log($scope.place);
-            $http.post('/employees_rest/api/location/', $scope.place).success(function (response) {
-                console.log(response);
-                refresh();
-            });
-        };
+      $http.post('/employees_rest/api/user/', $scope.registerData).success(function (response) {
+        console.log(response);
+      });
 
-        $scope.remove = function () {
-            $http.defaults.headers["delete"] = {
-                'Content-Type': 'application/json'
-            };
+      $timeout(function () {
+        $location.path("app/login");
+      }, 1000);
+    };
+  }])
 
-            $http.delete('/employees_rest/api/places/delete', $scope.place).success(function (data, status, headers, config) {
-                refresh();
-            }).error(function (data, status, headers, config) {
-            });
-        };
+.controller('menuCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
 
-        $scope.edit = function (id) {
-            console.log(id);
-            $http.get('/employees_rest/webapi/places/' + id).success(function (response) {
-                $scope.contact = response;
-            });
-        };
 
-        $scope.update = function () {
-            console.log($scope.place.name);
-            $http.put('/employees_rest/webapi/places/' + $scope.place.name, $scope.place).success(function (response) {
-                refresh();
-            })
-        };
+}])
 
-        $scope.deselect = function () {
-            $scope.place = "";
-        }
+  .controller('mapCtrl', function ($scope, $ionicLoading) {
+    console.log("Hello World from map controller");
+    $scope.mapCreated = function (map) {
+      $scope.map = map;
+    };
 
-    }])
+    $scope.centerOnMe = function () {
+      console.log("Centering");
+      if (!$scope.map) {
+        return;
+      }
 
-// .controller('PlacesCtrl', function($scope, $stateParams) {
-//   console.log("Hello World from place controller");
-// })
+      $scope.loading = $ionicLoading.show({
+        content: 'Getting current location...',
+        showBackdrop: false
+      });
+
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        console.log('Got pos', pos);
+        $scope.map.setCenter(new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude));
+        $scope.loading.hide();
+      }, function (error) {
+        alert('Unable to get location: ' + error.message);
+      });
+    };
+  })
+
+.controller('userProfileCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+
+}])
+
+.controller('timetableCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+
+}])
+
+.controller('pointOfInterestsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+
+}])
+
+.controller('recentlyVisitedCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+
+}])
+
+.controller('adminMenuCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+
+}])
+
+.controller('adminPOICtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+
+}])
+
+.controller('adminLocationsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+
+}])
+
+.controller('adminUsersCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+
+}])
+
+.controller('adminAddLocationCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+
+}])
+
+.controller('guestMenuCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+
+}])
+
+.controller('adminEditLocationCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+
+}])
+
+.controller('adminAddPointOfInterestCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+
+}])
+
+.controller('adminEditPointOfInterestCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+// You can include any angular dependencies as parameters for this function
+// TIP: Access Route Parameters for your page via $stateParams.parameterName
+function ($scope, $stateParams) {
+
+
+}])

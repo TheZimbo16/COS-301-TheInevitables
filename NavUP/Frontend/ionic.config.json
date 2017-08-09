@@ -1,14 +1,18 @@
 {
-  "name": "ionic-app-base",
+  "name": "Frontend",
   "app_id": "",
   "type": "ionic1",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
   "watchPatterns": [
     "scss/**/*"
   ],
   "proxies": [
     {
       "path": "/employees_rest/",
-      "proxyUrl": "http://localhost:11080/NavUPRest/"
+      "proxyUrl": "http://35.202.5.111:11080/NavUPRest/"
     }
   ]
 }

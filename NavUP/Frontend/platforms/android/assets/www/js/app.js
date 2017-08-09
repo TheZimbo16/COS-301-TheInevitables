@@ -1,129 +1,83 @@
-angular.module('myApp', ['ionic', 'myApp.controllers', 'myApp.directives'])
-
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
-
-    }
-    if(window.StatusBar) {
-      StatusBar.styleDefault();
-    }
-  });
-})
-
-.config(function($stateProvider, $urlRouterProvider) {
-  $stateProvider
-
-    .state('app', {
-    url: '/app',
-    abstract: true,
-    templateUrl: 'templates/menu.html',
-    controller: 'MenuCtrl'
-  })
-
-  .state('app.search', {
-    url: '/search_map',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html'
-      }
-    }
-  })
-      .state('app.main', {
-        url: '/main',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/main.html'
-          }
-        }
-      })
-
-  .state('app.users', {
-      url: '/users',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/users.html'
-        }
-      }
-    })
-    .state('app.places', {
-      url: '/places',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/places.html',
-          controller: 'PlacesCtrl'
-        }
-      }
-    });
-
-  // .state('app.single', {
-  //   url: '/place/:placeId',
-  //   views: {
-  //     'menuContent': {
-  //       templateUrl: 'templates/place.html',
-  //       controller: 'PlacesCtrl'
-  //     }
-  //   }
-  // });
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/main');
-});
-
 // Ionic Starter App
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// var myApp = angular.module('myApp', []);
-// myApp.controller('appCtrl', ['$scope', '$http', function($scope, $http) {
-//     console.log("Hello World from controller");
-//
-//
-// var refresh = function() {
-//   $http.get('/contactlist').success(function(response) {
-//     console.log("I got the data I requested");
-//     $scope.contactlist = response;
-//     $scope.contact = "";
-//   });
-// };
-//
-// refresh();
-//
-// $scope.addContact = function() {
-//   console.log($scope.contact);
-//   $http.post('/contactlist', $scope.contact).success(function(response) {
-//     console.log(response);
-//     refresh();
-//   });
-// };
-//
-// $scope.remove = function(id) {
-//   console.log(id);
-//   $http.delete('/contactlist/' + id).success(function(response) {
-//     refresh();
-//   });
-// };
-//
-// $scope.edit = function(id) {
-//   console.log(id);
-//   $http.get('/contactlist/' + id).success(function(response) {
-//     $scope.contact = response;
-//   });
-// };
-//
-// $scope.update = function() {
-//   console.log($scope.contact._id);
-//   $http.put('/contactlist/' + $scope.contact._id, $scope.contact).success(function(response) {
-//     refresh();
-//   })
-// };
-//
-// $scope.deselect = function() {
-//   $scope.contact = "";
-// }
-//
-// }]);﻿
+// 'starter.services' is found in services.js
+// 'starter.controllers' is found in controllers.js
+angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives','app.services',])
+
+.config(function($ionicConfigProvider, $sceDelegateProvider){
+
+  $sceDelegateProvider.resourceUrlWhitelist([ 'self','*://www.youtube.com/**', '*://player.vimeo.com/video/**']);
+
+})
+
+.run(function($ionicPlatform) {
+  $ionicPlatform.ready(function() {
+    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+    // for form inputs)
+    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      cordova.plugins.Keyboard.disableScroll(true);
+    }
+    if (window.StatusBar) {
+      // org.apache.cordova.statusbar required
+      StatusBar.styleDefault();
+    }
+  });
+})
+
+/*
+  This directive is used to disable the "drag to open" functionality of the Side-Menu
+  when you are dragging a Slider component.
+*/
+.directive('disableSideMenuDrag', ['$ionicSideMenuDelegate', '$rootScope', function($ionicSideMenuDelegate, $rootScope) {
+    return {
+        restrict: "A",  
+        controller: ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
+
+            function stopDrag(){
+              $ionicSideMenuDelegate.canDragContent(false);
+            }
+
+            function allowDrag(){
+              $ionicSideMenuDelegate.canDragContent(true);
+            }
+
+            $rootScope.$on('$ionicSlides.slideChangeEnd', allowDrag);
+            $element.on('touchstart', stopDrag);
+            $element.on('touchend', allowDrag);
+            $element.on('mousedown', stopDrag);
+            $element.on('mouseup', allowDrag);
+
+        }]
+    };
+}])
+
+/*
+  This directive is used to open regular and dynamic href links inside of inappbrowser.
+*/
+.directive('hrefInappbrowser', function() {
+  return {
+    restrict: 'A',
+    replace: false,
+    transclude: false,
+    link: function(scope, element, attrs) {
+      var href = attrs['hrefInappbrowser'];
+
+      attrs.$observe('hrefInappbrowser', function(val){
+        href = val;
+      });
+      
+      element.bind('click', function (event) {
+
+        window.open(href, '_system', 'location=yes');
+
+        event.preventDefault();
+        event.stopPropagation();
+
+      });
+    }
+  };
+});
