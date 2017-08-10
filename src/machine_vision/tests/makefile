@@ -10,6 +10,6 @@ build:
 	cd .. && bash detector_gcc.bash
 
 tests: build
-	bash low_light_detection.bash
-	bash wallhug_multimarker.bash
-	bash wallhug_singlemarker.bash
+	bash test_cases/low_light_detection.bash
+	bash test_cases/wallhug_multimarker.bash
+	bash test_cases/wallhug_singlemarker.bash
