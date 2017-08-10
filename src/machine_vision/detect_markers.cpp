@@ -63,7 +63,9 @@ const char* keys  =
         "{ground_plane |       | do ground-plane triangulation of markers. If not specified, default to wall-plane triangulation }"
         "{mirror   |       | mirror mode for debugging purposes}"
         "{dot_size   | 20    | Size of the green and red dot}"
-        "{show_axis   |       | Show the axis of the markers}";
+        "{show_axis   |       | Show the axis of the markers}"
+        "{print_distance   |       | Print the euclidean distance to stdout}"
+        "{verbose   |       | Be verbose, print readings to stderr}";
 }
 
 static bool readCameraParameters(std::string filename, cv::Mat &camMatrix, cv::Mat &distCoeffs) {
