@@ -256,7 +256,7 @@ int main(int argc, char *argv[]) {
                     if(print_distance)
                         std::cout << euclid_distance << std::endl;
                     if(print_ids)
-                        std::cerr << ids[i] << std::endl;
+                        std::cout << ids[i] << std::endl;
 
                     int width = inputVideo.get(CV_CAP_PROP_FRAME_WIDTH);
                     int height = inputVideo.get(CV_CAP_PROP_FRAME_HEIGHT);
