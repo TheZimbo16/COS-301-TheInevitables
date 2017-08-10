@@ -65,6 +65,7 @@ const char* keys  =
         "{dot_size   | 20    | Size of the green and red dot}"
         "{show_axis   |       | Show the axis of the markers}"
         "{print_distance   |       | Print the euclidean distance to stdout}"
+        "{print_ids   |       | Print the detected IDs to stdout}"
         "{verbose   |       | Be verbose, print readings to stderr}";
 }
 
@@ -152,6 +153,7 @@ int main(int argc, char *argv[]) {
     bool show_axis = parser.has("show_axis");
     bool verbose = parser.has("verbose");
     bool print_distance = parser.has("print_distance");
+    bool print_ids = parser.has("print_ids");
     int dot_size = parser.get<int>("dot_size");
 
     cv::Ptr<cv::aruco::DetectorParameters> detectorParams = cv::aruco::DetectorParameters::create();
@@ -253,7 +255,8 @@ int main(int argc, char *argv[]) {
                     }
                     if(print_distance)
                         std::cout << euclid_distance << std::endl;
-
+                    if(print_ids)
+                        std::cerr << ids[i] << std::endl;
 
                     int width = inputVideo.get(CV_CAP_PROP_FRAME_WIDTH);
                     int height = inputVideo.get(CV_CAP_PROP_FRAME_HEIGHT);
