@@ -1,10 +1,11 @@
 <ion-view title="Map" id="page5">
-  <ion-content padding="true" class="has-header">
+  <ion-content padding="true" class="has-header" ng-controller="mapCtrl">
     <form id="map-form11" class="list">
       <label class="item item-input" id="map-search1">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Search Location">
+        <input id="end" type="search" placeholder="Search Location">
       </label>
+      <button id="adminAddLocation-button25" ng-click="calculateAndDisplayRoute()" class="button button-assertive button-block icon ion-android-compass"> Navigate</button>
     </form>
     <map on-create="mapCreated(map)"></map>
   </ion-content>
