@@ -43,3 +43,20 @@ Intruducing a second marker allos the system to consider specific pairs of marke
 One could peruse campus with a typical camera and record footage in varying environmental conditions and locations. Any markers that are detected are false positives(since the campus is void of any markers at the time of writing this) and are likely less robust as a result. One may construct a list of bad markers and avoid using them altogether.
 \subsubsection{Higher bitrate markers}
 Aruco, the library we are currently making use of, supports different bitrate markers. The lowest bitrate marker is 4x4 black and white squares, followed by 5x5 and so on and so forth. Increasing the bitrate means that there are far more distinct markers with their own unique embedded hamming codes. This in turn means the that false positive detection rate will drop drastically. However, one trades more robust markers for a shorter detection range.
+
+\section{Backend Unit Test}
+For the Backend JUnit and Maven were used
+
+\subsection{Dependencies required}
+To set up the tests we had to add dependencies to the pom.xml file. These dependancies made use of JUnit to create and test all unit tests
+\includegraphics[]{data/backend/Dependencies_needed.png}
+
+\subsection{Setting up Unit Test}
+To create the unit test, a standard Java class is created. Inside this class all the 
+\includegraphics[]{data/backend/User_Unit_Test.png}
+
+\subsection{Running Unit Test}
+To execute the unit tests the following command is executed: mvn test. This will compile the project and test all classess annotated as @Test classes
+
+\subsection{Results}
+\includegraphics[]{data/backend/Backend_Unit_Tests.png}
