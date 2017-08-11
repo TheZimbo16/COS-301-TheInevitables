@@ -101,11 +101,15 @@ angular.module('app.controllers', [])
       //   });
       //
       // });
-      calculateAndDisplayRoute(directionsService, directionsDisplay);
+      var onChangeHandler = function() {
+        calculateAndDisplayRoute(directionsService, directionsDisplay);
+      };
+      document.getElementById('end').addEventListener('change', onChangeHandler);
     };
+
     function calculateAndDisplayRoute(directionsService, directionsDisplay){
       console.log("clicked");
-      var start = new google.maps.LatLng(-25.755360, 28.232476);
+      var start = navigator.geolocation.getCurrentPosition();
       var finish = new google.maps.LatLng(-25.756370, 28.232680);
 
       directionsService.route({

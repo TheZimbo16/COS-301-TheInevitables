@@ -8,10 +8,15 @@ angular.module('app.controllers', [])
 
     }])
 
-  .controller('loginCtrl', ['$scope', '$http', '$timeout', '$location', function ($scope, $http, $timeout, $location) {
+  .controller('loginCtrl', ['$scope', '$http', '$ionicModal', '$timeout', '$location', function ($scope, $http, $ionicModal, $timeout, $location) {
     console.log("Hello World from login controller");
 
     $scope.loginData = "";
+    $ionicModal.fromTemplateUrl('templates/loginWrong.html', {
+      scope: $scope
+    }).then(function (modal3) {
+      $scope.modal3 = modal3;
+    });
     $scope.doLogin = function () {
       //console.log("login clicked");
       console.log('Doing login', $scope.loginData);
@@ -24,7 +29,7 @@ angular.module('app.controllers', [])
           $location.path("/menu");
         }
         else {
-          //$scope.modal3.show();
+          $scope.modal3.show();
         }
       });
 
@@ -33,6 +38,10 @@ angular.module('app.controllers', [])
       // }, 1000);
     };
 
+    $scope.closeWrong = function()
+    {
+      $scope.modal3.hide();
+    }
 
   }])
 
@@ -65,6 +74,7 @@ angular.module('app.controllers', [])
     console.log("Hello World from map controller");
     $scope.mapCreated = function (map) {
       $scope.map = map;
+      //$scope.start = new google.maps.LatLng(getMyLocation());
       var directionsService = new google.maps.DirectionsService;
       var directionsDisplay = new google.maps.DirectionsRenderer;
       directionsDisplay.setMap(map);
@@ -101,16 +111,42 @@ angular.module('app.controllers', [])
       //   });
       //
       // });
-      calculateAndDisplayRoute(directionsService, directionsDisplay);
+      var onChangeHandler = function() {
+        calculateAndDisplayRoute(directionsService, directionsDisplay);
+      };
+      document.getElementById('start').addEventListener('change', onChangeHandler);
+      document.getElementById('end').addEventListener('change', onChangeHandler);
     };
+
+    // function getMyLocation()
+    // {
+    //   console.log("getting location");
+    //   navigator.geolocation.watchPosition(function (pos) {
+    //     console.log('Got pos', pos);
+    //     var pos2 = {
+    //       lat: parseFloat(pos.coords.latitude),
+    //       lng:  parseFloat(pos.coords.longitude)
+    //     };
+    //     console.log(pos2);
+    //     return pos2;
+    //   }, function (error) {
+    //     alert('Unable to get location: ' + error.message);
+    //   });
+    //
+    // }
+
     function calculateAndDisplayRoute(directionsService, directionsDisplay){
       console.log("clicked");
-      var start = new google.maps.LatLng(-25.755360, 28.232476);
-      var finish = new google.maps.LatLng(-25.756370, 28.232680);
+      //var currPos = getMyLocation();
+      //var start = new google.maps.LatLng(getMyLocation());
+      //console.log("recieved " + $scope.start);
+      console.log("recieved " + start);
+
+      //var finish = new google.maps.LatLng(-25.756370, 28.232680);
 
       directionsService.route({
-        origin: start,
-        destination: finish,
+        origin: document.getElementById("start").value,
+        destination: document.getElementById("end").value,
         travelMode: 'WALKING'
       }, function(response, status) {
         if (status === 'OK') {
@@ -120,7 +156,6 @@ angular.module('app.controllers', [])
         }
       });
     }
-
 
     $scope.centerOnMe = function () {
       console.log("Centering");
@@ -191,21 +226,33 @@ angular.module('app.controllers', [])
 
     }])
 
-  .controller('adminLocationsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function ($scope, $stateParams) {
+  .controller('adminLocationsCtrl', ['$scope', '$http', function ($scope, $http) {
+    console.log("Hello World from admin locations controller");
 
+    var refresh = function () {
+      $http.get('/employees_rest/api/locations/get').success(function (response) {
+        console.log("I got the data I requested");
+        $scope.contactlist = response;
+        $scope.contact = "";
+      });
+    };
 
-    }])
+    refresh();
+  }])
 
-  .controller('adminUsersCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function ($scope, $stateParams) {
+  .controller('adminUsersCtrl', ['$scope', '$http', function ($scope, $http) {
+    console.log("Hello World from users controller");
 
+    var refresh = function () {
+      $http.get('/employees_rest/api/user/get').success(function (response) {
+        console.log("I got the data I requested");
+        $scope.contactlist = response;
+        $scope.contact = "";
+      });
+    };
 
-    }])
+    refresh();
+  }])
 
   .controller('adminAddLocationCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function

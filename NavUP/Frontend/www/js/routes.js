@@ -64,7 +64,7 @@ angular.module('app.routes', [])
       })
 
       .state('adminMenu', {
-        url: '/AdminMenu',
+        url: '/adminMenu',
         templateUrl: 'templates/adminMenu.html',
         controller: 'adminMenuCtrl'
       })
