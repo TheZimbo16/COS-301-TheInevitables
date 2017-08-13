@@ -70,90 +70,51 @@ angular.module('app.controllers', [])
 
     }])
 
-  .controller('mapCtrl', function ($scope, $ionicLoading) {
+  .controller('mapCtrl', function ($scope,$http, $ionicLoading) {
+    $scope.coordinatesData = "";
+    $scope.coordinatesData2 = "";
     console.log("Hello World from map controller");
     $scope.mapCreated = function (map) {
       $scope.map = map;
-      //$scope.start = new google.maps.LatLng(getMyLocation());
-      var directionsService = new google.maps.DirectionsService;
-      var directionsDisplay = new google.maps.DirectionsRenderer;
-      directionsDisplay.setMap(map);
-      // var marker1 = new google.maps.LatLng(-25.755360, 28.232476);
-      // google.maps.event.addListenerOnce($scope.map, 'idle', function(){
-      //
-      //   var center = new google.maps.Marker({
-      //     map: $scope.map,
-      //     animation: google.maps.Animation.DROP,
-      //     position: marker1
-      //   });
-      //
-      //   var infoWindow = new google.maps.InfoWindow({
-      //     content: "Map Center!"
-      //   });
-      //
-      //   var marker2 = new google.maps.LatLng(-25.755470, 28.233476);
-      //
-      //     var dest = new google.maps.Marker({
-      //       map: $scope.map,
-      //       animation: google.maps.Animation.DROP,
-      //       position: marker2
-      //     });
-      //
-      //     var infoWindow2 = new google.maps.InfoWindow({
-      //       content: "destination!"
-      //     });
-      //
-      //   google.maps.event.addListener(center, 'click', function () {
-      //     infoWindow.open($scope.map, center);
-      //   });
-      //   google.maps.event.addListener(dest, 'click', function () {
-      //     infoWindow2.open($scope.map, dest);
-      //   });
-      //
-      // });
-      var onChangeHandler = function() {
-        calculateAndDisplayRoute(directionsService, directionsDisplay);
-      };
-      document.getElementById('start').addEventListener('change', onChangeHandler);
-      document.getElementById('end').addEventListener('change', onChangeHandler);
+      $scope.directionsService = new google.maps.DirectionsService;
+      $scope.directionsDisplay = new google.maps.DirectionsRenderer;
+      $scope.directionsDisplay.setMap(map);
     };
 
-    // function getMyLocation()
-    // {
-    //   console.log("getting location");
-    //   navigator.geolocation.watchPosition(function (pos) {
-    //     console.log('Got pos', pos);
-    //     var pos2 = {
-    //       lat: parseFloat(pos.coords.latitude),
-    //       lng:  parseFloat(pos.coords.longitude)
-    //     };
-    //     console.log(pos2);
-    //     return pos2;
-    //   }, function (error) {
-    //     alert('Unable to get location: ' + error.message);
-    //   });
-    //
-    // }
+    $scope.calculateAndDisplayRoute =function(directionsService, directionsDisplay){
+      //we use angular promises to make sure the data gets retrieved, something to do with asynchronous requests that makes the data not appear. Angular promises handles that
+      $scope.coords1 = "";
+      $scope.coords2 = "";
+      //we make nested promise to use data from both promises together otherwise only data of one will load
+      var $promise =$http.post('/employees_rest/api/navigation/get', $scope.coordinatesData);
+      $promise.then(function(response){
+        var $promise1 =$http.post('/employees_rest/api/navigation/get', $scope.coordinatesData2);
+        $promise1.then(function(response1){
 
-    function calculateAndDisplayRoute(directionsService, directionsDisplay){
-      console.log("clicked");
-      //var currPos = getMyLocation();
-      //var start = new google.maps.LatLng(getMyLocation());
-      //console.log("recieved " + $scope.start);
-      console.log("recieved " + start);
+                $scope.coords = response.data.locationCoordinates;//data promise
+                $scope.coords1 = response1.data.locationCoordinates; //data promise1
 
-      //var finish = new google.maps.LatLng(-25.756370, 28.232680);
+                $scope.res = $scope.coords.split(",");//split string
+                $scope.res1 = $scope.coords1.split(",");//split string
 
-      directionsService.route({
-        origin: document.getElementById("start").value,
-        destination: document.getElementById("end").value,
-        travelMode: 'WALKING'
-      }, function(response, status) {
-        if (status === 'OK') {
-          directionsDisplay.setDirections(response);
-        } else {
-          window.alert('Directions request failed due to ' + status);
-        }
+                //parse coordinates using the array res and res1
+                var parsedLat = parseFloat($scope.res[0]);
+                var parsedLng = parseFloat($scope.res[1]);
+                var parsedLat1 = parseFloat($scope.res1[0]);
+                var parsedLng1 = parseFloat($scope.res1[1]);
+
+                $scope.directionsService.route({
+                  origin:  new google.maps.LatLng(parsedLng,parsedLat),//somehow its inverted i do not know why lng and lat
+                  destination:  new google.maps.LatLng(parsedLng1,parsedLat1),
+                  travelMode: 'WALKING'
+                }, function(response, status) {
+                  if (status === 'OK') {
+                    $scope.directionsDisplay.setDirections(response);
+                  } else {
+                    window.alert('Directions request failed due to ' + status);
+                  }
+                });
+          });
       });
     }
 

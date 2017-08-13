@@ -8,10 +8,15 @@ angular.module('app.controllers', [])
 
     }])
 
-  .controller('loginCtrl', ['$scope', '$http', '$timeout', '$location', function ($scope, $http, $timeout, $location) {
+  .controller('loginCtrl', ['$scope', '$http', '$ionicModal', '$timeout', '$location', function ($scope, $http, $ionicModal, $timeout, $location) {
     console.log("Hello World from login controller");
 
     $scope.loginData = "";
+    $ionicModal.fromTemplateUrl('templates/loginWrong.html', {
+      scope: $scope
+    }).then(function (modal3) {
+      $scope.modal3 = modal3;
+    });
     $scope.doLogin = function () {
       //console.log("login clicked");
       console.log('Doing login', $scope.loginData);
@@ -24,7 +29,7 @@ angular.module('app.controllers', [])
           $location.path("/menu");
         }
         else {
-          //$scope.modal3.show();
+          $scope.modal3.show();
         }
       });
 
@@ -33,6 +38,10 @@ angular.module('app.controllers', [])
       // }, 1000);
     };
 
+    $scope.closeWrong = function()
+    {
+      $scope.modal3.hide();
+    }
 
   }])
 
@@ -61,70 +70,56 @@ angular.module('app.controllers', [])
 
     }])
 
-  .controller('mapCtrl', function ($scope, $ionicLoading) {
+  .controller('mapCtrl', function ($scope,$http, $ionicLoading) {
+    $scope.coordinatesData = "";
+    $scope.coordinatesData2 = "";
+    $scope.start ="";
+    $scope.end = "";
     console.log("Hello World from map controller");
     $scope.mapCreated = function (map) {
       $scope.map = map;
-      var directionsService = new google.maps.DirectionsService;
-      var directionsDisplay = new google.maps.DirectionsRenderer;
-      directionsDisplay.setMap(map);
-      // var marker1 = new google.maps.LatLng(-25.755360, 28.232476);
-      // google.maps.event.addListenerOnce($scope.map, 'idle', function(){
-      //
-      //   var center = new google.maps.Marker({
-      //     map: $scope.map,
-      //     animation: google.maps.Animation.DROP,
-      //     position: marker1
-      //   });
-      //
-      //   var infoWindow = new google.maps.InfoWindow({
-      //     content: "Map Center!"
-      //   });
-      //
-      //   var marker2 = new google.maps.LatLng(-25.755470, 28.233476);
-      //
-      //     var dest = new google.maps.Marker({
-      //       map: $scope.map,
-      //       animation: google.maps.Animation.DROP,
-      //       position: marker2
-      //     });
-      //
-      //     var infoWindow2 = new google.maps.InfoWindow({
-      //       content: "destination!"
-      //     });
-      //
-      //   google.maps.event.addListener(center, 'click', function () {
-      //     infoWindow.open($scope.map, center);
-      //   });
-      //   google.maps.event.addListener(dest, 'click', function () {
-      //     infoWindow2.open($scope.map, dest);
-      //   });
-      //
-      // });
-      var onChangeHandler = function() {
-        calculateAndDisplayRoute(directionsService, directionsDisplay);
-      };
-      document.getElementById('end').addEventListener('change', onChangeHandler);
+      //$scope.start = new google.maps.LatLng(getMyLocation());
+      $scope.directionsService = new google.maps.DirectionsService;
+      $scope.directionsDisplay = new google.maps.DirectionsRenderer;
+      $scope.directionsDisplay.setMap(map);
     };
 
-    function calculateAndDisplayRoute(directionsService, directionsDisplay){
-      console.log("clicked");
-      var start = navigator.geolocation.getCurrentPosition();
-      var finish = new google.maps.LatLng(-25.756370, 28.232680);
+    $scope.calculateAndDisplayRoute =function(directionsService, directionsDisplay){
+      //we use angular promises to make sure the data gets retrieved, something to do with asynchronous requests that makes the data not appear. Angular promises handles that
+      $scope.coords1 = "";
+      $scope.coords2 = "";
+      //we make nested promise to use data from both promises together otherwise only data of one will load
+      var $promise =$http.post('/employees_rest/api/navigation/get', $scope.coordinatesData);
+      $promise.then(function(response){
+        var $promise1 =$http.post('/employees_rest/api/navigation/get', $scope.coordinatesData2);
+        $promise1.then(function(response1){
+          
+                $scope.coords = response.data.locationCoordinates;//data promise
+                $scope.coords1 = response1.data.locationCoordinates; //data promise1
 
-      directionsService.route({
-        origin: start,
-        destination: finish,
-        travelMode: 'WALKING'
-      }, function(response, status) {
-        if (status === 'OK') {
-          directionsDisplay.setDirections(response);
-        } else {
-          window.alert('Directions request failed due to ' + status);
-        }
+                $scope.res = $scope.coords.split(",");//split string
+                $scope.res1 = $scope.coords1.split(",");//split string
+
+                //parse coordinates using the array res and res1
+                var parsedLat = parseFloat($scope.res[0]);
+                var parsedLng = parseFloat($scope.res[1]);
+                var parsedLat1 = parseFloat($scope.res1[0]);
+                var parsedLng1 = parseFloat($scope.res1[1]);
+
+                $scope.directionsService.route({
+                  origin:  new google.maps.LatLng(parsedLng,parsedLat),//somehow its inverted i do not know why
+                  destination:  new google.maps.LatLng(parsedLng1,parsedLat1),
+                  travelMode: 'WALKING'
+                }, function(response, status) {
+                  if (status === 'OK') {
+                    $scope.directionsDisplay.setDirections(response);
+                  } else {
+                    window.alert('Directions request failed due to ' + status);
+                  }
+                });
+          });
       });
     }
-
 
     $scope.centerOnMe = function () {
       console.log("Centering");
@@ -195,21 +190,33 @@ angular.module('app.controllers', [])
 
     }])
 
-  .controller('adminLocationsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function ($scope, $stateParams) {
+  .controller('adminLocationsCtrl', ['$scope', '$http', function ($scope, $http) {
+    console.log("Hello World from admin locations controller");
 
+    var refresh = function () {
+      $http.get('/employees_rest/api/locations/get').success(function (response) {
+        console.log("I got the data I requested");
+        $scope.contactlist = response;
+        $scope.contact = "";
+      });
+    };
 
-    }])
+    refresh();
+  }])
 
-  .controller('adminUsersCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function ($scope, $stateParams) {
+  .controller('adminUsersCtrl', ['$scope', '$http', function ($scope, $http) {
+    console.log("Hello World from users controller");
 
+    var refresh = function () {
+      $http.get('/employees_rest/api/user/get').success(function (response) {
+        console.log("I got the data I requested");
+        $scope.contactlist = response;
+        $scope.contact = "";
+      });
+    };
 
-    }])
+    refresh();
+  }])
 
   .controller('adminAddLocationCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function

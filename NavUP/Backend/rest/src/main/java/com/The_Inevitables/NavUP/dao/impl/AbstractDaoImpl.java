@@ -17,6 +17,7 @@ import javax.transaction.Transactional;
 import com.The_Inevitables.NavUP.model.SuperEntity;
 import com.The_Inevitables.NavUP.model.User;
 import com.The_Inevitables.NavUP.model.LocationType;
+import com.The_Inevitables.NavUP.model.Navigation;
 import com.The_Inevitables.NavUP.model.Building;
 import com.The_Inevitables.NavUP.model.CRS;
 import com.The_Inevitables.NavUP.model.CRSName;
@@ -279,9 +280,27 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 		
 		return geoJSON;
 	}
+	//======================================================================================================================================
+	//										Navigation QUERIES
+	//======================================================================================================================================
+	public Navigation getNav(String studentNo)
+	{
+		Navigation user = null;
+		
+		try
+		{
+			Query query = em.createQuery("SELECT c FROM com.The_Inevitables.NavUP.model.Navigation c WHERE c.locationName LIKE :custName");
+			query.setParameter("custName", studentNo);
+			user = (Navigation) query.getSingleResult();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
 	
-	
-
 	
 	
 }
