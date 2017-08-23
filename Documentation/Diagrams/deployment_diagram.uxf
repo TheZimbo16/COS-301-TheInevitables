@@ -4,8 +4,8 @@
   <element>
     <id>UMLDeployment</id>
     <coordinates>
-      <x>430</x>
-      <y>590</y>
+      <x>680</x>
+      <y>110</y>
       <w>260</w>
       <h>250</h>
     </coordinates>
@@ -17,8 +17,8 @@ group=1</panel_attributes>
   <element>
     <id>UMLDeployment</id>
     <coordinates>
-      <x>450</x>
-      <y>650</y>
+      <x>700</x>
+      <y>170</y>
       <w>210</w>
       <h>150</h>
     </coordinates>
@@ -30,8 +30,8 @@ group=1</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>480</x>
-      <y>710</y>
+      <x>730</x>
+      <y>230</y>
       <w>140</w>
       <h>80</h>
     </coordinates>
@@ -46,7 +46,7 @@ group=1</panel_attributes>
     <coordinates>
       <x>350</x>
       <y>110</y>
-      <w>390</w>
+      <w>300</w>
       <h>440</h>
     </coordinates>
     <panel_attributes>&lt;&lt;device&gt;&gt;
@@ -58,7 +58,7 @@ Backend Server</panel_attributes>
     <coordinates>
       <x>380</x>
       <y>170</y>
-      <w>330</w>
+      <w>250</w>
       <h>340</h>
     </coordinates>
     <panel_attributes>&lt;&lt;execution environment&gt;&gt;
@@ -69,38 +69,14 @@ Wildfly
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>390</x>
-      <y>230</y>
+      <x>400</x>
+      <y>390</y>
       <w>180</w>
       <h>110</h>
     </coordinates>
     <panel_attributes>symbol=component
-Controller</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>400</x>
-      <y>270</y>
-      <w>140</w>
-      <h>60</h>
-    </coordinates>
-    <panel_attributes>symbol=artifact
-NavUp.war</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>390</x>
-      <y>370</y>
-      <w>180</w>
-      <h>130</h>
-    </coordinates>
-    <panel_attributes>symbol=component
-Database
-abstraction layer</panel_attributes>
+Controller
+group=2</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -112,7 +88,57 @@ abstraction layer</panel_attributes>
       <h>60</h>
     </coordinates>
     <panel_attributes>symbol=artifact
-hibernate.jar</panel_attributes>
+NavUp.war
+group=2</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>400</x>
+      <y>240</y>
+      <w>160</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+Database
+abstraction layer
+group=3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>410</x>
+      <y>300</y>
+      <w>140</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>symbol=artifact
+hibernate.jar
+group=3</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>550</x>
+      <y>260</y>
+      <w>200</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;10.0;180.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>460</x>
+      <y>360</y>
+      <w>30</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;30.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
