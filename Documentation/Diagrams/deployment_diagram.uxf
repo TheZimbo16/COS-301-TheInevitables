@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>430</x>
+      <y>590</y>
+      <w>260</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;device&gt;&gt;
+Database Server
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>450</x>
+      <y>650</y>
+      <w>210</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;execution environment&gt;&gt;
+PostgreSQL
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>480</x>
+      <y>710</y>
+      <w>140</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+NavUP
+Database
+group=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
