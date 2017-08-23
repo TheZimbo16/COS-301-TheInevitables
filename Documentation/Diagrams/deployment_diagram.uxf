@@ -417,4 +417,54 @@ Management
 Console</panel_attributes>
     <additional_attributes/>
   </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>750</x>
+      <y>800</y>
+      <w>150</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>symbol=artifact
+Manage
+Wildfly through the
+console</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>850</x>
+      <y>750</y>
+      <w>60</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>40.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>370</x>
+      <y>420</y>
+      <w>70</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;40.0;50.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>270</x>
+      <y>440</y>
+      <w>110</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>Contains the
+business logic
+and database
+markup</panel_attributes>
+    <additional_attributes/>
+  </element>
 </diagram>
