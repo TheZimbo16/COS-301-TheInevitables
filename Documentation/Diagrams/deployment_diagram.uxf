@@ -66,4 +66,53 @@ Wildfly
 </panel_attributes>
     <additional_attributes/>
   </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>390</x>
+      <y>230</y>
+      <w>180</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+Controller</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>400</x>
+      <y>270</y>
+      <w>140</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>symbol=artifact
+NavUp.war</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>390</x>
+      <y>370</y>
+      <w>180</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>symbol=component
+Database
+abstraction layer</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>410</x>
+      <y>430</y>
+      <w>140</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>symbol=artifact
+hibernate.jar</panel_attributes>
+    <additional_attributes/>
+  </element>
 </diagram>
