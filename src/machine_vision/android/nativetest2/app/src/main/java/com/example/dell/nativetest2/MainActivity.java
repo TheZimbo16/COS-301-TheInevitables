@@ -23,6 +23,9 @@ import android.widget.Toast;
 
 import android.os.Vibrator;
 import android.os.Handler;
+import android.speech.tts.TextToSpeech;
+import java.util.Locale;
+import android.os.Build;
 
 public class MainActivity extends Activity implements CvCameraViewListener2 {
 
@@ -61,6 +64,17 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
     private Handler mHandler;
     private TextView text;
     private String str;
+    private TextToSpeech tts;
+
+    private void speak(String text){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+        }else{
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        }
+    }
+
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,6 +90,22 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
 
         mOpenCvCameraView.setCvCameraViewListener(this);
 
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = tts.setLanguage(Locale.UK);
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "This Language is not supported");
+                    }
+                    speak("Hello");
+
+                } else {
+                    Log.e("TTS", "Initilization Failed!");
+                }
+            }
+        });
+
         text = (TextView)findViewById(R.id.feedback);
         mHandler = new Handler();
         mHandler.post(mUpdate);
@@ -83,6 +113,12 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
     private Runnable mUpdate = new Runnable() {
         public void run() {
             text.setText(str);
+            if(str!=null)
+            {
+                if(str.equals("0 "))
+                    speak("Caution, concrete bollards ahead.");
+
+            }
             mHandler.postDelayed(this, 1000);
         }
     };
@@ -112,6 +148,10 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
         super.onDestroy();
         if (mOpenCvCameraView != null)
             mOpenCvCameraView.disableView();
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
     }
 
     public void onCameraViewStarted(int width, int height) {
