@@ -72,6 +72,7 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
         }else{
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         }
+        while(tts.isSpeaking()){}
     }
 
 
@@ -117,7 +118,8 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
             {
                 if(str.equals("0 "))
                     speak("Caution, concrete bollards ahead.");
-
+                if(str.equals("1 "))
+                    speak("The humanities building is to your left.");
             }
             mHandler.postDelayed(this, 1000);
         }
