@@ -3,7 +3,7 @@
 
 # Sets the minimum version of CMake required to build the native library.
 
-set(pathToProject /home/dell/Documents/univ/301/main/nativetest2)
+set(pathToProject /home/dell/Documents/univ/301/main/COS-301-TheInevitables/src/machine_vision/android/nativetest2)
 set(pathToOpenCv /home/dell/Documents/univ/301/main/android_opencv/opencv)
 
 cmake_minimum_required(VERSION 3.4.1)

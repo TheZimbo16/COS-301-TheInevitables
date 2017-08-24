@@ -7,15 +7,22 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
+import org.w3c.dom.Text;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.VibrationEffect;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import android.os.Vibrator;
+import android.os.Handler;
 
 public class MainActivity extends Activity implements CvCameraViewListener2 {
 
@@ -51,6 +58,9 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
         Log.i(TAG, "Instantiated new " + this.getClass());
     }
 
+    private Handler mHandler;
+    private TextView text;
+    private String str;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +75,17 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
 
         mOpenCvCameraView.setCvCameraViewListener(this);
+
+        text = (TextView)findViewById(R.id.feedback);
+        mHandler = new Handler();
+        mHandler.post(mUpdate);
     }
+    private Runnable mUpdate = new Runnable() {
+        public void run() {
+            text.setText(str);
+            mHandler.postDelayed(this, 1000);
+        }
+    };
 
     @Override
     public void onPause()
@@ -102,9 +122,12 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         Mat m = inputFrame.gray();
-        parseImg(m.getNativeObjAddr());
-        return m;
+        str=parseImg(m.getNativeObjAddr());
+        Vibrator v = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
+        v.vibrate(30);
+        return null;
     }
 
     public native String parseImg(long matAddrRgba);
 }
+
