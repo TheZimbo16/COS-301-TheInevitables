@@ -55,7 +55,7 @@ Thumbs.db
 .idea
 #.idea/workspace.xml
 build/
-
+jniLibs/
 #NDK
 obj/
 ####################################
