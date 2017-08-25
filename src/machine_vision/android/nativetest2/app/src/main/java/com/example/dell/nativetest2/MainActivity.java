@@ -24,8 +24,13 @@ import android.widget.Toast;
 import android.os.Vibrator;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
+
+import java.util.HashSet;
 import java.util.Locale;
 import android.os.Build;
+
+import java.util.Set;
+import java.util.StringTokenizer;
 
 public class MainActivity extends Activity implements CvCameraViewListener2 {
 
@@ -116,10 +121,22 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
             text.setText(str);
             if(str!=null)
             {
-                if(str.equals("0 "))
-                    speak("Caution, concrete bollards ahead.");
-                if(str.equals("1 "))
-                    speak("The humanities building is to your left.");
+                Set<String> set = new HashSet<String>();
+                String[] tokens = str.split(" ");
+                for(String token:tokens)
+                    set.add(token);
+                for(String token:set)
+                {
+                    if(token.equals("0"))
+                        speak("Caution, concrete bollards ahead.");
+                    if(token.equals("1"))
+                        speak("The humanities building is to your left.");
+                    if(token.equals("2"))
+                        speak("Caution, uneven terrain ahead.");
+                    if(token.equals("3"))
+                        speak("Listen for the fountain to your right.");
+                }
+                str = "";
             }
             mHandler.postDelayed(this, 1000);
         }
@@ -164,9 +181,10 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         Mat m = inputFrame.gray();
-        str=parseImg(m.getNativeObjAddr());
+        str+=parseImg(m.getNativeObjAddr());
         Vibrator v = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
-        v.vibrate(30);
+        if(!str.isEmpty())
+            v.vibrate(30);
         return null;
     }
 
