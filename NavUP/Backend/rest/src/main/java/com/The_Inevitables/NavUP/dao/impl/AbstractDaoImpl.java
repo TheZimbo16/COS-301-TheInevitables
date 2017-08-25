@@ -18,6 +18,7 @@ import com.The_Inevitables.NavUP.model.SuperEntity;
 import com.The_Inevitables.NavUP.model.User;
 import com.The_Inevitables.NavUP.model.LocationType;
 import com.The_Inevitables.NavUP.model.Navigation;
+import com.The_Inevitables.NavUP.model.POI;
 import com.The_Inevitables.NavUP.model.Building;
 import com.The_Inevitables.NavUP.model.CRS;
 import com.The_Inevitables.NavUP.model.CRSName;
@@ -301,6 +302,14 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 		return user;
 	}
 	
+	//======================================================================================================================================
+		//										POI QUERIES
+		//======================================================================================================================================
+	 public List<POI> findAllLocations() { 
+	        CriteriaQuery<POI> criteria = em.getCriteriaBuilder().createQuery(POI.class); 
+	        criteria.from(POI.class); 
+	        return em.createQuery(criteria).getResultList(); 
+	 }
 	
 	
 }
