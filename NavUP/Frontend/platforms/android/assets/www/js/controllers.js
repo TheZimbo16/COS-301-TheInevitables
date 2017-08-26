@@ -73,12 +73,9 @@ angular.module('app.controllers', [])
   .controller('mapCtrl', function ($scope,$http, $ionicLoading) {
     $scope.coordinatesData = "";
     $scope.coordinatesData2 = "";
-    $scope.start ="";
-    $scope.end = "";
     console.log("Hello World from map controller");
     $scope.mapCreated = function (map) {
       $scope.map = map;
-      //$scope.start = new google.maps.LatLng(getMyLocation());
       $scope.directionsService = new google.maps.DirectionsService;
       $scope.directionsDisplay = new google.maps.DirectionsRenderer;
       $scope.directionsDisplay.setMap(map);
@@ -93,7 +90,7 @@ angular.module('app.controllers', [])
       $promise.then(function(response){
         var $promise1 =$http.post('/employees_rest/api/navigation/get', $scope.coordinatesData2);
         $promise1.then(function(response1){
-          
+
                 $scope.coords = response.data.locationCoordinates;//data promise
                 $scope.coords1 = response1.data.locationCoordinates; //data promise1
 
@@ -107,7 +104,7 @@ angular.module('app.controllers', [])
                 var parsedLng1 = parseFloat($scope.res1[1]);
 
                 $scope.directionsService.route({
-                  origin:  new google.maps.LatLng(parsedLng,parsedLat),//somehow its inverted i do not know why
+                  origin:  new google.maps.LatLng(parsedLng,parsedLat),//somehow its inverted i do not know why lng and lat
                   destination:  new google.maps.LatLng(parsedLng1,parsedLat1),
                   travelMode: 'WALKING'
                 }, function(response, status) {
@@ -158,13 +155,19 @@ angular.module('app.controllers', [])
 
     }])
 
-  .controller('pointOfInterestsCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function ($scope, $stateParams) {
+  .controller('pointOfInterestsCtrl', ['$scope', '$http', function ($scope, $http) {
+    console.log("Hello World from POI controller");
 
+    var refresh = function () {
+      $http.get('/employees_rest/api/poi/get').success(function (response) {
+        console.log("I got the data I requested");
+        $scope.poilist = response;
+        $scope.poi = "";
+      });
+    };
 
-    }])
+    refresh();
+  }])
 
   .controller('recentlyVisitedCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
@@ -182,13 +185,19 @@ angular.module('app.controllers', [])
 
     }])
 
-  .controller('adminPOICtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function ($scope, $stateParams) {
+  .controller('adminPOICtrl', ['$scope', '$http', function ($scope, $http) {
+    console.log("Hello World from POI controller");
 
+    var refresh = function () {
+      $http.get('/employees_rest/api/poi/get').success(function (response) {
+        console.log("I got the data I requested");
+        $scope.poilist = response;
+        $scope.poi = "";
+      });
+    };
 
-    }])
+    refresh();
+  }])
 
   .controller('adminLocationsCtrl', ['$scope', '$http', function ($scope, $http) {
     console.log("Hello World from admin locations controller");
