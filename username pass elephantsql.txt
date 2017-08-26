@@ -1,0 +1,6 @@
+Server	pellefant.db.elephantsql.com (pellefant-02)
+
+User & Default database:qdnharhg
+Password:NUx3TcCi1tfcdKmO5OTkwjrcNszPgOhp
+
+URL:postgres://qdnharhg:NUx3TcCi1tfcdKmO5OTkwjrcNszPgOhp@pellefant.db.elephantsql.com:5432/qdnharhg

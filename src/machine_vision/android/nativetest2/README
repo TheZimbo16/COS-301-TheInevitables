@@ -1,0 +1,7 @@
+You will notice in app/CMakeList.txt there are 2 path variables that need to be set for your environment.
+The first one `pathToProject` is simply the path to the root directory of the android studio project.
+The second variable is the path to the android implementation of opencv compiled with the script that I modified from `https://github.com/tzutalin/build-opencv-for-android`.
+
+To set the second path, download and unpack the android implementation of opencv that I made from the google drive: and place it at some arbitrary path that you prefer. Just remember to set the second path to that location.
+
+Lastly download and unpack the compiled library files into app/src/main/jniLibs. The compiled library files can be downloaded from my google drive: .
