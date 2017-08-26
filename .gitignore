@@ -9,7 +9,7 @@
 persistence.xml
 # PDF files
 #*.pdf
-
+*.class
 *.iml
 .gradle
 /local.properties
