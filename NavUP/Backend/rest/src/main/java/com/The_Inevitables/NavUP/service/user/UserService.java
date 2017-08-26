@@ -28,7 +28,7 @@ public class UserService  {
 		userDAO.delete(studentNo);
 	}
 	
-	public List<User >findAllUsers() {
+	public List<User>findAllUsers() {
 		return userDAO.findAllCustomers();
 	}
 	

@@ -1,0 +1,25 @@
+<ion-view title="Point Of Interests" id="page8">
+  <ion-content padding="true" class="has-header">
+    <ion-list id="pointOfInterests-list6">
+      <label class="item item-select" id="pointOfInterests-select2">
+        <span class="input-label">Filter Category</span>
+        <select>
+          <option>All</option>
+          <option>Food</option>
+          <option>Residences</option>
+          <option>Historical</option>
+          <option>Activities</option>
+          <option>Sports</option>
+          <option>Toilets</option>
+          <option>Administration</option>
+        </select>
+      </label>
+      <label class="item item-input" id="pointOfInterests-search2">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="search" placeholder="Try &quot;CSC&quot;">
+      </label>
+      <a ui-sref="map()"><ion-item ng-repeat="poi in poilist" class="item-icon-right assertive" id="adminUsers-list-item105"><b>{{poi.locationName}}</b>
+      </ion-item></a>
+    </ion-list>
+  </ion-content>
+</ion-view>

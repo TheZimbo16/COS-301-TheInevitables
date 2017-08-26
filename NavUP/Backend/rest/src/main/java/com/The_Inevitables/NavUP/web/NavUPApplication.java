@@ -9,12 +9,11 @@ import javax.ws.rs.core.Application;
 import com.The_Inevitables.NavUP.web.api.UserAPI;
 import com.The_Inevitables.NavUP.web.api.FeatureAPI;
 import com.The_Inevitables.NavUP.web.api.GeoJSONAPI;
-import com.The_Inevitables.NavUP.model.GeoJSON;
 import com.The_Inevitables.NavUP.web.api.BuildingAPI;
 import com.The_Inevitables.NavUP.web.api.CRSAPI;
 import com.The_Inevitables.NavUP.web.api.CoordinatesAPI;
-import com.The_Inevitables.NavUP.web.api.LocationTypeAPI;
-import com.The_Inevitables.NavUP.web.api.LocationAPI;
+import com.The_Inevitables.NavUP.web.api.NavigationAPI;
+import com.The_Inevitables.NavUP.web.api.POIAPI;
 
 @ApplicationPath("api")
 public class NavUPApplication extends Application {
@@ -34,7 +33,9 @@ public class NavUPApplication extends Application {
 		s.add(CoordinatesAPI.class);
 		s.add(FeatureAPI.class);
 		s.add(CRSAPI.class);
+		s.add(NavigationAPI.class);
 		s.add(GeoJSONAPI.class);
+		s.add(POIAPI.class);
 		return s;
 
 	}
