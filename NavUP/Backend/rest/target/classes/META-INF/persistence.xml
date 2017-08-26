@@ -4,8 +4,8 @@
 		<jta-data-source>java:/PostgresDS</jta-data-source>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		      <properties>
-		      	<property name="hibernate.connection.username" value="qdnharhg" />
-				<property name="hibernate.connection.password" value="NUx3TcCi1tfcdKmO5OTkwjrcNszPgOhp" />
+		      	<property name="hibernate.connection.username" value="postgres" />
+				<property name="hibernate.connection.password" value="uvvF3MvWQzPvBWozd51GR/HZIb0" />
 				<property name="hibernate.hbm2ddl.auto" value="create" />
 				<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
 		      </properties>

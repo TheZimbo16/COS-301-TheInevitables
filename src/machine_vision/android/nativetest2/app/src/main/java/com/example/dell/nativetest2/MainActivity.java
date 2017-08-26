@@ -7,15 +7,30 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
+import org.w3c.dom.Text;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.VibrationEffect;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import android.os.Vibrator;
+import android.os.Handler;
+import android.speech.tts.TextToSpeech;
+
+import java.util.HashSet;
+import java.util.Locale;
+import android.os.Build;
+
+import java.util.Set;
+import java.util.StringTokenizer;
 
 public class MainActivity extends Activity implements CvCameraViewListener2 {
 
@@ -51,6 +66,21 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
         Log.i(TAG, "Instantiated new " + this.getClass());
     }
 
+    private Handler mHandler;
+    private TextView text;
+    private String str;
+    private TextToSpeech tts;
+
+    private void speak(String text){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+        }else{
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        }
+        while(tts.isSpeaking()){}
+    }
+
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +95,52 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
 
         mOpenCvCameraView.setCvCameraViewListener(this);
+
+        tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = tts.setLanguage(Locale.UK);
+                    if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "This Language is not supported");
+                    }
+                    speak("Hello");
+
+                } else {
+                    Log.e("TTS", "Initilization Failed!");
+                }
+            }
+        });
+
+        text = (TextView)findViewById(R.id.feedback);
+        mHandler = new Handler();
+        mHandler.post(mUpdate);
     }
+    private Runnable mUpdate = new Runnable() {
+        public void run() {
+            text.setText(str);
+            if(str!=null)
+            {
+                Set<String> set = new HashSet<String>();
+                String[] tokens = str.split(" ");
+                for(String token:tokens)
+                    set.add(token);
+                for(String token:set)
+                {
+                    if(token.equals("0"))
+                        speak("Caution, concrete bollards ahead.");
+                    if(token.equals("1"))
+                        speak("The humanities building is to your left.");
+                    if(token.equals("2"))
+                        speak("Caution, uneven terrain ahead.");
+                    if(token.equals("3"))
+                        speak("Listen for the fountain to your right.");
+                }
+                str = "";
+            }
+            mHandler.postDelayed(this, 1000);
+        }
+    };
 
     @Override
     public void onPause()
@@ -92,6 +167,10 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
         super.onDestroy();
         if (mOpenCvCameraView != null)
             mOpenCvCameraView.disableView();
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
     }
 
     public void onCameraViewStarted(int width, int height) {
@@ -102,9 +181,13 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         Mat m = inputFrame.gray();
-        parseImg(m.getNativeObjAddr());
-        return m;
+        str+=parseImg(m.getNativeObjAddr());
+        Vibrator v = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
+        if(!str.isEmpty())
+            v.vibrate(30);
+        return null;
     }
 
     public native String parseImg(long matAddrRgba);
 }
+

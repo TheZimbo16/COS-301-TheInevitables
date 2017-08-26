@@ -6,6 +6,15 @@
 #include <opencv2/core/base.hpp>
 #include <opencv2/opencv.hpp>
 
+
+template <typename T>
+std::string to_string(T value)
+{
+    std::ostringstream os ;
+    os << value ;
+    return os.str() ;
+}
+
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_example_dell_nativetest2_MainActivity_parseImg(JNIEnv *env, jobject, jlong addrRgba) {
@@ -18,10 +27,10 @@ Java_com_example_dell_nativetest2_MainActivity_parseImg(JNIEnv *env, jobject, jl
 
     int dictionaryId = 0;
     bool showRejected = false;
-    bool estimatePose = true;
+    bool estimatePose = false;
     float markerLength = 0.19;
     bool portrait_mode = false;
-    bool show_axis = true;
+    bool show_axis = false;
 
     cv::Ptr<cv::aruco::DetectorParameters> detectorParams = cv::aruco::DetectorParameters::create();
     //detectorParams->doCornerRefinement = true; // do corner refinement in markers
@@ -67,8 +76,12 @@ Java_com_example_dell_nativetest2_MainActivity_parseImg(JNIEnv *env, jobject, jl
 
     // draw results
     //image.copyTo(imageCopy);
+    std::string str_ids;
     if(ids.size() > 0) {
         cv::aruco::drawDetectedMarkers(image, corners, ids);
+
+        for(unsigned int i = 0; i < ids.size(); i++)
+            str_ids+=to_string(ids[i])+' ';
 
         if(estimatePose) {
             for(unsigned int i = 0; i < ids.size(); i++)
@@ -85,6 +98,5 @@ Java_com_example_dell_nativetest2_MainActivity_parseImg(JNIEnv *env, jobject, jl
 //    image = imageCopy;
 //    cv::cvtColor(imageCopy,imageCopy,cv::COLOR_RGB2RGBA);
 //    cv::resize(image,image,image_size);
-    std::string hello = "Hello from C++";
-    return env->NewStringUTF(hello.c_str());
+    return env->NewStringUTF(str_ids.c_str());
 }

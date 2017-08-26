@@ -1,0 +1,29 @@
+<ion-view title="Signup" id="page3">
+  <ion-content padding="true" class="has-header" ng-controller="signupCtrl">
+    <form id="signup-form10" class="list" ng-submit="doRegister()">
+      <ion-list id="signup-list2">
+        <label class="item item-input" id="signup-input10">
+          <input type="text" placeholder="Name" ng-model="registerData.studentName">
+        </label>
+        <label class="item item-input" id="signup-input11">
+          <input type="text" placeholder="Surname" ng-model="registerData.userSurname">
+        </label>
+        <label class="item item-input" id="signup-input15">
+          <input type="number" placeholder="Student No(e.g. u13104340)" ng-model="registerData.studentNumber">
+        </label>
+        <label class="item item-input" id="signup-input13">
+          <input type="email" placeholder="Email">
+        </label>
+        <label class="item item-input" id="signup-input12">
+          <input type="password" placeholder="Password" ng-model="registerData.userPassword">
+        </label>
+        <label class="item item-input" id="signup-input16">
+          <input type="password" placeholder="Confirm Password">
+        </label>
+        <ion-checkbox id="signup-checkbox1">I am not disabled</ion-checkbox>
+        <ion-checkbox id="signup-checkbox2">I am disabled</ion-checkbox>
+      </ion-list>
+      <button type="submit" id="signup-button14" class="button button-positive button-block">Sign up</button>
+    </form>
+  </ion-content>
+</ion-view>

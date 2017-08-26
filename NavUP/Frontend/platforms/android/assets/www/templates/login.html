@@ -1,0 +1,20 @@
+<ion-view title="Login" id="page2">
+  <ion-content padding="true" class="has-header" ng-controller="loginCtrl">
+    <div>
+      <img src="img/tU83iEXGR3mUQakkAMo1_Untitled-1.png" style="display: block; width: 25%; height: auto; margin-left: auto; margin-right: auto;">
+    </div>
+    <form id="login-form9" class="list" ng-submit="doLogin()">
+      <ion-list id="login-list1">
+        <label class="item item-input" id="login-input8">
+          <input type="number" placeholder="Student No e.g. u13104340" ng-model="loginData.studentNumber">
+        </label>
+        <label class="item item-input" id="login-input9">
+          <input type="password" placeholder="password" ng-model="loginData.userPassword">
+        </label>
+      </ion-list>
+      <button id="login-button11" class="button button-positive button-block" type="submit">Log in</button>
+      <a ui-sref="guestMenu()" id="login-button13" class="button button-positive button-block button-clear">Guest</a>
+      <a ui-sref="signup()" id="login-button12" class="button button-positive button-block button-clear">Register</a>
+    </form>
+  </ion-content>
+</ion-view>
