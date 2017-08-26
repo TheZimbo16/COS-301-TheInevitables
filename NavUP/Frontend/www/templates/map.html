@@ -1,0 +1,20 @@
+<ion-view title="Map" id="page5">
+  <ion-content padding="true" class="has-header" ng-controller="mapCtrl">
+    <form id="map-form11" class="list"ng-submit="calculateAndDisplayRoute()" >
+      <label class="item item-input" id="map-search1">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input id="start" type="search" placeholder="Start Location"ng-model="coordinatesData.locationName">
+      </label>
+      <label class="item item-input" id="map-search1">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input id="end" type="search" placeholder="End Location"ng-model="coordinatesData2.locationName">
+      </label>
+      <button id="adminAddLocation-button25" ng-click="getCoordinates()" class="button button-assertive button-block icon ion-android-compass"> Navigate</button>
+    </form>
+    <map on-create="mapCreated(map)"></map>
+  </ion-content>
+  <ion-footer-bar class="bar-stable">
+    <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate"></a>
+    <search-bar ng-model="search"></search-bar>
+  </ion-footer-bar>
+</ion-view>

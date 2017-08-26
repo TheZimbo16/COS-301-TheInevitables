@@ -1,0 +1,10 @@
+{
+  "name": "newapp",
+  "app_id": "",
+  "v2": true,
+  "typescript": true,
+  "proxies": [{
+    "path": "employees_rest/api/",
+    "proxyUrl": "http://localhost:11080/"
+  }]
+}
