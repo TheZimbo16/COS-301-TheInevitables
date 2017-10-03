@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">NavUP</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_main_menu">MainMenu</string>
+    <string name="title_activity_disability_menu">disability_menu</string>
+    <string name="title_activity_disability_navigation">disability_navigation</string>
+</resources>
