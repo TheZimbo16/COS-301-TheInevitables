@@ -138,7 +138,7 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
                 }
                 str = "";
             }
-            mHandler.postDelayed(this, 1000);
+            mHandler.postDelayed(this, 3000);
         }
     };
 
