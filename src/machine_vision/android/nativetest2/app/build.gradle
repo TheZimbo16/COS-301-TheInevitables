@@ -40,6 +40,7 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.google.guava:guava:23.0-android'
     testCompile 'junit:junit:4.12'
     compile project(':openCVLibrary320')
 }

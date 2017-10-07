@@ -11,6 +11,7 @@ import org.w3c.dom.Text;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.os.VibrationEffect;
 import android.util.Log;
 import android.view.Menu;
@@ -31,8 +32,11 @@ import android.os.Build;
 import android.content.Context;//required by SharedPreferences for MODE types
 import android.content.SharedPreferences;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.Cache;
+
 import java.util.Set;
-import java.util.StringTokenizer;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends Activity implements CvCameraViewListener2 {
 
@@ -72,15 +76,16 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
     }
 
     private Handler mHandler;
-    Set<String> detectedMarkers = new HashSet<>();
+    Cache<String, String> cache = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.SECONDS).build();
+    String raw_ids = "";
     private TextToSpeech tts;
     private TextView text;
 
     private void speak(String text){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+            tts.speak(text, TextToSpeech.QUEUE_ADD, null, null);
         }else{
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+            tts.speak(text, TextToSpeech.QUEUE_ADD, null);
         }
         while(tts.isSpeaking()){}
     }
@@ -131,12 +136,22 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
     }
     private Runnable mUpdate = new Runnable() {
         public void run() {
-            for(String marker:detectedMarkers)
+            String[] tokens = raw_ids.split(" ");
+            for(String token:tokens)
             {
-                speak(sharedpreferences.getString(marker,"unknown marker detected"));
-                text.setText(marker);
+                if(token!=null && token!="" && token!="null")
+                    if(cache.getIfPresent(token)==null)
+                    {
+                        String feedback = sharedpreferences.getString(token,"");
+                        if(feedback != "")
+                        {
+                            speak(feedback);
+                            text.setText(token);
+                            cache.put(token,token);
+                        }
+                    }
             }
-            detectedMarkers.clear();
+            raw_ids = "";
             mHandler.postDelayed(this, 1000);
         }
     };
@@ -180,17 +195,12 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         Mat m = inputFrame.gray();
-        String raw_ids;
-        raw_ids=parseImg(m.getNativeObjAddr());
-        Vibrator v = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
+        raw_ids+=parseImg(m.getNativeObjAddr());
+ /*       Vibrator v = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
         if(!raw_ids.isEmpty())
         {
-            String[] tokens = raw_ids.split(" ");
-            for(String token:tokens)
-                if(token!=null && token!="" && token!="null")
-                    detectedMarkers.add(token);
             v.vibrate(30);
-        }
+        }*/
         return null;
     }
 
