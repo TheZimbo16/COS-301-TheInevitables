@@ -28,6 +28,8 @@ import android.speech.tts.TextToSpeech;
 import java.util.HashSet;
 import java.util.Locale;
 import android.os.Build;
+import android.content.Context;//required by SharedPreferences for MODE types
+import android.content.SharedPreferences;
 
 import java.util.Set;
 import java.util.StringTokenizer;
@@ -40,10 +42,13 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
     }
 
     private static final String TAG = "OCVSample::Activity";
+    private static final String PREFERENCENAME = "navupBlind";
 
     private CameraBridgeViewBase mOpenCvCameraView;
     private boolean              mIsJavaCamera = true;
     private MenuItem             mItemSwitchCamera = null;
+
+    private SharedPreferences sharedpreferences;
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -67,9 +72,9 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
     }
 
     private Handler mHandler;
-    private TextView text;
-    private String str;
+    Set<String> detectedMarkers = new HashSet<>();
     private TextToSpeech tts;
+    private TextView text;
 
     private void speak(String text){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -87,6 +92,14 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
         Log.i(TAG, "called onCreate");
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        sharedpreferences = getSharedPreferences(PREFERENCENAME, Context.MODE_MULTI_PROCESS);
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString("0","Caution, concrete bollards ahead.");
+        editor.putString("1","The humanities building is to your left.");
+        editor.putString("2","Caution, uneven terrain ahead.");
+        editor.putString("3","Listen for the fountain to your right.");
+        editor.commit();
 
         setContentView(R.layout.tutorial1_surface_view);
 
@@ -118,27 +131,13 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
     }
     private Runnable mUpdate = new Runnable() {
         public void run() {
-            text.setText(str);
-            if(str!=null)
+            for(String marker:detectedMarkers)
             {
-                Set<String> set = new HashSet<String>();
-                String[] tokens = str.split(" ");
-                for(String token:tokens)
-                    set.add(token);
-                for(String token:set)
-                {
-                    if(token.equals("0"))
-                        speak("Caution, concrete bollards ahead.");
-                    if(token.equals("1"))
-                        speak("The humanities building is to your left.");
-                    if(token.equals("2"))
-                        speak("Caution, uneven terrain ahead.");
-                    if(token.equals("3"))
-                        speak("Listen for the fountain to your right.");
-                }
-                str = "";
+                speak(sharedpreferences.getString(marker,"unknown marker detected"));
+                text.setText(marker);
             }
-            mHandler.postDelayed(this, 3000);
+            detectedMarkers.clear();
+            mHandler.postDelayed(this, 1000);
         }
     };
 
@@ -181,10 +180,17 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         Mat m = inputFrame.gray();
-        str+=parseImg(m.getNativeObjAddr());
+        String raw_ids;
+        raw_ids=parseImg(m.getNativeObjAddr());
         Vibrator v = (Vibrator) this.getSystemService(this.VIBRATOR_SERVICE);
-        if(!str.isEmpty())
+        if(!raw_ids.isEmpty())
+        {
+            String[] tokens = raw_ids.split(" ");
+            for(String token:tokens)
+                if(token!=null && token!="" && token!="null")
+                    detectedMarkers.add(token);
             v.vibrate(30);
+        }
         return null;
     }
 
