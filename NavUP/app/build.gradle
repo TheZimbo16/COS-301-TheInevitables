@@ -1,8 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
+
     compileSdkVersion 25
     buildToolsVersion "26.0.2"
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "theinevitables.navup"
         minSdkVersion 15
@@ -24,8 +26,12 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:25.3.1'
+    compile 'com.google.android.gms:play-services-maps:11.0.4'
+    compile 'com.google.maps.android:android-maps-utils:0.5'
+    compile 'com.google.maps:google-maps-services:0.1.20'
     testCompile 'junit:junit:4.12'
 }

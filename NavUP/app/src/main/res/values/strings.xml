@@ -5,4 +5,11 @@
     <string name="title_activity_main_menu">MainMenu</string>
     <string name="title_activity_disability_menu">disability_menu</string>
     <string name="title_activity_disability_navigation">disability_navigation</string>
+    <string name="title_activity_map_page">mapPage</string>
+    <string name="title_activity_recent_locations">recentLocations</string>
+    <string name="title_activity_poi">POI</string>
+    <string name="title_activity_registration">registration</string>
+    <string name="register">Register</string>
+    <string name="title_activity_maps">Map</string>
+    <string name ="directionsApiKey">AIzaSyAAOO09oZDnxJxvRXpMjCaqTBDIGGKKIyQ</string>
 </resources>
