@@ -128,7 +128,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         HttpClient httpclient = new DefaultHttpClient();
 
                         // make GET request to the given URL
-                        HttpResponse httpResponse = httpclient.execute(new HttpGet("http://35.202.5.111:11080/NavUPRest/api/geoJSON/get"));
+                        HttpResponse httpResponse = httpclient.execute(new HttpGet("http://35.202.5.111:11080/NavUPRest/api/building/get/geoJSON"));
 
                         // receive response as inputStream
                         inputStream = httpResponse.getEntity().getContent();
