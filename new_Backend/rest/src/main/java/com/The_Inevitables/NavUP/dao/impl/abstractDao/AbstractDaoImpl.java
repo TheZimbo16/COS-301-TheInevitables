@@ -47,13 +47,16 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 		
 		try
 		{
-			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.Building u WHERE u.name = :p");
+			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.building.Building u WHERE u.name = :p");
 			query.setParameter("p", buildingName);
 			building = (Building) query.getSingleResult();
+			
+			if(building == null)
+				throw new Exception("no item found");
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 		return building;
@@ -73,7 +76,7 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	{
 		try
 		{
-			Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.Building u WHERE u.buildingName = :p");
+			Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.building.Building u WHERE u.buildingName = :p");
 			query.setParameter("p", buildingName).executeUpdate();
 		}
 		catch(Exception e)
@@ -88,7 +91,7 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	public void delete(int studentNo) {
 		try
 		{
-			Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.User u WHERE u.studentNumber = :p");
+			Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.user.User u WHERE u.studentNumber = :p");
 			query.setParameter("p", studentNo).executeUpdate();
 		}
 		catch(Exception e)
@@ -121,7 +124,7 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 		
 		try
 		{
-			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.User u WHERE u.studentNumber = :p");
+			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.user.User u WHERE u.studentNumber = :p");
 			query.setParameter("p", studentNo);
 			user = (User) query.getSingleResult();
 		}
@@ -166,7 +169,7 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	public void deleteEntranceByName(String name) {
 		try
 		{
-			Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.Entrance u WHERE u.name = :p");
+			Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.entrance.Entrance u WHERE u.name = :p");
 			query.setParameter("p", name).executeUpdate();
 		}
 		catch(Exception e)
@@ -186,7 +189,7 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 		
 		try
 		{
-			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.Entrance u WHERE u.name = :p");
+			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.entrance.Entrance u WHERE u.name = :p");
 			query.setParameter("p", name);
 			entrance = (Entrance) query.getSingleResult();
 		}
@@ -214,7 +217,7 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	public void deleteLectureHallByRoomName(String name) {
 		try
 		{
-			Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.LectureHall u WHERE u.name = :p");
+			Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.lectureHall.LectureHall u WHERE u.name = :p");
 			query.setParameter("p", name).executeUpdate();
 		}
 		catch(Exception e)
@@ -234,7 +237,7 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 		
 		try
 		{
-			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.LectureHall u WHERE u.name = :p");
+			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.lectureHall.LectureHall u WHERE u.name = :p");
 			query.setParameter("p", name);
 			lectureHall = (LectureHall) query.getSingleResult();
 		}
@@ -253,7 +256,7 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	public void deleteByStairName(String name) {
 		try
 		{
-			Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.Stairs u WHERE u.name = :p");
+			Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.stairs.Stairs u WHERE u.name = :p");
 			query.setParameter("p", name).executeUpdate();
 		}
 		catch(Exception e)
@@ -273,9 +276,12 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 		
 		try
 		{
-			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.Stairs u WHERE u.name = :p");
+			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.stairs.Stairs u WHERE u.name = :p");
 			query.setParameter("p", name);
 			stairs = (Stairs) query.getSingleResult();
+			
+			if(stairs == null)
+				throw new Exception("no item found");
 		}
 		catch(Exception e)
 		{

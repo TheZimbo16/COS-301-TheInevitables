@@ -2,6 +2,7 @@ package com.The_Inevitables.NavUP.web.api.api_modules.building;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -84,7 +85,7 @@ public class BuildingAPI {
 	 }
 	 
 	 @POST 
-	 @Path("geoJSON/building")
+	 @Path("geoJSON")
 	 @Produces(MediaType.APPLICATION_JSON)
 	 @Consumes(MediaType.APPLICATION_JSON)
 	 public List<Building> getBuildingFromGeoJSON(String request) {
@@ -107,6 +108,47 @@ public class BuildingAPI {
 		}
 		 
 		 return buildingService.getAllBuildings();
+	 }
+	 
+	 @POST 
+	 @Path("geoJSON/coordinates")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 public ArrayList<Float> getBuildingCoordinates(BuildingDTO request) {
+		 try {
+			 Building building = buildingService.getBuildingByName(buildingTransformer.toEntity(request).getName());
+			 
+			 if(building == null)
+				 throw new Exception("no building found");
+			 
+			//get coordinates of the building
+			ArrayList<ArrayList<ArrayList<Float>>> buildingCoordinates = building.getCoordinates();
+			
+			if(buildingCoordinates.isEmpty())
+				throw new Exception("no coordinates found for building");
+			
+			//iterate through all coordinates and add to an ArrayList
+			ArrayList<Float> coordinates = new ArrayList<Float>();
+			for(int i = 0; i < buildingCoordinates.size(); i++) {
+				ArrayList<ArrayList<Float>> outerArray = buildingCoordinates.get(i);
+				for(int o = 0; o < outerArray.size(); o++) {
+					ArrayList<Float> innerArray = outerArray.get(o);
+					
+					//retrieve long and lat values (ignore elevation)
+					for(int c = 0; c < innerArray.size() - 1; c++) {
+						coordinates.add(innerArray.get(c));
+					}
+				}
+			}
+			
+			return coordinates;
+			 
+		 }
+		 catch(Exception e) {
+			 e.getMessage();
+		 }
+		
+		 return null;
 	 }
 
 }
