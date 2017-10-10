@@ -1,5 +1,7 @@
 package com.The_Inevitables.NavUP.web.api.api_modules.lectureHall;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,6 +18,8 @@ import javax.ws.rs.core.MediaType;
 import com.The_Inevitables.NavUP.model.GeoJSONFormatter.LectureHallGeoJson.LectureHallGeoJson;
 import com.The_Inevitables.NavUP.model.LectureHall.LectureHall;
 import com.The_Inevitables.NavUP.web.api.dto.lectureHall.LectureHallDTO;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Path("lecture-hall")
 @RequestScoped
@@ -77,6 +81,31 @@ public class LectureHallAPI {
 		LectureHall lectureHall =  lectureHallService.getLectureHallByRoomName(request.getRoom_name());
 		geoJSON.createGeoJSON(lectureHall);
 		return geoJSON.printGeoJSON();
+	}
+	
+	@POST 
+	@Path("geoJSON")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<LectureHall> getLectureHallFromGeoJSON(String request) {
+		JsonParser parser = new JsonParser();
+		JsonObject o = parser.parse(request).getAsJsonObject();
+		
+		try {
+			Collection<LectureHall> lectureHalls = geoJSON.createObjectsFromGeoJSON(o);
+			for(LectureHall l : lectureHalls) {
+				lectureHallService.createLectureHall(l);
+			}
+		}
+		catch(Exception e) {
+			StringWriter sw = new StringWriter();
+			PrintWriter pr = new PrintWriter(sw);
+			e.printStackTrace(pr);
+			String stackTrance = sw.toString();
+			System.out.println(stackTrance);
+		}
+		
+		return lectureHallService.getAllLectureHalls();
 	}
 	
 	

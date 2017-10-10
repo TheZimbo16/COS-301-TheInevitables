@@ -18,20 +18,20 @@ private JsonObject geoJSON;
 	}
 	
 	public JsonObject createGeoJSON(Stairs stairs) {
-		JsonObject featureCollection = new JsonObject();
+		JsonObject FeatureCollection = new JsonObject();
 		 
 		 try {
-			 featureCollection.addProperty("type", "featureCollection");
-			 featureCollection.add("crs", createCRS());
-			 featureCollection.add("features", createFeature(stairs));
+			 FeatureCollection.addProperty("type", "FeatureCollection");
+			 FeatureCollection.add("crs", createCRS());
+			 FeatureCollection.add("features", createFeature(stairs));
 			 
 		 }
 		 catch(Exception e) {
 			 System.out.println(e);
 		 }
 		 
-		 this.geoJSON = featureCollection;
-		 return featureCollection;
+		 this.geoJSON = FeatureCollection;
+		 return FeatureCollection;
 	}
 	
 	public JsonArray createFeature(Stairs s) {
@@ -52,7 +52,6 @@ private JsonObject geoJSON;
 	public JsonObject addFeature(Stairs s) {
 		JsonObject feature = new JsonObject();
 		JsonObject properties = new JsonObject();
-		properties.addProperty("id", s.getId());
 		properties.addProperty("level", s.getLevel());
 		properties.addProperty("position", s.getPosition());
 		properties.addProperty("building", s.getBuilding());
@@ -79,20 +78,21 @@ private JsonObject geoJSON;
 	}
 	
 	public JsonObject createGeoJSON(Collection<Stairs> stairs) {
-		JsonObject featureCollection = new JsonObject();
-		featureCollection.addProperty("type", "featureCollection");
-		featureCollection.add("crs", createCRS());
-		featureCollection.add("features", createFeatures(stairs));
+		JsonObject FeatureCollection = new JsonObject();
+		FeatureCollection.addProperty("type", "FeatureCollection");
+		FeatureCollection.add("crs", createCRS());
+		FeatureCollection.add("features", createFeatures(stairs));
 		
-		this.geoJSON = featureCollection;
-		return featureCollection;
+		this.geoJSON = FeatureCollection;
+		return FeatureCollection;
 	}
 	
 	public Collection<Stairs> getObjectsFromGeoJSON(JsonArray features) {
 		Collection<Stairs> stairs = new ArrayList<Stairs>();
-		ArrayList<Float> coordinates = new ArrayList<Float>();
 		
 		for(JsonElement f: features) {
+			ArrayList<Float> coordinates = new ArrayList<Float>();
+			
 			Stairs stair = new Stairs();
 			JsonObject properties = f.getAsJsonObject().getAsJsonObject("properties");
 			JsonObject geometry = f.getAsJsonObject().getAsJsonObject("geometry");
@@ -103,7 +103,6 @@ private JsonObject geoJSON;
 				coordinates.add(tmp);
 			}
 			
-			stair.setId(Integer.parseInt(properties.get("id").getAsString().toString()));
 			stair.setPosition(properties.get("position").getAsString().toString());
 			stair.setLevel(Integer.parseInt(properties.get("level").getAsString().toString()));
 			stair.setBuilding(properties.get("building").getAsString().toString());

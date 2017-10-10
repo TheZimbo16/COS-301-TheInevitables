@@ -20,20 +20,20 @@ public class BuildingGeoJson extends GeoJSON{
 
 	public JsonObject createGeoJSON(Building b)
 	{
-		 JsonObject featureCollection = new JsonObject();
+		 JsonObject FeatureCollection = new JsonObject();
 		 
 		 try {
-			 featureCollection.addProperty("type", "featureCollection");
-			 featureCollection.add("crs", createCRS());
-			 featureCollection.add("features", createFeature(b));
+			 FeatureCollection.addProperty("type", "FeatureCollection");
+			 FeatureCollection.add("crs", createCRS());
+			 FeatureCollection.add("features", createFeature(b));
 			 
 		 }
 		 catch(Exception e) {
 			 System.out.println(e);
 		 }
 		 
-		 this.buildingGeoJSON = featureCollection;
-		 return featureCollection;
+		 this.buildingGeoJSON = FeatureCollection;
+		 return FeatureCollection;
 	}
 	
 	public JsonArray createFeature(Building b) {
@@ -87,44 +87,44 @@ public class BuildingGeoJson extends GeoJSON{
 	}
 	
 	public JsonObject createMultipleGeoJSON(Collection<Building> buildings) {
-		JsonObject featureCollection = new JsonObject();
-		 featureCollection.addProperty("type", "featureCollection");
-		 featureCollection.add("crs", createCRS());
-		 featureCollection.add("features", createFeatures(buildings));
+		JsonObject FeatureCollection = new JsonObject();
+		 FeatureCollection.addProperty("type", "FeatureCollection");
+		 FeatureCollection.add("crs", createCRS());
+		 FeatureCollection.add("features", createFeatures(buildings));
 		
-		this.buildingGeoJSON = featureCollection;
-		return featureCollection;
+		this.buildingGeoJSON = FeatureCollection;
+		return FeatureCollection;
 	}
 	
 	public Collection<Building> getObjectsFromGeoJSON(JsonArray features) {
-		Collection<Building> buildings = new ArrayList<Building>();
-		
-		ArrayList<ArrayList<ArrayList<Float>>> coordinates = new ArrayList<ArrayList<ArrayList<Float>>>();
-		ArrayList<ArrayList<Float>> temp = new ArrayList<ArrayList<Float>>();
-		ArrayList<Float> coordinateValues = new ArrayList<Float>();
-		
+Collection<Building> buildings = new ArrayList<Building>();
 		for(JsonElement f: features) {
+			ArrayList<ArrayList<ArrayList<Float>>> coordinates = new ArrayList<ArrayList<ArrayList<Float>>>();
+			ArrayList<ArrayList<Float>> temp = new ArrayList<ArrayList<Float>>();
+			
 			Building newBuilding = new Building();
 			JsonObject properties = f.getAsJsonObject().getAsJsonObject("properties");
 			JsonObject geometry = f.getAsJsonObject().getAsJsonObject("geometry");
-			JsonArray coords = geometry.getAsJsonArray("coordinates");
+			JsonArray coordinateField = geometry.getAsJsonArray("coordinates");
 			
-			for(int i = 0; i < coords.size(); i++) {
-				JsonArray innerArray = (JsonArray) coords.get(i);
+			for(int i = 0; i < coordinateField.size(); i++) {
+
+				JsonArray innerArray = (JsonArray) coordinateField.get(i);
 				for(int j = 0; j < innerArray.size(); j++) {
-					JsonArray coordinateTriplets = (JsonArray) innerArray.get(j);
-					for(int c = 0; c < coordinateTriplets.size(); c++) {
-						Float tmp = new Float(coordinateTriplets.get(c).getAsFloat());
-						coordinateValues.add(tmp);
+					
+					JsonArray coordinateValue = (JsonArray) innerArray.get(j);
+					ArrayList<Float> coordinateTriples = new ArrayList<Float>();
+					for(int c = 0; c < coordinateValue.size(); c++) {
+						Float tmp = new Float(coordinateValue.get(c).getAsFloat());
+						coordinateTriples.add(tmp);
 					}
-					temp.add(coordinateValues);
+					temp.add(coordinateTriples);
 				}
 			}
 			
 			coordinates.add(temp);
 			newBuilding.setName(properties.get("name").getAsString().toString());
 			newBuilding.setDescription(properties.get("description").getAsString().toString());
-			newBuilding.setId(properties.get("id").getAsInt());
 			newBuilding.setCoordinates(coordinates);
 			buildings.add(newBuilding);
 		}

@@ -17,20 +17,20 @@ public class LectureHallGeoJson extends GeoJSON {
 	}
 	
 	public JsonObject createGeoJSON(LectureHall lectureHall) {
-		JsonObject featureCollection = new JsonObject();
+		JsonObject FeatureCollection = new JsonObject();
 		 
 		 try {
-			 featureCollection.addProperty("type", "featureCollection");
-			 featureCollection.add("crs", createCRS());
-			 featureCollection.add("features", createFeature(lectureHall));
+			 FeatureCollection.addProperty("type", "FeatureCollection");
+			 FeatureCollection.add("crs", createCRS());
+			 FeatureCollection.add("features", createFeature(lectureHall));
 			 
 		 }
 		 catch(Exception e) {
 			 System.out.println(e);
 		 }
 		 
-		 this.lectureHallGeoJSON = featureCollection;
-		 return featureCollection;
+		 this.lectureHallGeoJSON = FeatureCollection;
+		 return FeatureCollection;
 	}
 	
 	public JsonArray createFeature(LectureHall lectureHall) {
@@ -51,7 +51,6 @@ public class LectureHallGeoJson extends GeoJSON {
 	public JsonObject addFeature(LectureHall lectureHall) {
 		JsonObject feature = new JsonObject();
 		JsonObject properties = new JsonObject();
-		properties.addProperty("id", lectureHall.getId());
 		properties.addProperty("room_name", lectureHall.getRoom_name());
 		properties.addProperty("building", lectureHall.getBuilding());
 		properties.addProperty("level", lectureHall.getLevel());
@@ -85,23 +84,23 @@ public class LectureHallGeoJson extends GeoJSON {
 	}
 	
 	public JsonObject createGeoJSON(Collection<LectureHall> lectureHalls) {
-		JsonObject featureCollection = new JsonObject();
-		 featureCollection.addProperty("type", "featureCollection");
-		 featureCollection.add("crs", createCRS());
-		 featureCollection.add("features", createFeatures(lectureHalls));
+		JsonObject FeatureCollection = new JsonObject();
+		 FeatureCollection.addProperty("type", "FeatureCollection");
+		 FeatureCollection.add("crs", createCRS());
+		 FeatureCollection.add("features", createFeatures(lectureHalls));
 		
-		this.lectureHallGeoJSON = featureCollection;
-		return featureCollection;
+		this.lectureHallGeoJSON = FeatureCollection;
+		return FeatureCollection;
 	}
 	
 	public Collection<LectureHall> getObjectsFromGeoJSON(JsonArray features) {
 		Collection<LectureHall> lectureHalls = new ArrayList<LectureHall>();
 		
-		ArrayList<ArrayList<ArrayList<Float>>> coordinates = new ArrayList<ArrayList<ArrayList<Float>>>();
-		ArrayList<ArrayList<Float>> temp = new ArrayList<ArrayList<Float>>();
-		ArrayList<Float> coordinateValues = new ArrayList<Float>();
-		
 		for(JsonElement f: features) {
+			ArrayList<ArrayList<ArrayList<Float>>> coordinates = new ArrayList<ArrayList<ArrayList<Float>>>();
+			ArrayList<ArrayList<Float>> temp = new ArrayList<ArrayList<Float>>();
+			ArrayList<Float> coordinateValues = new ArrayList<Float>();
+			
 			LectureHall newLectureHall = new LectureHall();
 			JsonObject properties = f.getAsJsonObject().getAsJsonObject("properties");
 			JsonObject geometry = f.getAsJsonObject().getAsJsonObject("geometry");
@@ -120,7 +119,6 @@ public class LectureHallGeoJson extends GeoJSON {
 			}
 			
 			coordinates.add(temp);
-			newLectureHall.setId(Integer.parseInt(properties.get("id").getAsString().toString()));
 			newLectureHall.setBuilding(properties.get("building").getAsString().toString());
 			newLectureHall.setRoom_name(properties.get("room_name").getAsString().toString());
 			newLectureHall.setLevel(Integer.parseInt(properties.get("level").getAsString().toString()));

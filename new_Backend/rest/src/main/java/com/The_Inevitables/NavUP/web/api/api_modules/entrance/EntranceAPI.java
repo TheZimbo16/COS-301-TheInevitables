@@ -1,6 +1,9 @@
 package com.The_Inevitables.NavUP.web.api.api_modules.entrance;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Collection;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -16,6 +19,7 @@ import com.The_Inevitables.NavUP.model.Entrances.Entrance;
 import com.The_Inevitables.NavUP.model.GeoJSONFormatter.EntranceGeoJson.EntranceGeoJson;
 import com.The_Inevitables.NavUP.web.api.dto.entrance.EntranceDTO;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Path("entrance")
 @RequestScoped
@@ -61,5 +65,30 @@ public class EntranceAPI {
 	 public JsonObject findEntranceByName(EntranceDTO request) {
 		 Entrance entrance = entranceService.getEntranceByName(request.getName());
 		 return entranceGeoJSON.createGeoJSON(entrance);
+	 }
+	 
+	 @POST 
+	 @Path("geoJSON")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 public List<Entrance> getEntranceFromGeoJSON(String request) {
+		 JsonParser parser = new JsonParser();
+		 JsonObject o = parser.parse(request).getAsJsonObject();
+		 
+		 try {
+			 Collection<Entrance> entrances = entranceGeoJSON.createObjectsFromGeoJSON(o);
+			 for(Entrance e : entrances) {
+				 entranceService.createEntrance(e);
+			 }
+		 }
+		 catch(Exception e) {
+			StringWriter sw = new StringWriter();
+			PrintWriter pr = new PrintWriter(sw);
+			e.printStackTrace(pr);
+			String stackTrance = sw.toString();
+			System.out.println(stackTrance);
+		}
+		 
+		return entranceService.getAllEntrances();
 	 }
 }

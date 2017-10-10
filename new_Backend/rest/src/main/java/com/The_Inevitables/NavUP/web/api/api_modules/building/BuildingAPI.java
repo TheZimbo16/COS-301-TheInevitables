@@ -1,5 +1,7 @@
 package com.The_Inevitables.NavUP.web.api.api_modules.building;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,6 +18,8 @@ import javax.ws.rs.core.MediaType;
 import com.The_Inevitables.NavUP.model.GeoJSONFormatter.BuildingGeoJson.BuildingGeoJson;
 import com.The_Inevitables.NavUP.model.building.Building;
 import com.The_Inevitables.NavUP.web.api.dto.building.BuildingDTO;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Path("building")
 @RequestScoped
@@ -77,6 +81,32 @@ public class BuildingAPI {
 		 Collection<Building> buildings = buildingService.getAllBuildings();
 		 geoJson.createMultipleGeoJSON(buildings);
 		 return geoJson.printGeoJSON();
+	 }
+	 
+	 @POST 
+	 @Path("geoJSON/building")
+	 @Produces(MediaType.APPLICATION_JSON)
+	 @Consumes(MediaType.APPLICATION_JSON)
+	 public List<Building> getBuildingFromGeoJSON(String request) {
+		 BuildingGeoJson buildingGeoJSON = new BuildingGeoJson();
+		 JsonParser parser = new JsonParser();
+		 JsonObject o = parser.parse(request).getAsJsonObject();
+		 
+		 try {
+			 Collection<Building> buildings = buildingGeoJSON.createObjectsFromGeoJSON(o);
+			 for(Building b : buildings) {
+				 buildingService.createBuilding(b);
+			 }
+		 }
+		catch(Exception e) {
+			StringWriter sw = new StringWriter();
+			PrintWriter pr = new PrintWriter(sw);
+			e.printStackTrace(pr);
+			String stackTrance = sw.toString();
+			System.out.println(stackTrance);
+		}
+		 
+		 return buildingService.getAllBuildings();
 	 }
 
 }

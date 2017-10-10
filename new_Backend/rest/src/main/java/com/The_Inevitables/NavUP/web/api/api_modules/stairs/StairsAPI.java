@@ -1,5 +1,7 @@
 package com.The_Inevitables.NavUP.web.api.api_modules.stairs;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,6 +18,8 @@ import javax.ws.rs.core.MediaType;
 import com.The_Inevitables.NavUP.model.GeoJSONFormatter.StairsGeoJson.StairsGeoJson;
 import com.The_Inevitables.NavUP.model.stairs.Stairs;
 import com.The_Inevitables.NavUP.web.api.dto.stairs.StairsDTO;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @Path("stairs")
 @RequestScoped
@@ -59,5 +63,30 @@ public class StairsAPI {
 		Collection<Stairs> stairs = stairsService.getAllStairs();
 		geoJSON.createGeoJSON(stairs);
 		return geoJSON.printGeoJSON();
+	}
+	
+	@POST 
+	@Path("geoJSON")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<Stairs> getStairsFromGeoJSON(String request) {
+		 JsonParser parser = new JsonParser();
+		 JsonObject o = parser.parse(request).getAsJsonObject();
+		 
+		 try {
+			 Collection<Stairs> stairs = geoJSON.createObjectsFromGeoJSON(o);
+			 for(Stairs s : stairs) {
+				 stairsService.createStairs(s);
+			 }
+		 }
+		 catch(Exception e) {
+			StringWriter sw = new StringWriter();
+			PrintWriter pr = new PrintWriter(sw);
+			e.printStackTrace(pr);
+			String stackTrance = sw.toString();
+			System.out.println(stackTrance);
+		}
+		 
+		 return stairsService.getAllStairs();
 	}
 }

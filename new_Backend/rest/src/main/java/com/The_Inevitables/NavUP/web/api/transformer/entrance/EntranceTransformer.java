@@ -16,7 +16,6 @@ public class EntranceTransformer implements ApiTransformer {
 		EntranceDTO entranceDTO = new EntranceDTO();
 		
 		entranceDTO.setName(entrance.getName());
-		entranceDTO.setId(entrance.getId());
 		entranceDTO.setDescription(entrance.getDescription());
 		entranceDTO.setCoordinates(entrance.getCoordinates());
 		
@@ -27,7 +26,6 @@ public class EntranceTransformer implements ApiTransformer {
 		Entrance entrance = new Entrance();
 		
 		entrance.setName(entranceDTO.getName());
-		entrance.setId(entranceDTO.getId());
 		entrance.setDescription(entranceDTO.getDescription());
 		entrance.setCoordinates(entranceDTO.getCoordinates());
 		

@@ -18,20 +18,20 @@ public class EntranceGeoJson extends GeoJSON{
 	}
 	
 	public JsonObject createGeoJSON(Entrance entrance) {
-		JsonObject featureCollection = new JsonObject();
+		JsonObject FeatureCollection = new JsonObject();
 		 
 		 try {
-			 featureCollection.addProperty("type", "featureCollection");
-			 featureCollection.add("crs", createCRS());
-			 featureCollection.add("features", createFeature(entrance));
+			 FeatureCollection.addProperty("type", "FeatureCollection");
+			 FeatureCollection.add("crs", createCRS());
+			 FeatureCollection.add("features", createFeature(entrance));
 			 
 		 }
 		 catch(Exception e) {
 			 System.out.println(e);
 		 }
 		 
-		 this.geoJson = featureCollection;
-		 return featureCollection;
+		 this.geoJson = FeatureCollection;
+		 return FeatureCollection;
 	}
 	
 	public JsonArray createFeature(Entrance e) {
@@ -53,8 +53,6 @@ public class EntranceGeoJson extends GeoJSON{
 		JsonObject feature = new JsonObject();
 		JsonObject properties = new JsonObject();
 		properties.addProperty("name", e.getName());
-		properties.addProperty("description", e.getDescription());
-		properties.addProperty("id", e.getId());
 		
 		JsonObject geometry = new JsonObject();
 		JsonArray coordinates = new JsonArray();
@@ -78,20 +76,20 @@ public class EntranceGeoJson extends GeoJSON{
 	}
 	
 	public JsonObject createGeoJSON(Collection<Entrance> entrances) {
-		JsonObject featureCollection = new JsonObject();
-		featureCollection.addProperty("type", "featureCollection");
-		featureCollection.add("crs", createCRS());
-		featureCollection.add("features", createFeatures(entrances));
+		JsonObject FeatureCollection = new JsonObject();
+		FeatureCollection.addProperty("type", "FeatureCollection");
+		FeatureCollection.add("crs", createCRS());
+		FeatureCollection.add("features", createFeatures(entrances));
 		
-		this.geoJson = featureCollection;
-		return featureCollection;
+		this.geoJson = FeatureCollection;
+		return FeatureCollection;
 	}
 	
 	public Collection<Entrance> getObjectsFromGeoJSON(JsonArray features) {
 		Collection<Entrance> entrances = new ArrayList<Entrance>();
-		ArrayList<Float> coordinates = new ArrayList<Float>();
 		
 		for(JsonElement f: features) {
+			ArrayList<Float> coordinates = new ArrayList<Float>();
 			Entrance entrance = new Entrance();
 			JsonObject properties = f.getAsJsonObject().getAsJsonObject("properties");
 			JsonObject geometry = f.getAsJsonObject().getAsJsonObject("geometry");
@@ -104,7 +102,6 @@ public class EntranceGeoJson extends GeoJSON{
 			
 			entrance.setName(properties.get("name").getAsString().toString());
 			entrance.setDescription(properties.get("description").getAsString().toString());
-			entrance.setId(properties.get("id").getAsInt());
 			entrance.setCoordinates(coordinates);
 			
 			entrances.add(entrance);
