@@ -3,7 +3,8 @@ Risks are categorised by severity(1-10) and likelyhood(1-10)
 Project management and logistics:
 	-Lag-time for hardware acquisition: If the hardware does not get order and delivered in a timely manner, then there will be no time for experimentation and prototyping(S=10,L=8)
 	-Project funding: The hardware does not come for free so some funding will need to be allocated for it. If we are unable to acquire funding, the obstacle avoidance and detection section of the project is dead(S=10,L=7)
-
+	-Poor communication: If clients do not respond to attempts at contacting them, or if the team does not attempt at communicating on a regular basis, that slows down development and may lead to product expectations being different from the product being developed(S=10,L=10)
+	-Lack of coordination: A side-effect of poor communication, this will lead to inconsistent and duplicate work being done or a slowdown in efficiency altogether(S=10,L=9)
 Reliability:
 	-All potential solutions:
 		+A wifi reliant solution will have difficulty	fulfilling its role due to the issues with connecting to any wifi access point on campus.(S=10,L=10) 
