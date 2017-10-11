@@ -71,7 +71,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:shadowColor="@color/text_shadow"
+            android:shadowColor="@color/colorPrimary"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
