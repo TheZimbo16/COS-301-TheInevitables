@@ -2,9 +2,11 @@ package theinevitables.navup;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +20,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.DirectionsApi;
@@ -36,6 +41,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.joda.time.DateTime;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,8 +50,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -89,12 +98,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-25.7545,28.2314);
+        LatLng sydney = new LatLng(-25.756039,28.233034);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
        //  mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         float zoomLevel = 18.0f; //This goes up to 21
@@ -103,6 +113,53 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         JSONObject jsonobject = null;
         try {
             jsonobject = new JSONObject(getGeoJSONObjects());
+            JSONArray pilot = jsonobject.getJSONArray("features");
+            JSONObject jsono = new JSONObject(pilot.getString(1));
+
+            JSONObject geom = jsono.getJSONObject("geometry");
+
+            JSONArray json = geom.getJSONArray("coordinates");
+
+            ArrayList<String> listdata = new ArrayList<String>();
+            if (json != null) {
+                for (int i=0;i<json.length();i++){
+                    listdata.add(json.getString(i));
+                }
+            }
+
+            //String[] array = listdata.toString().split("],");
+            listdata.toString().replaceAll("[\\[\\](){}]","");
+            String[] tokens = listdata.toString().replaceAll("[\\[\\](){}]","").split(",0,", -1);
+
+            //LatLng [] floatValues = new LatLng[tokens.length];
+            ArrayList<LatLng> coords = new ArrayList<>();
+            for(int i = 0; i < tokens.length;i++){
+                //System.out.println(Float.parseFloat(tokens[i]));
+                String[] latlong =  tokens[i].split(",");
+                double latitude = Double.parseDouble(latlong[0]);
+                double longitude = Double.parseDouble(latlong[1]);
+                LatLng obj = new LatLng(longitude,latitude);
+                coords.add(i,obj);
+            }
+            LatLng insideBuilding =coords.get(0);
+            mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+            //System.out.println(tokens[0]);
+            //tokens = tokens.
+            //System.out.println(listdata);
+           // ArrayList<LatLng> listdata1 = new ArrayList<LatLng>();
+           // for(int i = 0; i < listdata.size();i++){
+              //  listdata1.add(listdata.get(i));
+           // }
+            ;
+            //Polygon polygon = mMap.addPolygon(new PolygonOptions().addAll(listdata));
+            //boolean contain = PolyUtil.containsLocation(new LatLng(-25.7545,28.2314), new LatLng(), true);
+           // System.out.println(contain);
+
+            if(PolyUtil.containsLocation (sydney, coords, true)){
+                System.out.println("you have succeeded dawie");
+            }else{
+                System.out.println("failed");
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -110,7 +167,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         layer = new GeoJsonLayer(mMap, jsonobject);
         layer.addLayerToMap();
+        List<LatLng> polygonList = new ArrayList<LatLng>();
+        // To draw boundray on map
+
         //mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng( 28.2314,25.7545) , 14.0f) );
+    }
+
+    private void drawPolygon() {
+        PolygonOptions polygonOptions = new PolygonOptions(); // consider new options
+
+        LatLng[] drawCoordinates = new LatLng[0];
+        for (LatLng latLng : drawCoordinates) {
+            Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(latLng.toString()));
+            marker.setVisible(false);
+
+            polygonOptions.add(marker.getPosition()).strokeColor(Color.RED);
+            polygonOptions.fillColor(Color.TRANSPARENT);
+            polygonOptions.visible(true);
+        }
+        List<LatLng> points = polygonOptions.getPoints();
+        if (!points.isEmpty()) {
+           Polygon polygon = mMap.addPolygon(polygonOptions);
+            Log.i("Poly lines","Successfully added polyline on map");
+        }
     }
 
     public String getGeoJSONObjects() throws InterruptedException {
@@ -295,7 +374,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                         temp = data.split(delimiter);
                         endX = temp[0];
-                       endY = temp[1];
+                        endY = temp[1];
 
                         System.out.println(endX);
                         System.out.println(endY);
