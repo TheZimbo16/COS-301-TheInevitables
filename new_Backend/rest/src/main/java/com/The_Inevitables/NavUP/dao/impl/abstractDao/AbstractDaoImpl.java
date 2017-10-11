@@ -30,6 +30,7 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 		em.merge(entity);
 		return entity;
 	}
+	
 	//=====================================================================================================================================
 	//										BUILDING QUERIES
 	//=====================================================================================================================================
@@ -63,9 +64,17 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	}
 	
 	public ArrayList<ArrayList<ArrayList<Float>>> getBuildingCoordinates(String name) {
-		Building building = getBuildingByName(name);
-		if(building != null) {
+		
+		try {
+			Building building = getBuildingByName(name);
+			
+			if(building == null) 
+				throw new Exception("no item found");
+			
 			return building.getCoordinates();
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
 		}
 		
 		return null;
@@ -127,6 +136,9 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.user.User u WHERE u.studentNumber = :p");
 			query.setParameter("p", studentNo);
 			user = (User) query.getSingleResult();
+			
+			if(user == null)
+				throw new Exception("no item found");
 		}
 		catch(Exception e)
 		{
@@ -154,6 +166,9 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 			Query query = em.createQuery("SELECT c FROM com.The_Inevitables.NavUP.model.navigation.Navigation c WHERE c.locationName LIKE :custName");
 			query.setParameter("custName", studentNo);
 			user = (Navigation) query.getSingleResult();
+			
+			if(user == null)
+				throw new Exception("no item found");
 		}
 		catch(Exception e)
 		{
@@ -192,6 +207,9 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.entrance.Entrance u WHERE u.name = :p");
 			query.setParameter("p", name);
 			entrance = (Entrance) query.getSingleResult();
+			
+			if(entrance == null)
+				throw new Exception("no item found");
 		}
 		catch(Exception e)
 		{
@@ -203,9 +221,14 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	
 	public ArrayList<Float> getEntranceCoordiantes(String name) {
 		Entrance entrance = getEntranceByName(name);
+		try {
+			if(entrance == null)
+				throw new Exception("no item found");
 		
-		if(entrance != null) {
 			return entrance.getCoordinates();
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
 		}
 		
 		return null;
@@ -217,7 +240,7 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 	public void deleteLectureHallByRoomName(String name) {
 		try
 		{
-			Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.lectureHall.LectureHall u WHERE u.name = :p");
+			Query query = em.createQuery("DELETE FROM com.The_Inevitables.NavUP.model.LectureHall.LectureHall u WHERE u.name = :p");
 			query.setParameter("p", name).executeUpdate();
 		}
 		catch(Exception e)
@@ -237,9 +260,12 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 		
 		try
 		{
-			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.lectureHall.LectureHall u WHERE u.name = :p");
+			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.LectureHall.LectureHall u WHERE u.room_name = :p");
 			query.setParameter("p", name);
 			lectureHall = (LectureHall) query.getSingleResult();
+			
+			if(lectureHall == null)
+				throw new Exception("no item found");
 		}
 		catch(Exception e)
 		{
@@ -247,6 +273,26 @@ public abstract class AbstractDaoImpl <E extends SuperEntity> {
 		}
 		
 		return lectureHall;
+	}
+	
+	public List<LectureHall> getBuildingLectureHalls(String name) {
+		List<LectureHall> lectureHalls = null;
+		
+		try
+		{
+			Query query = em.createQuery("SELECT u FROM com.The_Inevitables.NavUP.model.LectureHall.LectureHall u WHERE u.building = :p");
+			query.setParameter("p", name);
+			lectureHalls = (List<LectureHall>) query.getResultList();
+			
+			if(lectureHalls == null)
+				throw new Exception("no item found");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return lectureHalls;
 	}
 	
 	//======================================================================================================================================

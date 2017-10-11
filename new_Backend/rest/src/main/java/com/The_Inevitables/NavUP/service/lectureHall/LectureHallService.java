@@ -47,5 +47,9 @@ public class LectureHallService {
 	public JsonObject createLectureHallGeoJSON(Collection<LectureHall> lectureHalls) {
 		return geoJson.createGeoJSON(lectureHalls);
 	}
+	
+	public List<LectureHall> getBuildingLectureHalls(String name) {
+		return lectureHallDao.getBuildingLectureHalls(name);
+	}
 
 }

@@ -1,5 +1,8 @@
 package com.The_Inevitables.NavUP.web.api.api_modules.lectureHall;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Collection;
@@ -60,9 +63,16 @@ public class LectureHallAPI {
 	@Path("get/geoJSON")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getAllLectureHallsAsGeoJSON() {
-		Collection<LectureHall> lectureHalls = lectureHallService.getAllLectureHalls();
-		geoJSON.createFeatures(lectureHalls);
-		return geoJSON.printGeoJSON();
+		
+		try {
+			Collection<LectureHall> lectureHalls = lectureHallService.getAllLectureHalls();
+			return geoJSON.createGeoJSON(lectureHalls).toString();
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return null;
 	}
 	
 	@POST
@@ -81,6 +91,27 @@ public class LectureHallAPI {
 		LectureHall lectureHall =  lectureHallService.getLectureHallByRoomName(request.getRoom_name());
 		geoJSON.createGeoJSON(lectureHall);
 		return geoJSON.printGeoJSON();
+	}
+	
+	@POST
+	@Path("get/geoJSON/building")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String getLectureHallByBuildingName(LectureHallDTO request) {
+		try {
+			List<LectureHall> lectureHalls = lectureHallService.getBuildingLectureHalls(request.getBuilding());
+			
+			if(lectureHalls == null)
+				throw new Exception("no lecture halls found");
+			
+			geoJSON.createGeoJSON(lectureHalls);
+			return geoJSON.printGeoJSON();
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return "";
 	}
 	
 	@POST 

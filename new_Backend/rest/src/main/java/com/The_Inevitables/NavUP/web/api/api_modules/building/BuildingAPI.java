@@ -1,7 +1,5 @@
 package com.The_Inevitables.NavUP.web.api.api_modules.building;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -59,11 +57,10 @@ public class BuildingAPI {
 	
 	
 	 @POST
-	 @Path("find/name")
+	 @Path("get/name")
 	 @Produces(MediaType.APPLICATION_JSON)
 	 @Consumes(MediaType.APPLICATION_JSON)
-	 public Building findBuildingByName(BuildingDTO request)
-	 {
+	 public Building findBuildingByName(BuildingDTO request) {
 		 return buildingService.getBuildingByName(request.getName());
 	 }
 	 
@@ -100,11 +97,7 @@ public class BuildingAPI {
 			 }
 		 }
 		catch(Exception e) {
-			StringWriter sw = new StringWriter();
-			PrintWriter pr = new PrintWriter(sw);
-			e.printStackTrace(pr);
-			String stackTrance = sw.toString();
-			System.out.println(stackTrance);
+			System.out.println(e.getMessage());
 		}
 		 
 		 return buildingService.getAllBuildings();
