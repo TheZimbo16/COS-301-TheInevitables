@@ -11,7 +11,7 @@
     <string name="title_activity_registration">registration</string>
     <string name="register">Register</string>
     <string name="title_activity_maps">Map</string>
-    <string name ="directionsApiKey">AIzaSyAAOO09oZDnxJxvRXpMjCaqTBDIGGKKIyQ</string>
+    <string name ="directionsApiKey">AIzaSyDjgvY-aqagM3mne_OyNo8eOZKrhmtqRLo</string>
     <string name="title_activity_map_tracking">Map Route Tracking</string>
     <string name="track_path_on_map">Walk and route your path on map</string>
     <string name="permission_notice">Please note that your location permission is important if you want to draw your route on map while walking or running</string>

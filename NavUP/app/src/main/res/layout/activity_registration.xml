@@ -19,7 +19,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -85,8 +85,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Register"
+            android:drawableLeft="@android:drawable/ic_menu_add"
+            android:drawableRight="@android:drawable/ic_menu_add"
             android:id="@+id/regbtn"
-            android:textColor="@color/colorPrimary"
+            android:layout_margin="10dp"
+            android:background="@android:color/holo_blue_dark"
+            android:textColor="@android:color/white"
         />
     </LinearLayout>
 
@@ -94,16 +98,15 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:shadowColor="@color/colorPrimary"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/holo_blue_dark"
+        android:shadowColor="@android:color/black"
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="2"
         android:text="@string/register"
         android:textSize="35dp"
-        android:layout_below="@+id/appBarLayout2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="117dp"
-        android:layout_marginStart="117dp" />
+        android:layout_below="@+id/appBarLayout2" />
 </RelativeLayout>
 </ScrollView>

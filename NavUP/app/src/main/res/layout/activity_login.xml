@@ -19,7 +19,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
+                android:background="@color/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </android.support.design.widget.AppBarLayout>
@@ -55,15 +55,19 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/password"
                     android:hint="Password"
-                    android:inputType="textPersonName"
+                    android:inputType="textPassword"
                     android:layout_marginBottom="20dp"/>
             </android.support.design.widget.TextInputLayout>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@android:color/holo_blue_dark"
+                android:layout_margin="10px"
+                android:drawableLeft="@android:drawable/ic_menu_save"
+                android:drawableRight="@android:drawable/ic_menu_save"
                 android:text="Login"
                 android:id="@+id/regbtn"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@android:color/white"
                 />
         </LinearLayout>
 
@@ -71,16 +75,15 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:shadowColor="@color/colorPrimary"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:shadowColor="@android:color/black"
+            android:textColor="@android:color/holo_blue_dark"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
             android:text="@string/title_activity_login"
             android:textSize="35dp"
-            android:layout_below="@+id/appBarLayout2"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="117dp"
-            android:layout_marginStart="117dp" />
+            android:layout_below="@+id/appBarLayout2" />
     </RelativeLayout>
 </ScrollView>

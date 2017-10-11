@@ -594,7 +594,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GeoApiContext getGeoContext() {
         GeoApiContext geoApiContext = new GeoApiContext();
-        return geoApiContext.setQueryRateLimit(3).setApiKey(getString(R.string.directionsApiKey)).setConnectTimeout(1, TimeUnit.SECONDS).setReadTimeout(1, TimeUnit.SECONDS).setWriteTimeout(1, TimeUnit.SECONDS);
+        return geoApiContext.setQueryRateLimit(3).setApiKey("AIzaSyDjgvY-aqagM3mne_OyNo8eOZKrhmtqRLo").setConnectTimeout(1, TimeUnit.SECONDS).setReadTimeout(1, TimeUnit.SECONDS).setWriteTimeout(1, TimeUnit.SECONDS);
     }
 
     private void addMarkersToMap(DirectionsResult results, GoogleMap mMap) {
