@@ -30,6 +30,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -45,6 +46,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -94,7 +96,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.CAMERA;
 
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,LocationListener {
     DirectionsResult result;
     float zoomLevel = 18f;
     private static final Location TODO = null;
@@ -127,6 +129,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Marker mMarker;
     boolean isZooming = false;
     private String endLocation;
+    Marker m;
     LatLng geography = new LatLng(-25.7536717, 28.230221);
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,12 +169,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         System.out.println(mLocation + "mloc");
         if (mLocation != null) {
 
-            location = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
-
+            //onLocationChanged(mLocation);
         }
         else location = new LatLng(-25.7536717, 28.230221);
         System.out.println(mLocation + "mloc");
-        mMap.addMarker(new MarkerOptions().position(location).title("This is where you are"));
+        m.setPosition(new LatLng(getMyLocation().getLatitude(),getMyLocation().getLongitude()));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
     }
 
@@ -198,6 +200,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(geography, zoomLevel));
         mMap.setMyLocationEnabled(true);
         mMap.setIndoorEnabled(true);
+        MarkerOptions a = new MarkerOptions()
+                .position(new LatLng(getMyLocation().getLatitude(),getMyLocation().getLongitude()));
+        m = mMap.addMarker(a);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         System.out.println(getMyLocation() + "getmyloc");
         mLocation = getMyLocation();
@@ -207,9 +212,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             location = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
 
         }
+
         else location = new LatLng(-25.7536717, 28.230221);
 
+        timer = new CountDownTimer(5000, 1000)
+        {
 
+
+
+            public void onTick(long millisUntilFinished)
+            {
+                long scnds=0;
+                scnds=(millisUntilFinished/1000);
+
+            }
+
+
+            public void onFinish()
+            {
+                System.out.println(getMyLocation());
+
+                onLocationChanged(getMyLocation());
+                timer.start();
+
+            }
+        }.start();
 
 
 
@@ -310,6 +337,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onCameraChange(CameraPosition position)
             {
+                mMap.clear();
+                if(result != null) {
+                    addPolyline(result, mMap);
+                    addMarkersToMap(result, mMap);
+                    getEndLocationTitle(result);
+                }
+                MarkerOptions a = new MarkerOptions()
+                        .position(new LatLng(getMyLocation().getLatitude(),getMyLocation().getLongitude()));
+                m = mMap.addMarker(a);
                 Log.d("Zoom", "Zoom: " + position.zoom);
                 layer = new GeoJsonLayer(mMap, lectureWalls);
                 layer1 = new GeoJsonLayer(mMap, my);
@@ -395,7 +431,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 System.out.println(coords.get(1));
                 System.out.println(coords.get(2));
 
-                mMap.clear();
+
 
                 if(position.zoom <= 18)
                 {
@@ -404,13 +440,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     layer1.addLayerToMap();
                     mMap.addMarker(new MarkerOptions().position(geography).title("University of Pretoria"));
                     if(result!=null) {
-                        addPolyline(result, mMap);
-                        addMarkersToMap(result, mMap);
-                        getEndLocationTitle(result);
+
                     }
 
+                    if (mLocation != null) {
 
+                        location = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
 
+                    }
+                    //onLocationChanged(mLocation);
                 }else{
 
                  layer.addLayerToMap();
@@ -711,8 +749,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         LatLng origin = new LatLng(lat,lng);
 
                                         //mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-
-                                        result = DirectionsApi.newRequest(getGeoContext()).mode(TravelMode.WALKING).origin(Y + "," + X).destination(endY + "," + endX).departureTime(now).await();
+                                        String latitude =Double.toString(m.getPosition().latitude);
+                                        String longitude =Double.toString(m.getPosition().longitude);
+                                        System.out.println(latitude + longitude + "poes werk net");
+                                        result = DirectionsApi.newRequest(getGeoContext()).mode(TravelMode.WALKING).origin(latitude+ "," + longitude).destination(endY + "," + endX).departureTime(now).await();
                                        // System.out.println("HERE" + result.routes[0].legs[0].startLocation.lat);
                                         //System.out.println("HERE" + result.routes[0].legs[0].startLocation.lng);
                                         addMarkersToMap(result, mMap);
@@ -770,9 +810,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         List<LatLng> decodedPath = PolyUtil.decode(results.routes[0].overviewPolyline.getEncodedPath());
         mMap.addPolyline(new PolylineOptions().addAll(decodedPath).color(Color.RED));
 
-
-
-
     }
 
 
@@ -822,10 +859,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    @Override
+    public void onLocationChanged(Location location) {
+
+        Log.i("called", "onLocationChanged");
+
+        location = getMyLocation();
+
+        //when the location changes, update the map by zooming to the location
+        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(),location.getLongitude()));
+        //mMap.moveCamera(center);
+        LatLng ltlng = new LatLng(location.getLatitude(),location.getLongitude());
+        m.setPosition(new LatLng(location.getLatitude(),location.getLongitude()));
+        if(result != null) {
+            addPolyline(result, mMap);
+            addMarkersToMap(result, mMap);
+            getEndLocationTitle(result);
+        }
 
 
+        CameraUpdate zoom=CameraUpdateFactory.zoomTo(18);
 
+    }
 }
+
 
 
 
