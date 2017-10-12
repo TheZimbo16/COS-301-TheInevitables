@@ -13,30 +13,19 @@
         android:layout_alignParentTop="true"
         class="com.google.android.gms.maps.SupportMapFragment" />
 
-    <EditText
-        android:id="@+id/startLoc"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_margin="10dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:hint="Enter Start Point"
-        android:textColor="@android:color/black"
-        android:background="@android:color/white" >
-    </EditText>
-    <EditText
+
+    <AutoCompleteTextView
         android:id="@+id/endLoc"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-
         android:hint="Enter Destination"
         android:textColor="@android:color/black"
         android:background="@android:color/white"
         android:layout_margin="10dp"
-        android:layout_below="@+id/startLoc"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
-    </EditText>
+        <requestFocus/>
+    </AutoCompleteTextView>
 
     <Button
         android:id="@+id/nav"
@@ -47,28 +36,27 @@
         android:layout_alignParentStart="true"
         android:layout_margin="10dp"
         android:onClick="sendPost"
+        android:background="@android:color/holo_blue_dark"
         android:text="Navigate"
         android:drawableLeft="@android:drawable/ic_menu_mapmode"
         android:drawableRight="@android:drawable/ic_menu_mapmode"
-        android:textColor="@color/colorPrimary" />
+        android:textColor="@android:color/white" />
 
 
     <Button
         android:id="@+id/start_tracking"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_above="@+id/nav"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_gravity="bottom"
         android:layout_margin="10dp"
         android:background="@android:color/holo_blue_dark"
-        android:drawableLeft="@android:drawable/ic_menu_compass"
-        android:drawableRight="@android:drawable/ic_menu_compass"
+        android:drawableBottom="@android:drawable/ic_menu_compass"
         android:gravity="center"
         android:onClick="getCurrentLocation"
         android:padding="16dp"
-        android:text="Start tracking"
         android:textColor="@color/colorIcons" />
 
 

@@ -34,10 +34,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             StrictMode.setThreadPolicy(policy);
         }
 
-        Button check_permission = (Button) findViewById(R.id.check_permission);
-        Button request_permission = (Button) findViewById(R.id.request_permission);
+        Button check_permission = (Button) findViewById(R.id.start);
+        Button request_permission = (Button) findViewById(R.id.start);
         check_permission.setOnClickListener( this);
         request_permission.setOnClickListener( this);
+        checkPermission();
+        requestPermission();
     }
 
 
@@ -75,25 +77,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         int id = v.getId();
         switch (id) {
-            case R.id.check_permission:
+            case R.id.start:
                 if (checkPermission()) {
+                    goToNextPage(view);
 
-                    Snackbar.make(view, "Permission already granted.", Snackbar.LENGTH_LONG).show();
-
-                } else {
-
-                    Snackbar.make(view, "Please request permission.", Snackbar.LENGTH_LONG).show();
-                }
-                break;
-            case R.id.request_permission:
-                if (!checkPermission()) {
-
-                    requestPermission();
+                    //Snackbar.make(view, "Permission already granted.", Snackbar.LENGTH_LONG).show();
 
                 } else {
 
-                    Snackbar.make(view, "Permission already granted.", Snackbar.LENGTH_LONG).show();
-
+                    //Snackbar.make(view, "Please request permission.", Snackbar.LENGTH_LONG).show();
                 }
                 break;
         }
@@ -123,10 +115,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     boolean cameraAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
                     if (locationAccepted && cameraAccepted)
-                        Snackbar.make(view, "Permission Granted, Now you can access location data and camera.", Snackbar.LENGTH_LONG).show();
+                    {
+
+                    }
+                        //Snackbar.make(view, "Permission Granted, Now you can access location data and camera.", Snackbar.LENGTH_LONG).show();
                     else {
 
-                        Snackbar.make(view, "Permission Denied, You cannot access location data and camera.", Snackbar.LENGTH_LONG).show();
+                        //Snackbar.make(view, "Permission Denied, You cannot access location data and camera.", Snackbar.LENGTH_LONG).show();
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             if (shouldShowRequestPermissionRationale(ACCESS_FINE_LOCATION)) {

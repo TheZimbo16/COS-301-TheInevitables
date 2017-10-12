@@ -28,6 +28,8 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -131,6 +133,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private String endLocation;
     Marker m;
     LatLng geography = new LatLng(-25.7536717, 28.230221);
+
+    String[] locations = {"Engineering 1", "Engineering 2", "Engineering 3", "EMB", "IT", "Aula", "AE-Auditorium", "Geography", "Mathematics"};
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps2);
@@ -139,8 +144,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         navBtn = (Button) findViewById(R.id.nav);
-        et_startLoc = (EditText) findViewById(R.id.startLoc);
+        //et_startLoc = (EditText) findViewById(R.id.startLoc);
         et_endLoc = (EditText) findViewById(R.id.endLoc);
+
+        //Creating the instance of ArrayAdapter containing list of fruit names
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (this, android.R.layout.select_dialog_item, locations);
+        //Getting the instance of AutoCompleteTextView
+        AutoCompleteTextView actv = (AutoCompleteTextView) findViewById(R.id.endLoc);
+        actv.setThreshold(1);//will start working from first character
+        actv.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
+        //actv.setTextColor(Color.RED);
 
         initGoogleApiClient();
         try {
@@ -155,7 +169,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     public void initialize() {
-        startLoc = et_startLoc.getText().toString().trim();
+        //startLoc = et_startLoc.getText().toString().trim();
         endLoc = et_endLoc.getText().toString().trim();
         endLocation = endLoc;
         //cpassword = et_cpassword.getText().toString().trim();
@@ -610,75 +624,75 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         initialize();
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url = new URL("http://35.202.5.111:11080/NavUPRest/api/nav/getSingleUser");
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("POST");
-                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-                    conn.setRequestProperty("Accept", "application/json");
-                    conn.setDoOutput(true);
-                    conn.setDoInput(true);
-
-                    JSONObject jsonParam = new JSONObject();
-                    jsonParam.put("locationName", startLoc);
-
-
-                    Log.i("JSON", jsonParam.toString());
-                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
-                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
-                    os.writeBytes(jsonParam.toString());
-
-                    os.flush();
-                    os.close();
-
-                    Log.i("STATUS", String.valueOf(conn.getResponseCode()));
-                    Log.i("MSG", conn.getResponseMessage());
-
-                    InputStream is = null;
-                    try {
-                        is = conn.getInputStream();
-                        int ch;
-                        StringBuffer sb = new StringBuffer();
-                        while ((ch = is.read()) != -1) {
-                            sb.append((char) ch);
-                        }
-
-
-                        JSONObject jObject = new JSONObject(sb.toString()); // json
-                        String data = jObject.getString("locationCoordinates"); // get data object
-                        // String xCoord = data.getString("locationCoordinates");
-
-                        System.out.println(data);
-
-                        String[] temp;
-                        String delimiter = ", ";
-
-                        temp = data.split(delimiter);
-                        X = temp[0];
-                        Y = temp[1];
-
-                        //System.out.println(X);
-                        //System.out.println(Y);
-
-
-                    } catch (IOException e) {
-                        throw e;
-                    } finally {
-                        if (is != null) {
-                            is.close();
-                        }
-                    }
-
-
-                    conn.disconnect();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        Thread thread = new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    URL url = new URL("http://35.202.5.111:11080/NavUPRest/api/nav/getSingleUser");
+//                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//                    conn.setRequestMethod("POST");
+//                    conn.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
+//                    conn.setRequestProperty("Accept", "application/json");
+//                    conn.setDoOutput(true);
+//                    conn.setDoInput(true);
+//
+//                    JSONObject jsonParam = new JSONObject();
+//                    jsonParam.put("locationName", startLoc);
+//
+//
+//                    Log.i("JSON", jsonParam.toString());
+//                    DataOutputStream os = new DataOutputStream(conn.getOutputStream());
+//                    //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
+//                    os.writeBytes(jsonParam.toString());
+//
+//                    os.flush();
+//                    os.close();
+//
+//                    Log.i("STATUS", String.valueOf(conn.getResponseCode()));
+//                    Log.i("MSG", conn.getResponseMessage());
+//
+//                    InputStream is = null;
+//                    try {
+//                        is = conn.getInputStream();
+//                        int ch;
+//                        StringBuffer sb = new StringBuffer();
+//                        while ((ch = is.read()) != -1) {
+//                            sb.append((char) ch);
+//                        }
+//
+//
+//                        JSONObject jObject = new JSONObject(sb.toString()); // json
+//                        String data = jObject.getString("locationCoordinates"); // get data object
+//                        // String xCoord = data.getString("locationCoordinates");
+//
+//                        System.out.println(data);
+//
+//                        String[] temp;
+//                        String delimiter = ", ";
+//
+//                        temp = data.split(delimiter);
+//                        X = temp[0];
+//                        Y = temp[1];
+//
+//                        //System.out.println(X);
+//                        //System.out.println(Y);
+//
+//
+//                    } catch (IOException e) {
+//                        throw e;
+//                    } finally {
+//                        if (is != null) {
+//                            is.close();
+//                        }
+//                    }
+//
+//
+//                    conn.disconnect();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
         Thread thread1 = new Thread(new Runnable() {
             @Override
@@ -787,7 +801,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-        thread.start();
+        //thread.start();
         thread1.start();
 
     }

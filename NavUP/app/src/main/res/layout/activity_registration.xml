@@ -2,85 +2,77 @@
 <ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android" >
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="theinevitables.navup.registration">
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:id="@+id/appBarLayout2">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_registration" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
         android:orientation="vertical"
         android:id="@+id/linearLayout">
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/name"
-                android:hint="Name"
-                android:inputType="textPersonName"
-                android:layout_marginBottom="20dp"/>
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/surname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:hint="Surname"
-                android:inputType="textPersonName" />
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <!--<ImageView-->
+        <!--android:id="@+id/imageView"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="210dp"-->
+        <!--app:srcCompat="@mipmap/navupnew2"-->
+        <!--android:layout_above="@+id/button17"-->
+        <!--android:layout_alignParentTop="true" />-->
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:layout_margin="10px"
+            android:background="@mipmap/navupnew2"
+            android:layout_above="@+id/button17"
+            android:layout_alignParentTop="true" />
 
-            <EditText
-                android:id="@+id/StudentNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:hint="Student Number"
-                android:inputType="textPersonName" />
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
+        <EditText
+            android:id="@+id/name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
+            android:layout_height="40dp"
+            android:hint="Name"
+            android:inputType="text"
+            android:textColor="@android:color/black"
+            android:background="@android:color/white"
+            android:layout_margin="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+        <EditText
+            android:id="@+id/surname"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/password"
-                android:hint="Password"
-                android:inputType="textPersonName"
-                android:layout_marginBottom="20dp"/>
-        </android.support.design.widget.TextInputLayout>
+            android:layout_height="40dp"
+            android:hint="Surname"
+            android:inputType="text"
+            android:textColor="@android:color/black"
+            android:background="@android:color/white"
+            android:layout_margin="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/StudentNumber"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:hint="Student Number"
+            android:textColor="@android:color/black"
+            android:background="@android:color/white"
+            android:layout_margin="10dp"
+            android:inputType="text"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/password"
+            android:hint="Password"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:inputType="text"
+            android:textColor="@android:color/black"
+            android:background="@android:color/white"
+            android:layout_margin="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,22 +83,6 @@
             android:layout_margin="10dp"
             android:background="@android:color/holo_blue_dark"
             android:textColor="@android:color/white"
-        />
+            />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:textColor="@android:color/holo_blue_dark"
-        android:shadowColor="@android:color/black"
-        android:shadowDx="1"
-        android:shadowDy="1"
-        android:shadowRadius="2"
-        android:text="@string/register"
-        android:textSize="35dp"
-        android:layout_below="@+id/appBarLayout2" />
-</RelativeLayout>
 </ScrollView>
