@@ -214,9 +214,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(geography, zoomLevel));
         mMap.setMyLocationEnabled(true);
         mMap.setIndoorEnabled(true);
-        MarkerOptions a = new MarkerOptions()
-                .position(new LatLng(getMyLocation().getLatitude(),getMyLocation().getLongitude()));
-        m = mMap.addMarker(a);
+
+        if(getMyLocation()!=null) {
+            MarkerOptions a = new MarkerOptions()
+                    .position(new LatLng(getMyLocation().getLatitude(), getMyLocation().getLongitude()));
+            m = mMap.addMarker(a);
+        }
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         System.out.println(getMyLocation() + "getmyloc");
         mLocation = getMyLocation();
@@ -357,9 +360,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     addMarkersToMap(result, mMap);
                     getEndLocationTitle(result);
                 }
-                MarkerOptions a = new MarkerOptions()
-                        .position(new LatLng(getMyLocation().getLatitude(),getMyLocation().getLongitude()));
-                m = mMap.addMarker(a);
+                if(getMyLocation()!=null) {
+                    MarkerOptions a = new MarkerOptions()
+                            .position(new LatLng(getMyLocation().getLatitude(), getMyLocation().getLongitude()));
+                    m = mMap.addMarker(a);
+                }
                 Log.d("Zoom", "Zoom: " + position.zoom);
                 layer = new GeoJsonLayer(mMap, lectureWalls);
                 layer1 = new GeoJsonLayer(mMap, my);
