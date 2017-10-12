@@ -96,9 +96,10 @@ import static android.Manifest.permission.CAMERA;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-
+    float zoomLevel = 18f;
     private static final Location TODO = null;
     GeoJsonLayer layer;
+    GeoJsonLayer layer1;
     private static final int PERMISSION_REQUEST_CODE = 200;
     private static final String[] INITIAL_PERMS = {
             android.Manifest.permission.ACCESS_COARSE_LOCATION
@@ -117,12 +118,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String startLoc, endLoc;
     String X, Y, endX, endY;
     double lat, lng;
+    JSONObject lectureWalls;
+    JSONObject my;
     private GoogleMap mMap;
     private LocationRequest mLocationRequest;
     private GoogleApiClient mGoogleApiClient;
     private LocationListener mLocationListener;
     Marker mMarker;
-
+    boolean isZooming = false;
+    private String endLocation;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps2);
@@ -135,6 +139,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         et_endLoc = (EditText) findViewById(R.id.endLoc);
 
         initGoogleApiClient();
+        try {
+            getGeoJSONHallObjects();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -144,7 +153,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void initialize() {
         startLoc = et_startLoc.getText().toString().trim();
         endLoc = et_endLoc.getText().toString().trim();
-
+        endLocation = endLoc;
         //cpassword = et_cpassword.getText().toString().trim();
     }
 
@@ -161,25 +170,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnCameraChangeListener(getCameraChangeListener());
 
         // Add a marker in Sydney and move the camera
         LatLng geography = new LatLng(-25.7536717, 28.230221);
-        mMap.addMarker(new MarkerOptions().position(geography).title("Marker in Sydney"));
-        //  mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-        float zoomLevel = 18.0f; //This goes up to 21
+        mMap.addMarker(new MarkerOptions().position(geography).title("University of Pretoria"));
+
+         //This goes up to 21
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(geography, zoomLevel));
         mMap.setMyLocationEnabled(true);
+        mMap.setIndoorEnabled(true);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         mLocation = getMyLocation();
+        System.out.println(mLocation + "mloc");
         if (mLocation != null) {
 
             location = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
             System.out.println(location + "here");
         }
-        else location = new LatLng(31, 31);
+        else location = new LatLng(-25.7536717, 28.230221);
 
-        mMap.addMarker(new MarkerOptions().position(location).title("Marker in Sydney"));
+
 
 
        // mMap.addMarker(new MarkerOptions().position(location).title("Marker in Sydney"));
@@ -198,7 +210,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-
 
         JSONObject jsonobject = null;
         try {
@@ -231,8 +242,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng obj = new LatLng(longitude, latitude);
                 coords.add(i, obj);
             }
+            my = jsonobject;
             LatLng insideBuilding = coords.get(0);
             mMap.addMarker(new MarkerOptions().position(geography).title("Geography Building"));
+
+            JSONObject jsonobject1 = null;
+            jsonobject1 = new JSONObject(getGeoJSONHallObjects());
+            lectureWalls = jsonobject1;
             //System.out.println(tokens[0]);
             //tokens = tokens.
             //System.out.println(listdata);
@@ -245,9 +261,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //boolean contain = PolyUtil.containsLocation(new LatLng(-25.7545,28.2314), new LatLng(), true);
             // System.out.println(contain);
 
-            if (PolyUtil.containsLocation(geography, coords, true)) {
+            if (PolyUtil.containsLocation(geography, coords, true) && lectureWalls != null) {
                 System.out.println("you have succeeded dawie");
-                getGeoJSONHallObjects();
+
+
             } else {
                 System.out.println("failed");
             }
@@ -256,23 +273,54 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        layer = new GeoJsonLayer(mMap, jsonobject);
-        layer.addLayerToMap();
+
+        //layer = new GeoJsonLayer(mMap, jsonobject);
+        //layer.addLayerToMap();
+
         List<LatLng> polygonList = new ArrayList<LatLng>();
         // To draw boundray on map
 
         //mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng( 28.2314,25.7545) , 14.0f) );
     }
-    public void changeLocOnTimer() throws InterruptedException {
-        Thread thread = new Thread();
-        for(int i = 60; i >= 0;i--){
-            thread.sleep(1000);
-            System.out.println(i);
-        }
-    }
-    private Location getMyLocation() {
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+    public GoogleMap.OnCameraChangeListener getCameraChangeListener()
+    {
+
+        return new GoogleMap.OnCameraChangeListener()
+        {
+            @Override
+            public void onCameraChange(CameraPosition position)
+            {
+                Log.d("Zoom", "Zoom: " + position.zoom);
+                layer = new GeoJsonLayer(mMap, lectureWalls);
+                layer1 = new GeoJsonLayer(mMap, my);
+                if(position.zoom <= 18)
+                {
+                    mMap.addMarker(new MarkerOptions().position(location).title("Marker in Sydney"));
+                    isZooming = true;
+
+
+                    mMap.clear();
+                    layer1.addLayerToMap();
+
+                }else{
+
+
+                    mMap.clear();
+
+                    mMap.addMarker(new MarkerOptions().position(location).title("Marker in Sydney"));
+                    layer.addLayerToMap();
+                }
+
+                zoomLevel = position.zoom;
+            }
+        };
+    }
+
+    private Location getMyLocation() {
+
+
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -284,6 +332,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return TODO;
         }
         Location myLocation = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER );
+
         if (myLocation == null) {
             Criteria criteria = new Criteria();
             criteria.setAccuracy(Criteria.ACCURACY_COARSE);
@@ -327,7 +376,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     HttpClient httpclient = new DefaultHttpClient();
 
                     // make GET request to the given URL
-                    HttpResponse httpResponse = httpclient.execute(new HttpGet("http://35.202.5.111:11080/NavUPRest/api/building/get/geoJSON"));
+                    HttpResponse httpResponse = httpclient.execute(new HttpGet("http://35.202.5.111:11080/NavUPRest/api/lecture-hall/get/geoJSON"));
 
                     // receive response as inputStream
                     inputStream = httpResponse.getEntity().getContent();
@@ -414,6 +463,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void sendPost(View view) {
 
         initialize();
+
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -464,8 +514,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         X = temp[0];
                         Y = temp[1];
 
-                        System.out.println(X);
-                        System.out.println(Y);
+                        //System.out.println(X);
+                        //System.out.println(Y);
 
 
                     } catch (IOException e) {
@@ -525,7 +575,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         String data = jObject.getString("locationCoordinates"); // get data object
                         // String xCoord = data.getString("locationCoordinates");
 
-                        System.out.println(data);
+                        //System.out.println(data);
 
                         String[] temp;
                         String delimiter = ", ";
@@ -534,8 +584,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         endX = temp[0];
                         endY = temp[1];
 
-                        System.out.println(endX);
-                        System.out.println(endY);
+                        //System.out.println(endX);
+                        //System.out.println(endY);
 
 
                     } catch (IOException e) {
@@ -551,7 +601,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         Double lat = location.latitude;
                                         Double lng = location.longitude;
                                         LatLng origin = new LatLng(lat,lng);
-                                        System.out.println(lat.toString() + lng.toString() + "EK IS VOKKEN HIER");
+
                                         //mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
 
                                         DirectionsResult result = DirectionsApi.newRequest(getGeoContext()).mode(TravelMode.WALKING).origin(Y + "," + X).destination(endY + "," + endX).departureTime(now).await();
@@ -560,6 +610,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         addMarkersToMap(result, mMap);
                                         getEndLocationTitle(result);
                                         addPolyline(result, mMap);
+
+
                                     } catch (ApiException e) {
                                         e.printStackTrace();
                                     } catch (InterruptedException e) {
