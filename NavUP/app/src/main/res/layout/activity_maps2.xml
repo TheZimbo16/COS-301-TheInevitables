@@ -61,13 +61,14 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_gravity="bottom"
+        android:layout_margin="10dp"
         android:background="@android:color/holo_blue_dark"
-        android:gravity="center"
-        android:padding="16dp"
-        android:text="Start tracking"
         android:drawableLeft="@android:drawable/ic_menu_compass"
         android:drawableRight="@android:drawable/ic_menu_compass"
-        android:layout_margin="10dp"
+        android:gravity="center"
+        android:onClick="getCurrentLocation"
+        android:padding="16dp"
+        android:text="Start tracking"
         android:textColor="@color/colorIcons" />
 
 

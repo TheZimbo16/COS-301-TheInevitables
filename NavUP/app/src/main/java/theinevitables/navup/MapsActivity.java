@@ -95,14 +95,14 @@ import static android.Manifest.permission.CAMERA;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
+    DirectionsResult result;
     float zoomLevel = 18f;
     private static final Location TODO = null;
     GeoJsonLayer layer;
     GeoJsonLayer layer1;
     private static final int PERMISSION_REQUEST_CODE = 200;
     private static final String[] INITIAL_PERMS = {
-            android.Manifest.permission.ACCESS_COARSE_LOCATION
+            android.Manifest.permission.ACCESS_FINE_LOCATION
     };
     private static final String[] LOCATION_PERMS = {
             android.Manifest.permission.ACCESS_COARSE_LOCATION
@@ -127,6 +127,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Marker mMarker;
     boolean isZooming = false;
     private String endLocation;
+    LatLng geography = new LatLng(-25.7536717, 28.230221);
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps2);
@@ -157,6 +158,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //cpassword = et_cpassword.getText().toString().trim();
     }
 
+    public void getCurrentLocation(View view){
+
+
+
+
+        System.out.println(mLocation + "mloc");
+        if (mLocation != null) {
+
+            location = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+
+        }
+        else location = new LatLng(-25.7536717, 28.230221);
+        System.out.println(mLocation + "mloc");
+        mMap.addMarker(new MarkerOptions().position(location).title("This is where you are"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+    }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -173,23 +191,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnCameraChangeListener(getCameraChangeListener());
 
         // Add a marker in Sydney and move the camera
-        LatLng geography = new LatLng(-25.7536717, 28.230221);
-        mMap.addMarker(new MarkerOptions().position(geography).title("University of Pretoria"));
+
+
 
          //This goes up to 21
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(geography, zoomLevel));
         mMap.setMyLocationEnabled(true);
         mMap.setIndoorEnabled(true);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
+        System.out.println(getMyLocation() + "getmyloc");
         mLocation = getMyLocation();
         System.out.println(mLocation + "mloc");
         if (mLocation != null) {
 
             location = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
-            System.out.println(location + "here");
+
         }
         else location = new LatLng(-25.7536717, 28.230221);
+
 
 
 
@@ -200,7 +219,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         System.out.println("my location" + mMap.getMyLocation());
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -294,22 +313,111 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.d("Zoom", "Zoom: " + position.zoom);
                 layer = new GeoJsonLayer(mMap, lectureWalls);
                 layer1 = new GeoJsonLayer(mMap, my);
+                JSONArray pilot = null;
+                try {
+                    pilot = lectureWalls.getJSONArray("features");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                JSONObject jsono1 = null;
+                JSONObject jsono2 = null;
+                JSONObject jsono3 = null;
+                try {
+                    jsono1 = new JSONObject(pilot.getString(0));
+                    jsono2 = new JSONObject(pilot.getString(1));
+                    jsono3 = new JSONObject(pilot.getString(2));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                JSONObject geom1 = null;
+                JSONObject geom2 = null;
+                JSONObject geom3 = null;
+                try {
+                    geom1 = jsono1.getJSONObject("geometry");
+                    geom2 = jsono2.getJSONObject("geometry");
+                    geom3 = jsono3.getJSONObject("geometry");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                JSONArray json1 = null;
+                JSONArray json2 = null;
+                JSONArray json3 = null;
+                try {
+                    json1 = geom1.getJSONArray("coordinates");
+                    json2 = geom2.getJSONArray("coordinates");
+                    json3 = geom3.getJSONArray("coordinates");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                ArrayList<String> listdata = new ArrayList<String>();
+
+                if (json1 != null && json2 !=null && json3!=null) {
+
+                        try {
+                            listdata.add(json1.getString(0));
+                            listdata.add(json2.getString(0));
+                            listdata.add(json3.getString(0));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                //System.out.println(listdata.toString());
+                //String[] array = listdata.toString().split("],");
+                //listdata.toString().replaceAll("[\\[\\](){}]", "");
+                String[] tokens = listdata.toString().replaceAll("[\\[\\](){}]", "").split("],", -1);
+                //LatLng [] floatValues = new LatLng[tokens.length];
+                ArrayList<LatLng> coords = new ArrayList<>();
+                for (int i = 0; i < tokens.length; i++) {
+                    //System.out.println(Float.parseFloat(tokens[i]));
+                    String[] latlong = tokens[i].split(",");
+                    double latitude = Double.parseDouble(latlong[0]);
+                    double longitude = Double.parseDouble(latlong[1]);
+
+                    double latitude1 = Double.parseDouble(latlong[24]);
+                    double longitude1 = Double.parseDouble(latlong[25]);
+
+                    double latitude2 = Double.parseDouble(latlong[14]);
+                    double longitude2 = Double.parseDouble(latlong[15]);
+                    LatLng obj = new LatLng(longitude, latitude);
+                    LatLng obj1 = new LatLng(longitude1, latitude1);
+                    LatLng obj2 = new LatLng(longitude2, latitude2);
+                    coords.add(0, obj);
+                    coords.add(1, obj1);
+                    coords.add(2, obj2);
+
+                }
+
+                System.out.println(coords.get(0));
+                System.out.println(coords.get(1));
+                System.out.println(coords.get(2));
+
+                mMap.clear();
+
                 if(position.zoom <= 18)
                 {
-                    mMap.addMarker(new MarkerOptions().position(location).title("Marker in Sydney"));
+
                     isZooming = true;
-
-
-                    mMap.clear();
                     layer1.addLayerToMap();
+                    mMap.addMarker(new MarkerOptions().position(geography).title("University of Pretoria"));
+                    if(result!=null) {
+                        addPolyline(result, mMap);
+                        addMarkersToMap(result, mMap);
+                        getEndLocationTitle(result);
+                    }
+
+
 
                 }else{
 
-
-                    mMap.clear();
-
-                    mMap.addMarker(new MarkerOptions().position(location).title("Marker in Sydney"));
-                    layer.addLayerToMap();
+                 layer.addLayerToMap();
+                    mMap.addMarker(new MarkerOptions().position(coords.get(0)).title("ROOM 1-2"));
+                    mMap.addMarker(new MarkerOptions().position(coords.get(1)).title("ROOM 1-17"));
+                    mMap.addMarker(new MarkerOptions().position(coords.get(2)).title("ROOM 1-11"));
+                    mMap.addMarker(new MarkerOptions().position(geography).title("University of Pretoria"));
                 }
 
                 zoomLevel = position.zoom;
@@ -321,7 +429,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -604,7 +712,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                                         //mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
 
-                                        DirectionsResult result = DirectionsApi.newRequest(getGeoContext()).mode(TravelMode.WALKING).origin(Y + "," + X).destination(endY + "," + endX).departureTime(now).await();
+                                        result = DirectionsApi.newRequest(getGeoContext()).mode(TravelMode.WALKING).origin(Y + "," + X).destination(endY + "," + endX).departureTime(now).await();
                                        // System.out.println("HERE" + result.routes[0].legs[0].startLocation.lat);
                                         //System.out.println("HERE" + result.routes[0].legs[0].startLocation.lng);
                                         addMarkersToMap(result, mMap);
@@ -700,7 +808,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         };
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
