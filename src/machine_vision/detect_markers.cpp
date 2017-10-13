@@ -134,6 +134,40 @@ void custom_drawAxis(cv::InputOutputArray _image, cv::InputArray _cameraMatrix, 
 //    cv::line(_image, imagePoints[0], imagePoints[4], cv::Scalar(255, 255, 0), 3);
 }
 
+void custom_drawDetectedMarkers(cv::InputOutputArray _image, cv::InputArrayOfArrays _corners,
+                         cv::InputArray _ids, cv::Scalar borderColor) {
+
+
+    CV_Assert(_image.getMat().total() != 0 &&
+              (_image.getMat().channels() == 1 || _image.getMat().channels() == 3));
+    CV_Assert((_corners.total() == _ids.total()) || _ids.total() == 0);
+
+    // calculate colors
+    cv::Scalar textColor, cornerColor;
+    textColor = cornerColor = borderColor;
+    std::swap(textColor.val[0], textColor.val[1]);     // text color just sawp G and R
+    std::swap(cornerColor.val[1], cornerColor.val[2]); // corner color just sawp G and B
+
+    int nMarkers = (int)_corners.total();
+    for(int i = 0; i < nMarkers; i++) {
+        cv::Mat currentMarker = _corners.getMat(i);
+        CV_Assert(currentMarker.total() == 4 && currentMarker.type() == CV_32FC2);
+
+        // draw marker sides
+        for(int j = 0; j < 4; j++) {
+            cv::Point2f p0, p1;
+            p0 = currentMarker.ptr< cv::Point2f >(0)[j];
+            p1 = currentMarker.ptr< cv::Point2f >(0)[(j + 1) % 4];
+            cv::line(_image, p0, p1, borderColor, 4);
+        }
+        // draw first corner mark
+        cv::rectangle(_image, currentMarker.ptr< cv::Point2f >(0)[0] - cv::Point2f(3, 3),
+                  currentMarker.ptr< cv::Point2f >(0)[0] + cv::Point2f(3, 3), cornerColor, 1, cv::LINE_AA);
+
+    }
+}
+
+
 int main(int argc, char *argv[]) {
     cv::CommandLineParser parser(argc, argv, keys);
     parser.about(about);
@@ -192,11 +226,13 @@ int main(int argc, char *argv[]) {
 
     cv::VideoCapture inputVideo;
     int waitTime;
+
     if(!video.empty()) {
         inputVideo.open(video);
 	//process video in realtime even if it can be done faster
-	int fps = inputVideo.get(CV_CAP_PROP_FPS);
-        waitTime = 1000/fps;
+//	int fps = inputVideo.get(CV_CAP_PROP_FPS);
+//        waitTime = 1000/fps;
+        waitTime = 1;
     } else {
         inputVideo.open(camId);
         waitTime = 10;
@@ -209,8 +245,15 @@ int main(int argc, char *argv[]) {
     std::deque<float> avgx;
     std::deque<float> avgy;
     std::deque<float> avgz;
-
-    while(inputVideo.grab()) {
+		cv::VideoWriter output_cap("output.avi", 
+                cv::VideoWriter::fourcc('X', 'V', 'I', 'D'),
+//0x00000021,
+               inputVideo.get(CV_CAP_PROP_FPS),
+               cv::Size(inputVideo.get(CV_CAP_PROP_FRAME_WIDTH),
+               inputVideo.get(CV_CAP_PROP_FRAME_HEIGHT)));
+		int fr = 0;
+    while(inputVideo.grab()&&fr < 1000) {
+//++fr;
         cv::Mat image, imageCopy;
         inputVideo.retrieve(image);
         if(portrait_mode)
@@ -218,6 +261,7 @@ int main(int argc, char *argv[]) {
             cv::transpose(image, image);
             cv::flip(image, image, 1);
         }
+//				cv::resize(image,image,cv::Size(),0.2,0.2);
             
         std::vector< int > ids;
         std::vector< std::vector< cv::Point2f > > corners, rejected;
@@ -232,7 +276,7 @@ int main(int argc, char *argv[]) {
         // draw results
         image.copyTo(imageCopy);
         if(ids.size() > 0) {
-            cv::aruco::drawDetectedMarkers(imageCopy, corners, ids);
+            custom_drawDetectedMarkers(imageCopy, corners, ids, cv::Scalar(0,255,0));
 
             if(estimatePose) {
                 for(unsigned int i = 0; i < ids.size(); i++)
@@ -260,6 +304,11 @@ int main(int argc, char *argv[]) {
 
                     int width = inputVideo.get(CV_CAP_PROP_FRAME_WIDTH);
                     int height = inputVideo.get(CV_CAP_PROP_FRAME_HEIGHT);
+cv::Point2f middle = (corners[i][0]+corners[i][1]+corners[i][2]+corners[i][3])/4;
+cv::line(imageCopy,cv::Point(0,middle.y),cv::Point(width+middle.x,middle.y), cv::Scalar(0,255,0),4);
+cv::line(imageCopy,cv::Point(middle.x,0),cv::Point(middle.x,height+middle.y), cv::Scalar(0,255,0),4);
+//cv::line(imageCopy);
+
 
                     cv::circle(imageCopy,CvPoint((width/2),(height/2)),dot_size,CV_RGB(0,255,0), -1, CV_AA);
 
@@ -328,10 +377,12 @@ int main(int argc, char *argv[]) {
             cv::aruco::drawDetectedMarkers(imageCopy, rejected, cv::noArray(), cv::Scalar(100, 0, 255));
         if(mirror)
             cv::flip(imageCopy, imageCopy, 1);
+				output_cap << imageCopy;
         cv::imshow("out", imageCopy);
         char key = (char)cv::waitKey(waitTime);
         if(key == 27) break;
     }
+		output_cap.release();
 
     return 0;
 }

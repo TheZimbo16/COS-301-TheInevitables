@@ -3,6 +3,8 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
+            keyAlias 'test'
+            keyPassword 'test'
         }
     }
     compileSdkVersion 26

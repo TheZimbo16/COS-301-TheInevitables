@@ -76,7 +76,7 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
     }
 
     private Handler mHandler;
-    Cache<String, String> cache = CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.SECONDS).build();
+    Cache<String, String> cache = CacheBuilder.newBuilder().expireAfterWrite(15, TimeUnit.SECONDS).build();
     String raw_ids = "";
     private TextToSpeech tts;
     private TextView text;
@@ -100,10 +100,20 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
 
         sharedpreferences = getSharedPreferences(PREFERENCENAME, Context.MODE_MULTI_PROCESS);
         SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString("0","Caution, concrete bollards ahead.");
-        editor.putString("1","The humanities building is to your left.");
-        editor.putString("2","Caution, uneven terrain ahead.");
-        editor.putString("3","Listen for the fountain to your right.");
+        editor.putString("0","The textured walkway is to your right.");
+        editor.putString("1","Follow the textured walkway up to a tea intersection. The humanities building will be to your right and the informatorium to your left.");
+        editor.putString("2","You have reached the tea intersection. Be careful for the road straight ahead");
+        editor.putString("3","You are nearing the informatorium entrance on your left.");
+        editor.putString("4","The purple labs and lavatories are on your right and the orange lab is to your left. The help desk is behind you.");
+        editor.putString("5","Straight ahead is a tea intersection where you may find the other labs.");
+        editor.putString("6","The C B T and project labs are to your right. The blue labs one to three as well as the orange, brown, maroon, and grey labs are to your left.");
+        editor.putString("7","You are approaching the first blue lab to your right.");
+        editor.putString("8","You are approaching the second blue lab to your right.");
+        editor.putString("9","You are approaching the end of the passage. The orange labs are straight ahead. The third blue lab is around the right hand corner of the passage. The stairs are to your right.");
+        editor.putString("10","Follow the stairs to reach the brown and grey labs.");
+        editor.putString("11","Walk straight along the walkway to reach the brown and grey labs. The passage is in a zigzag form.");
+        editor.putString("12","The passage curves to the right. Be careful for the table straight ahead.");
+        editor.putString("13","The grey lab is behind you to the right and the brown lab is in front of you to the right. Be careful for the pillar straight ahead.");
         editor.commit();
 
         setContentView(R.layout.tutorial1_surface_view);
@@ -122,8 +132,6 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "This Language is not supported");
                     }
-                    speak("Hello");
-
                 } else {
                     Log.e("TTS", "Initilization Failed!");
                 }
@@ -136,7 +144,9 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
     }
     private Runnable mUpdate = new Runnable() {
         public void run() {
+            text.setText(raw_ids);
             String[] tokens = raw_ids.split(" ");
+            raw_ids = "";
             for(String token:tokens)
             {
                 if(token!=null && token!="" && token!="null")
@@ -151,8 +161,7 @@ public class MainActivity extends Activity implements CvCameraViewListener2 {
                         }
                     }
             }
-            raw_ids = "";
-            mHandler.postDelayed(this, 1000);
+            mHandler.postDelayed(this, 200);
         }
     };
 
