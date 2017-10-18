@@ -9,4 +9,5 @@ pdf: diagrams
 
 diagrams:
 	java -jar Umlet/umlet.jar -action=convert -format=pdf -filename=../Diagrams/deployment_diagram.uxf -output=../Diagrams/deployment_diagram.pdf;
+	java -jar Umlet/umlet.jar -action=convert -format=pdf -filename=../Diagrams/uuc.uxf -output=../Diagrams/uuc.pdf;
 
