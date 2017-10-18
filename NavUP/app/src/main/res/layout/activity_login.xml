@@ -1,64 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/StudentNumber"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/linearLayout">
+        android:layout_height="80dp"
+        android:background="@android:color/white"
+        android:hint="Student Number"
+        android:inputType="text"
+        android:textColor="@android:color/black"
+        android:layout_above="@+id/password"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-        <!--<ImageView-->
-        <!--android:id="@+id/imageView"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="210dp"-->
-        <!--app:srcCompat="@mipmap/navupnew2"-->
-        <!--android:layout_above="@+id/button17"-->
-        <!--android:layout_alignParentTop="true" />-->
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="250dp"
-            android:layout_margin="10px"
-            android:background="@mipmap/navupnew2"
-            android:layout_above="@+id/button17"
-            android:layout_alignParentTop="true" />
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@android:color/white"
+        android:hint="Password"
+        android:inputType="text"
+        android:textColor="@android:color/black"
+        android:layout_above="@+id/regbtn"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-        <EditText
-            android:id="@+id/StudentNumber"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:hint="Student Number"
-            android:inputType="text"
-            android:textColor="@android:color/black"
-            android:background="@android:color/white"
-            android:layout_margin="10dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+    <Button
+        android:id="@+id/regbtn"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignEnd="@+id/StudentNumber"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/StudentNumber"
+        android:background="@color/colorPrimaryDark"
+        android:drawableLeft="@android:drawable/ic_menu_save"
+        android:drawableRight="@android:drawable/ic_menu_save"
+        android:text="Login"
+        android:textColor="@android:color/white" />
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:hint="Password"
-            android:inputType="text"
-            android:textColor="@android:color/black"
-            android:background="@android:color/white"
-            android:layout_margin="10dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@mipmap/navupmainmenu"
+        android:layout_above="@+id/StudentNumber"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            android:drawableLeft="@android:drawable/ic_menu_save"
-            android:drawableRight="@android:drawable/ic_menu_save"
-            android:id="@+id/regbtn"
-            android:layout_margin="10dp"
-            android:background="@android:color/holo_blue_dark"
-            android:textColor="@android:color/white"
-            />
-    </LinearLayout>
-</ScrollView>
+</RelativeLayout>

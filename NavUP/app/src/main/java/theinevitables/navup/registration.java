@@ -1,5 +1,6 @@
 package theinevitables.navup;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -41,13 +42,14 @@ public class registration extends AppCompatActivity {
     private EditText et_studentName,et_studentNumber,et_studentSurname,et_userPassword,et_cpassword;
     private String studentName, studentSurname,studentNumber,studentPassword,cpassword;
     Button regbtn;
+    View view;
     TextView content;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+
         et_studentName = (EditText) findViewById(R.id.name);
         et_studentNumber = (EditText) findViewById(R.id.StudentNumber);
         et_studentSurname = (EditText) findViewById(R.id.surname);
@@ -60,8 +62,9 @@ public class registration extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(validate()) {
-                    initialize();
+
                     sendPost();
+                    goToMainMenu(view);
                 }else{
                     System.out.print("There has been an error");
                 }
@@ -91,8 +94,14 @@ public class registration extends AppCompatActivity {
         //
     }
 
+    public void goToMainMenu(View view){
+        Intent nextPage1 = new Intent(registration.this,Login.class);
+        startActivity(nextPage1);
+    }
+
     public boolean validate(){
         boolean valid = true;
+        initialize();
         if(studentName.isEmpty() || studentName.length() > 32){
             et_studentName.setError("Please Enter Valid Name");
             valid = false;

@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void goToNextPage(View view){
 
-        Intent nextPage = new Intent(MainActivity.this,MainMenu.class);
+        Intent nextPage = new Intent(MainActivity.this,disability_menu.class);
         startActivity(nextPage);
     }
 

@@ -9,37 +9,55 @@
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
+        class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_alignParentTop="true"
-        class="com.google.android.gms.maps.SupportMapFragment" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+   <!-- <AutoCompleteTextView
+        android:id="@+id/startLoc"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hint="Enter Start"
+        android:textColor="@android:color/black"
+        android:background="@android:color/white"
+        android:layout_margin="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParent="@+id/endLoc">
+        <requestFocus/>
+    </AutoCompleteTextView>-->
 
 
     <AutoCompleteTextView
         android:id="@+id/endLoc"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:hint="Enter Destination"
-        android:textColor="@android:color/black"
-        android:background="@android:color/white"
-        android:layout_margin="10dp"
+        android:layout_height="70dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-        <requestFocus/>
-    </AutoCompleteTextView>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/white"
+        android:drawableRight="@android:drawable/ic_menu_search"
+        android:hint="Enter Destination"
+        android:radius="8dp"
+        android:textColor="@android:color/black"></AutoCompleteTextView>
 
     <Button
         android:id="@+id/nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_margin="10dp"
-        android:onClick="sendPost"
-        android:background="@android:color/holo_blue_dark"
-        android:text="Navigate"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimaryDark"
         android:drawableLeft="@android:drawable/ic_menu_mapmode"
         android:drawableRight="@android:drawable/ic_menu_mapmode"
+        android:onClick="sendPost"
+        android:text="Navigate"
         android:textColor="@android:color/white" />
 
 
@@ -52,7 +70,7 @@
         android:layout_alignParentRight="true"
         android:layout_gravity="bottom"
         android:layout_margin="10dp"
-        android:background="@android:color/holo_blue_dark"
+        android:background="@color/colorPrimaryDark"
         android:drawableBottom="@android:drawable/ic_menu_compass"
         android:gravity="center"
         android:onClick="getCurrentLocation"

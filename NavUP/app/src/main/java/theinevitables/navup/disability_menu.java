@@ -14,21 +14,42 @@ public class disability_menu extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disability_menu);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
     }
 
     public void goToNextPage(View view){
         Intent nextPage = new Intent(disability_menu.this,disability_navigation.class);
         startActivity(nextPage);
+    }
+
+    public void goToLoginPage(View view){
+        Intent nextPage = new Intent(disability_menu.this,Login.class);
+        startActivity(nextPage);
+    }
+
+    public void goToNextDisabilityMenu(View view){
+        Intent nextPage1 = new Intent(disability_menu.this,disability_menu.class);
+        startActivity(nextPage1);
+    }
+
+    public void goToMap(View view){
+        Intent nextPage1 = new Intent(disability_menu.this,MapsActivity.class);
+        startActivity(nextPage1);
+    }
+
+    public void goToRecentVisitedLocations(View view){
+        Intent nextPage1 = new Intent(disability_menu.this,recentLocations.class);
+        startActivity(nextPage1);
+    }
+
+    public void goToPOI(View view){
+        Intent nextPage1 = new Intent(disability_menu.this,POI.class);
+        startActivity(nextPage1);
+    }
+
+    public void goToRegistration(View view){
+        Intent nextPage1 = new Intent(disability_menu.this,registration.class);
+        startActivity(nextPage1);
     }
 }

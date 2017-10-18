@@ -4,29 +4,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="MainActivity"
-        tools:showIn="@layout/activity_main">
+        tools:context="MainActivity">
+
+
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            app:srcCompat="@mipmap/navuptwo" />
+            android:layout_marginBottom="45dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@mipmap/navupposter"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp" />
 
         <Button
             android:id="@+id/start"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:layout_alignParentBottom="true"
-            android:background="@android:color/holo_blue_dark"
-            android:onClick="goToNextPage"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorSecondaryText"
             android:drawableLeft="@android:drawable/ic_menu_compass"
             android:drawableRight="@android:drawable/ic_menu_compass"
+            android:onClick="goToNextPage"
             android:text="Start"
-            android:textColor="@android:color/background_light" />
+            android:textColor="@android:color/background_light"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp" />
 
         <!--<Button-->
             <!--android:id="@+id/check_permission"-->

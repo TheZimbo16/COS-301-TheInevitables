@@ -63,11 +63,13 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.DirectionsApi;
+import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.android.PolyUtil;
 import com.google.maps.android.data.geojson.GeoJsonLayer;
 import com.google.maps.errors.ApiException;
 import com.google.maps.model.DirectionsResult;
+import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.TravelMode;
 
 import org.apache.http.HttpResponse;
@@ -99,11 +101,16 @@ import static android.Manifest.permission.CAMERA;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,LocationListener {
-    DirectionsResult result;
+    DirectionsResult results;
+    DirectionsResult results2;
     float zoomLevel = 18f;
+    Polyline polyline;
     private static final Location TODO = null;
     GeoJsonLayer layer;
     GeoJsonLayer layer1;
+    boolean execute = false;
+    Marker start;
+    Marker end;
     private static final int PERMISSION_REQUEST_CODE = 200;
     private static final String[] INITIAL_PERMS = {
             android.Manifest.permission.ACCESS_FINE_LOCATION
@@ -121,6 +128,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     EditText et_startLoc, et_endLoc;
     String startLoc, endLoc;
     String X, Y, endX, endY;
+    String beginX,beginY;
     double lat, lng;
     JSONObject lectureWalls;
     JSONObject my;
@@ -129,20 +137,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleApiClient mGoogleApiClient;
     private LocationListener mLocationListener;
     Marker mMarker;
+    String[] tempo;
     boolean isZooming = false;
     private String endLocation;
     Marker m;
     LatLng geography = new LatLng(-25.7536717, 28.230221);
+    public static ArrayList<String> array = new ArrayList<String>();
+    public static ArrayList<Integer> flags = new ArrayList<Integer>();
+    String[] locations = {"Old Arts", "Tribecca", "Steers", "Chapel", "IT", "Oom Gerts", "Geography", "HB/SCC"};
+    ArrayList<String> myList = new ArrayList<String>();
+    float currPos;
 
-    String[] locations = {"Engineering 1", "Engineering 2", "Engineering 3", "EMB", "IT", "Aula", "AE-Auditorium", "Geography", "Mathematics"};
+
+
+
+    public void initialize() {
+        //startLoc = et_startLoc.getText().toString().trim();
+        endLoc = et_endLoc.getText().toString().trim();
+        endLocation = endLoc;
+        //cpassword = et_cpassword.getText().toString().trim();
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps2);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
         navBtn = (Button) findViewById(R.id.nav);
         //et_startLoc = (EditText) findViewById(R.id.startLoc);
         et_endLoc = (EditText) findViewById(R.id.endLoc);
@@ -155,6 +180,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         actv.setThreshold(1);//will start working from first character
         actv.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
         //actv.setTextColor(Color.RED);
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+
+            String message = bundle.getString("message");
+
+            String delimiter = ", ";
+
+            tempo = message.split(delimiter);
+            endX = tempo[0];
+            endY = tempo[1];
+        }
 
         initGoogleApiClient();
         try {
@@ -163,54 +199,236 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             e.printStackTrace();
         }
 
+
+
+    }
+
+    public GoogleMap.OnCameraChangeListener getCameraChangeListener()
+    {
+
+        return new GoogleMap.OnCameraChangeListener()
+        {
+            @Override
+            public void onCameraChange(CameraPosition position)
+            {
+                //mMap.clear();
+
+               /* if(results != null) {
+
+                    addPolyline(results, mMap);
+                    addMarkersToMap(results, mMap);
+                    getEndLocationTitle(results);
+
+                }
+                if(getMyLocation()!=null) {
+
+                    MarkerOptions a = new MarkerOptions()
+                            .position(new LatLng(getMyLocation().getLatitude(), getMyLocation().getLongitude()));
+                    m = mMap.addMarker(a);
+
+                    if  (m != null && endX!= null && endY != null) {
+
+                        try {
+
+                            results2 = DirectionsApi.newRequest(getGeoContext()).mode(TravelMode.WALKING).origin(new com.google.maps.model.LatLng(m.getPosition().latitude,m.getPosition().longitude)).destination(new com.google.maps.model.LatLng(Double.parseDouble(endY),Double.parseDouble(endX))).await();
+                            addMarkersToMap(results2, mMap);
+                            getEndLocationTitle(results2);
+                            addPolyline(results2, mMap);
+
+                        } catch (ApiException e) {
+
+                            e.printStackTrace();
+
+                        } catch (InterruptedException e) {
+
+                            e.printStackTrace();
+
+                        } catch (IOException e) {
+
+                            e.printStackTrace();
+
+                        }
+
+                    }
+                }*/
+
+                layer = new GeoJsonLayer(mMap, lectureWalls);
+                layer1 = new GeoJsonLayer(mMap, my);
+                JSONArray pilot = null;
+
+                try {
+
+                    pilot = lectureWalls.getJSONArray("features");
+
+                } catch (JSONException e) {
+
+                    e.printStackTrace();
+
+                }
+
+                JSONObject jsono1 = null;
+                JSONObject jsono2 = null;
+                JSONObject jsono3 = null;
+
+                try {
+
+                    jsono1 = new JSONObject(pilot.getString(0));
+                    jsono2 = new JSONObject(pilot.getString(1));
+                    jsono3 = new JSONObject(pilot.getString(2));
+
+                } catch (JSONException e) {
+
+                    e.printStackTrace();
+
+                }
+
+                JSONObject geom1 = null;
+                JSONObject geom2 = null;
+                JSONObject geom3 = null;
+
+                try {
+
+                    geom1 = jsono1.getJSONObject("geometry");
+                    geom2 = jsono2.getJSONObject("geometry");
+                    geom3 = jsono3.getJSONObject("geometry");
+
+                } catch (JSONException e) {
+
+                    e.printStackTrace();
+
+                }
+
+                JSONArray json1 = null;
+                JSONArray json2 = null;
+                JSONArray json3 = null;
+
+                try {
+
+                    json1 = geom1.getJSONArray("coordinates");
+                    json2 = geom2.getJSONArray("coordinates");
+                    json3 = geom3.getJSONArray("coordinates");
+
+                } catch (JSONException e) {
+
+                    e.printStackTrace();
+
+                }
+
+                ArrayList<String> listdata = new ArrayList<String>();
+
+                if (json1 != null && json2 !=null && json3!=null) {
+
+                    try {
+
+                        listdata.add(json1.getString(0));
+                        listdata.add(json2.getString(0));
+                        listdata.add(json3.getString(0));
+
+                    } catch (JSONException e) {
+
+                        e.printStackTrace();
+
+                    }
+                }
+
+                String[] tokens = listdata.toString().replaceAll("[\\[\\](){}]", "").split("],", -1);
+
+                ArrayList<LatLng> coords = new ArrayList<>();
+                for (int i = 0; i < tokens.length; i++) {
+
+                    //System.out.println(Float.parseFloat(tokens[i]));
+                    String[] latlong = tokens[i].split(",");
+
+                    double latitude = Double.parseDouble(latlong[0]);
+                    double longitude = Double.parseDouble(latlong[1]);
+
+                    double latitude1 = Double.parseDouble(latlong[24]);
+                    double longitude1 = Double.parseDouble(latlong[25]);
+
+                    double latitude2 = Double.parseDouble(latlong[14]);
+                    double longitude2 = Double.parseDouble(latlong[15]);
+
+                    LatLng obj = new LatLng(longitude, latitude);
+                    LatLng obj1 = new LatLng(longitude1, latitude1);
+                    LatLng obj2 = new LatLng(longitude2, latitude2);
+
+                    coords.add(0, obj);
+                    coords.add(1, obj1);
+                    coords.add(2, obj2);
+
+                }
+
+                //System.out.println(coords.get(0));
+                //System.out.println(coords.get(1));
+                //System.out.println(coords.get(2));
+                currPos = 18;
+                if(position.zoom  < currPos){
+                    isZooming = true;
+                    System.out.println("FALSE ZOOM LESS");
+                }else if(position.zoom > currPos){
+                    isZooming = true;
+                    System.out.println("FALSE ZOOM GREATER");
+                }else{
+                    System.out.println("FALSE ZOOM");
+                    isZooming = false;
+                    System.out.println(layer1.isLayerOnMap() + "is layer on map");
+                }
+
+                execute = false;
+                if(!execute) {
+
+                    if (position.zoom <= 18 && isZooming==true) {
+
+                        mMap.clear();
+                        layer1.addLayerToMap();
+                        mMap.addMarker(new MarkerOptions().position(geography).title("University of Pretoria"));
+                        onLocationChanged(getMyLocation());
+                        if(results != null) {
+                            addMarkersToMap(results, mMap);
+                            getEndLocationTitle(results);
+                            addPolyline(results, mMap);
+                        }
+                        if (mLocation != null) {
+
+                            location = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+
+                        }
+                        System.out.println("BUILDING OBJECTS LESS");
+
+                        //onLocationChanged(mLocation);
+                    } else if(position.zoom >= 18 && isZooming==true) {
+                        mMap.clear();
+                        layer.addLayerToMap();
+                        mMap.addMarker(new MarkerOptions().position(coords.get(0)).title("ROOM 1-2"));
+                        mMap.addMarker(new MarkerOptions().position(coords.get(1)).title("ROOM 1-17"));
+                        mMap.addMarker(new MarkerOptions().position(coords.get(2)).title("ROOM 1-11"));
+                        mMap.addMarker(new MarkerOptions().position(geography).title("University of Pretoria"));
+                        onLocationChanged(getMyLocation());
+                        if(results != null) {
+                            addMarkersToMap(results, mMap);
+                            getEndLocationTitle(results);
+                            addPolyline(results, mMap);
+                        }
+                        System.out.println("BUILDING OBJECTS GREATER");
+                    }
+                    execute = true;
+                }
+                System.out.println(execute + "exec");
+                zoomLevel = position.zoom;
+                currPos = position.zoom;
+
+            }
+        };
     }
 
     //
-
-
-    public void initialize() {
-        //startLoc = et_startLoc.getText().toString().trim();
-        endLoc = et_endLoc.getText().toString().trim();
-        endLocation = endLoc;
-        //cpassword = et_cpassword.getText().toString().trim();
-    }
-
-    public void getCurrentLocation(View view){
-
-
-
-
-        System.out.println(mLocation + "mloc");
-        if (mLocation != null) {
-
-            //onLocationChanged(mLocation);
-        }
-        else location = new LatLng(-25.7536717, 28.230221);
-        System.out.println(mLocation + "mloc");
-        m.setPosition(new LatLng(getMyLocation().getLatitude(),getMyLocation().getLongitude()));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-    }
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
         mMap.setOnCameraChangeListener(getCameraChangeListener());
-
-        // Add a marker in Sydney and move the camera
-
-
-
-         //This goes up to 21
+        //This goes up to 21
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(geography, zoomLevel));
         mMap.setMyLocationEnabled(true);
         mMap.setIndoorEnabled(true);
@@ -219,6 +437,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             MarkerOptions a = new MarkerOptions()
                     .position(new LatLng(getMyLocation().getLatitude(), getMyLocation().getLongitude()));
             m = mMap.addMarker(a);
+            try {
+                if (m != null && endX!= null && endY != null) {
+                    results = DirectionsApi.newRequest(getGeoContext()).mode(TravelMode.WALKING).origin(new com.google.maps.model.LatLng(m.getPosition().latitude,m.getPosition().longitude)).destination(new com.google.maps.model.LatLng(Double.parseDouble(endY),Double.parseDouble(endX))).await();
+                    System.out.println("HERE IS MY LOCATION LULZ"+results.routes[0].legs[0].endLocation);
+                    String loc = results.routes[0].legs[0].endLocation.toString();
+                    String[] latlong = loc.split(",");
+                    double lat = Double.parseDouble(latlong[0]);
+                    double longA = Double.parseDouble(latlong[1]);
+                    LatLng location = new LatLng(lat,longA);
+                    addMarkersToMap(results, mMap);
+                    getEndLocationTitle(results);
+                    addPolyline(results, mMap);
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomLevel));
+                }
+
+
+            } catch (ApiException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         System.out.println(getMyLocation() + "getmyloc");
@@ -232,7 +473,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         else location = new LatLng(-25.7536717, 28.230221);
 
-        timer = new CountDownTimer(5000, 1000)
+        /*timer = new CountDownTimer(15000, 1000)
         {
 
 
@@ -249,16 +490,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             {
                 System.out.println(getMyLocation());
 
-                onLocationChanged(getMyLocation());
+
                 timer.start();
 
             }
-        }.start();
+        }.start();*/
 
 
 
-       // mMap.addMarker(new MarkerOptions().position(location).title("Marker in Sydney"));
-       // mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+        // mMap.addMarker(new MarkerOptions().position(location).title("Marker in Sydney"));
+        // mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
 
 
 
@@ -306,6 +547,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 coords.add(i, obj);
             }
             my = jsonobject;
+            layer1 = new GeoJsonLayer(mMap, my);
+            layer1.addLayerToMap();
             LatLng insideBuilding = coords.get(0);
             mMap.addMarker(new MarkerOptions().position(geography).title("Geography Building"));
 
@@ -339,148 +582,39 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //layer = new GeoJsonLayer(mMap, jsonobject);
         //layer.addLayerToMap();
-
-        List<LatLng> polygonList = new ArrayList<LatLng>();
         // To draw boundray on map
 
         //mMap.moveCamera( CameraUpdateFactory.newLatLngZoom(new LatLng( 28.2314,25.7545) , 14.0f) );
     }
 
-    public GoogleMap.OnCameraChangeListener getCameraChangeListener()
-    {
 
-        return new GoogleMap.OnCameraChangeListener()
-        {
-            @Override
-            public void onCameraChange(CameraPosition position)
-            {
-                mMap.clear();
-                if(result != null) {
-                    addPolyline(result, mMap);
-                    addMarkersToMap(result, mMap);
-                    getEndLocationTitle(result);
-                }
-                if(getMyLocation()!=null) {
-                    MarkerOptions a = new MarkerOptions()
-                            .position(new LatLng(getMyLocation().getLatitude(), getMyLocation().getLongitude()));
-                    m = mMap.addMarker(a);
-                }
-                Log.d("Zoom", "Zoom: " + position.zoom);
-                layer = new GeoJsonLayer(mMap, lectureWalls);
-                layer1 = new GeoJsonLayer(mMap, my);
-                JSONArray pilot = null;
-                try {
-                    pilot = lectureWalls.getJSONArray("features");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                JSONObject jsono1 = null;
-                JSONObject jsono2 = null;
-                JSONObject jsono3 = null;
-                try {
-                    jsono1 = new JSONObject(pilot.getString(0));
-                    jsono2 = new JSONObject(pilot.getString(1));
-                    jsono3 = new JSONObject(pilot.getString(2));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
-                JSONObject geom1 = null;
-                JSONObject geom2 = null;
-                JSONObject geom3 = null;
-                try {
-                    geom1 = jsono1.getJSONObject("geometry");
-                    geom2 = jsono2.getJSONObject("geometry");
-                    geom3 = jsono3.getJSONObject("geometry");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                JSONArray json1 = null;
-                JSONArray json2 = null;
-                JSONArray json3 = null;
-                try {
-                    json1 = geom1.getJSONArray("coordinates");
-                    json2 = geom2.getJSONArray("coordinates");
-                    json3 = geom3.getJSONArray("coordinates");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                ArrayList<String> listdata = new ArrayList<String>();
-
-                if (json1 != null && json2 !=null && json3!=null) {
-
-                        try {
-                            listdata.add(json1.getString(0));
-                            listdata.add(json2.getString(0));
-                            listdata.add(json3.getString(0));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                //System.out.println(listdata.toString());
-                //String[] array = listdata.toString().split("],");
-                //listdata.toString().replaceAll("[\\[\\](){}]", "");
-                String[] tokens = listdata.toString().replaceAll("[\\[\\](){}]", "").split("],", -1);
-                //LatLng [] floatValues = new LatLng[tokens.length];
-                ArrayList<LatLng> coords = new ArrayList<>();
-                for (int i = 0; i < tokens.length; i++) {
-                    //System.out.println(Float.parseFloat(tokens[i]));
-                    String[] latlong = tokens[i].split(",");
-                    double latitude = Double.parseDouble(latlong[0]);
-                    double longitude = Double.parseDouble(latlong[1]);
-
-                    double latitude1 = Double.parseDouble(latlong[24]);
-                    double longitude1 = Double.parseDouble(latlong[25]);
-
-                    double latitude2 = Double.parseDouble(latlong[14]);
-                    double longitude2 = Double.parseDouble(latlong[15]);
-                    LatLng obj = new LatLng(longitude, latitude);
-                    LatLng obj1 = new LatLng(longitude1, latitude1);
-                    LatLng obj2 = new LatLng(longitude2, latitude2);
-                    coords.add(0, obj);
-                    coords.add(1, obj1);
-                    coords.add(2, obj2);
-
-                }
-
-                System.out.println(coords.get(0));
-                System.out.println(coords.get(1));
-                System.out.println(coords.get(2));
+    public void getCurrentLocation(View view){
 
 
 
-                if(position.zoom <= 18)
-                {
 
-                    isZooming = true;
-                    layer1.addLayerToMap();
-                    mMap.addMarker(new MarkerOptions().position(geography).title("University of Pretoria"));
-                    if(result!=null) {
+        System.out.println(mLocation + "mloc");
+        if (mLocation != null) {
 
-                    }
+            //onLocationChanged(mLocation);
+        }
+        else location = new LatLng(-25.7536717, 28.230221);
+        System.out.println(mLocation + "mloc");
 
-                    if (mLocation != null) {
-
-                        location = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
-
-                    }
-                    //onLocationChanged(mLocation);
-                }else{
-
-                 layer.addLayerToMap();
-                    mMap.addMarker(new MarkerOptions().position(coords.get(0)).title("ROOM 1-2"));
-                    mMap.addMarker(new MarkerOptions().position(coords.get(1)).title("ROOM 1-17"));
-                    mMap.addMarker(new MarkerOptions().position(coords.get(2)).title("ROOM 1-11"));
-                    mMap.addMarker(new MarkerOptions().position(geography).title("University of Pretoria"));
-                }
-
-                zoomLevel = position.zoom;
-            }
-        };
+        m.setPosition(new LatLng(location.latitude,location.longitude));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
     }
+
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
 
     private Location getMyLocation() {
 
@@ -506,24 +640,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         return myLocation;
     }
-    private void drawPolygon() {
-        PolygonOptions polygonOptions = new PolygonOptions(); // consider new options
 
-        LatLng[] drawCoordinates = new LatLng[0];
-        for (LatLng latLng : drawCoordinates) {
-            Marker marker = mMap.addMarker(new MarkerOptions().position(latLng).title(latLng.toString()));
-            marker.setVisible(false);
-
-            polygonOptions.add(marker.getPosition()).strokeColor(Color.RED);
-            polygonOptions.fillColor(Color.TRANSPARENT);
-            polygonOptions.visible(true);
-        }
-        List<LatLng> points = polygonOptions.getPoints();
-        if (!points.isEmpty()) {
-            Polygon polygon = mMap.addPolygon(polygonOptions);
-            Log.i("Poly lines", "Successfully added polyline on map");
-        }
-    }
 
 
     public String getGeoJSONHallObjects() throws InterruptedException {
@@ -608,23 +725,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-
-    }
-
-    public void drawPath() {
-
-    }
-
-
     public void sendPost(View view) {
 
         initialize();
@@ -703,6 +803,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void run() {
                 try {
+
                     URL url = new URL("http://35.202.5.111:11080/NavUPRest/api/nav/getSingleUser");
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
@@ -712,9 +813,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     conn.setDoInput(true);
 
                     JSONObject jsonParam = new JSONObject();
+                    array.add(endLoc);
                     jsonParam.put("locationName", endLoc);
-
-
                     Log.i("JSON", jsonParam.toString());
                     DataOutputStream os = new DataOutputStream(conn.getOutputStream());
                     //os.writeBytes(URLEncoder.encode(jsonParam.toString(), "UTF-8"));
@@ -735,49 +835,59 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             sb.append((char) ch);
                         }
 
-
                         JSONObject jObject = new JSONObject(sb.toString()); // json
                         String data = jObject.getString("locationCoordinates"); // get data object
                         // String xCoord = data.getString("locationCoordinates");
 
                         //System.out.println(data);
-
                         String[] temp;
                         String delimiter = ", ";
-
                         temp = data.split(delimiter);
                         endX = temp[0];
                         endY = temp[1];
-
-                        //System.out.println(endX);
-                        //System.out.println(endY);
-
 
                     } catch (IOException e) {
                         throw e;
                     } finally {
                         if (is != null) {
+
                             Handler handler = new Handler(Looper.getMainLooper());
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
+                                    Double lat = location.latitude;
+                                    Double lng = location.longitude;
+                                    LatLng origin = new LatLng(lat,lng);
+
+                                    //mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+                                    String latitude =Double.toString(m.getPosition().latitude);
+                                    String longitude =Double.toString(m.getPosition().longitude);
+                                    System.out.println(latitude + longitude);
                                     DateTime now = new DateTime();
+                                    LatLng origin1 = new LatLng(m.getPosition().latitude,m.getPosition().latitude);
+                                    LatLng dest = new LatLng(Double.parseDouble(endY),Double.parseDouble(endX));
                                     try {
-                                        Double lat = location.latitude;
-                                        Double lng = location.longitude;
-                                        LatLng origin = new LatLng(lat,lng);
 
-                                        //mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-                                        String latitude =Double.toString(m.getPosition().latitude);
-                                        String longitude =Double.toString(m.getPosition().longitude);
-                                        System.out.println(latitude + longitude + "poes werk net");
-                                        result = DirectionsApi.newRequest(getGeoContext()).mode(TravelMode.WALKING).origin(latitude+ "," + longitude).destination(endY + "," + endX).departureTime(now).await();
-                                       // System.out.println("HERE" + result.routes[0].legs[0].startLocation.lat);
-                                        //System.out.println("HERE" + result.routes[0].legs[0].startLocation.lng);
-                                        addMarkersToMap(result, mMap);
-                                        getEndLocationTitle(result);
-                                        addPolyline(result, mMap);
-
+                                        //
+                                        if(polyline!=null)
+                                            polyline.remove();
+                                        if(start !=null && end!= null){
+                                            start.remove();
+                                            end.remove();
+                                        }
+                                        results = DirectionsApi.newRequest(getGeoContext()).mode(TravelMode.WALKING).origin(new com.google.maps.model.LatLng(m.getPosition().latitude,m.getPosition().longitude)).destination(new com.google.maps.model.LatLng(Double.parseDouble(endY),Double.parseDouble(endX))).await();
+                                        layer1 = new GeoJsonLayer(mMap, my);
+                                        layer1.addLayerToMap();
+                                        System.out.println(results.routes.length);
+                                        addMarkersToMap(results, mMap);
+                                        getEndLocationTitle(results);
+                                        addPolyline(results, mMap);
+                                        String loc = results.routes[0].legs[0].endLocation.toString();
+                                        String[] latlong = loc.split(",");
+                                        double lati = Double.parseDouble(latlong[0]);
+                                        double longA = Double.parseDouble(latlong[1]);
+                                        LatLng location = new LatLng(lati,longA);
+                                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, zoomLevel));
 
                                     } catch (ApiException e) {
                                         e.printStackTrace();
@@ -786,10 +896,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
-                                  /*  Polyline line = mMap.addPolyline(new PolylineOptions()
-                                            .add(new LatLng(Float.parseFloat(Y), Float.parseFloat(X)), new LatLng(Float.parseFloat(endY), Float.parseFloat(endX)))
-                                            .width(5)
-                                            .color(Color.RED));*/
+                                    // System.out.println("HERE" + result.routes[0].legs[0].startLocation.lat);
+                                    //System.out.println("HERE" + result.routes[0].legs[0].startLocation.lng);
+
                                 }
                             });
 
@@ -797,28 +906,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                     }
 
-
                     conn.disconnect();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-
-
         //thread.start();
         thread1.start();
 
     }
 
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while ((line = bufferedReader.readLine()) != null)
+            result += line;
+
+        inputStream.close();
+        return result;
+
+    }
+
     private GeoApiContext getGeoContext() {
         GeoApiContext geoApiContext = new GeoApiContext();
-        return geoApiContext.setQueryRateLimit(3).setApiKey("AIzaSyDjgvY-aqagM3mne_OyNo8eOZKrhmtqRLo").setConnectTimeout(1, TimeUnit.SECONDS).setReadTimeout(1, TimeUnit.SECONDS).setWriteTimeout(1, TimeUnit.SECONDS);
+        return geoApiContext.setQueryRateLimit(3).setApiKey(getString(R.string.directionsApiKey)).setConnectTimeout(1, TimeUnit.SECONDS).setReadTimeout(1, TimeUnit.SECONDS)                .setWriteTimeout(1, TimeUnit.SECONDS);
     }
 
     private void addMarkersToMap(DirectionsResult results, GoogleMap mMap) {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[0].legs[0].startLocation.lat, results.routes[0].legs[0].startLocation.lng)).title(results.routes[0].legs[0].startAddress));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[0].legs[0].endLocation.lat, results.routes[0].legs[0].endLocation.lng)).title(results.routes[0].legs[0].startAddress).snippet(getEndLocationTitle(results)));
+        start =mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[0].legs[0].startLocation.lat, results.routes[0].legs[0].startLocation.lng)).title(results.routes[0].legs[0].startAddress));
+        end =mMap.addMarker(new MarkerOptions().position(new LatLng(results.routes[0].legs[0].endLocation.lat, results.routes[0].legs[0].endLocation.lng)).title(results.routes[0].legs[0].startAddress).snippet(getEndLocationTitle(results)));
+
     }
 
     private String getEndLocationTitle(DirectionsResult results) {
@@ -827,7 +946,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void addPolyline(DirectionsResult results, final GoogleMap mMap) {
         List<LatLng> decodedPath = PolyUtil.decode(results.routes[0].overviewPolyline.getEncodedPath());
-        mMap.addPolyline(new PolylineOptions().addAll(decodedPath).color(Color.RED));
+       //mMap.addPolyline(new PolylineOptions().addAll(decodedPath).color(Color.RED));
+
+       polyline = mMap.addPolyline(new PolylineOptions().addAll(decodedPath).color(Color.RED));
 
     }
 
@@ -889,13 +1010,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(),location.getLongitude()));
         //mMap.moveCamera(center);
         LatLng ltlng = new LatLng(location.getLatitude(),location.getLongitude());
-        m.setPosition(new LatLng(location.getLatitude(),location.getLongitude()));
-        if(result != null) {
-            addPolyline(result, mMap);
-            addMarkersToMap(result, mMap);
-            getEndLocationTitle(result);
+       /* m.setPosition(new LatLng(location.getLatitude(),location.getLongitude()));
+        if(results != null) {
+            addPolyline(results, mMap);
+            addMarkersToMap(results, mMap);
+            getEndLocationTitle(results);
         }
+        if  (m != null && endX!= null && endY != null){
+            try {
+                results2 = DirectionsApi.newRequest(getGeoContext()).mode(TravelMode.WALKING).origin(new com.google.maps.model.LatLng(m.getPosition().latitude,m.getPosition().longitude)).destination(new com.google.maps.model.LatLng(Double.parseDouble(endY),Double.parseDouble(endX))).await();
+                System.out.println("HERE IS MY LOCATION LULZ"+results2.routes[0].legs[0].endLocation);
+                addMarkersToMap(results2, mMap);
+                getEndLocationTitle(results2);
+                addPolyline(results2, mMap);
+            } catch (ApiException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
+        }
+        */
 
         CameraUpdate zoom=CameraUpdateFactory.zoomTo(18);
 
