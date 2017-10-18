@@ -281,78 +281,37 @@ Language</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>650</x>
+      <x>670</x>
       <y>490</y>
-      <w>100</w>
+      <w>80</w>
       <h>210</h>
     </coordinates>
     <panel_attributes>lt=-
 https</panel_attributes>
-    <additional_attributes>10.0;190.0;80.0;190.0;80.0;10.0</additional_attributes>
+    <additional_attributes>10.0;190.0;60.0;190.0;60.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLDeployment</id>
     <coordinates>
       <x>390</x>
       <y>580</y>
-      <w>270</w>
+      <w>290</w>
       <h>330</h>
     </coordinates>
     <panel_attributes>&lt;&lt;device&gt;&gt;
-Mobile/Desktop
-group=6</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLDeployment</id>
-    <coordinates>
-      <x>420</x>
-      <y>680</y>
-      <w>200</w>
-      <h>210</h>
-    </coordinates>
-    <panel_attributes>&lt;&lt;execution environment&gt;&gt;
-Ionic/Cordova framework
-group=6</panel_attributes>
+Mobile/Desktop</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>450</x>
-      <y>780</y>
-      <w>130</w>
+      <x>420</x>
+      <y>690</y>
+      <w>190</w>
       <h>40</h>
     </coordinates>
     <panel_attributes>symbol=artifact
-NavUp.apk
-group=6</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>440</x>
-      <y>740</y>
-      <w>150</w>
-      <h>90</h>
-    </coordinates>
-    <panel_attributes>symbol=component
-Native App
-group=6</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>450</x>
-      <y>840</y>
-      <w>130</w>
-      <h>40</h>
-    </coordinates>
-    <panel_attributes>symbol=component
-Web App
-group=6</panel_attributes>
+NavUp.apk</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -384,12 +343,11 @@ https</panel_attributes>
     <coordinates>
       <x>400</x>
       <y>630</y>
-      <w>240</w>
-      <h>270</h>
+      <w>260</w>
+      <h>260</h>
     </coordinates>
     <panel_attributes>&lt;&lt;execution environment&gt;&gt;
-Browser
-group=6</panel_attributes>
+Android runtime environment</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -466,5 +424,55 @@ business logic
 and database
 markup</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>430</x>
+      <y>800</y>
+      <w>190</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>symbol=artifact
+Machine Vision.apk</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLDeployment</id>
+    <coordinates>
+      <x>410</x>
+      <y>740</y>
+      <w>230</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;execution environment&gt;&gt;
+Java Native Interface</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>220</x>
+      <y>820</y>
+      <w>160</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>High performance
+routines are
+compiled to 
+binaries for the
+target architecture</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>370</x>
+      <y>800</y>
+      <w>90</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;40.0;70.0;10.0</additional_attributes>
   </element>
 </diagram>
