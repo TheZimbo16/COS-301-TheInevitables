@@ -130,9 +130,9 @@ public void addListenerOnButton() {
             public void onClick(View v) {
 
                 Toast.makeText(POI.this,
-                        "OnClickListener : " +
-                                "\nSpinner 1 : "+ String.valueOf(spinner1.getSelectedItem()) +
-                                "\nSpinner 2 : "+ String.valueOf(list.get(CustomOnItemSelectedListener.position2)),
+
+
+                                "\nNavigating you to "+ String.valueOf(list.get(CustomOnItemSelectedListener.position2)),
                         Toast.LENGTH_SHORT).show();
                 sendGeographyCoords(this);
             }

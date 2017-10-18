@@ -126,9 +126,9 @@ public class recentLocations extends AppCompatActivity implements AdapterView.On
             public void onClick(View v) {
 
                 Toast.makeText(recentLocations.this,
-                        "OnClickListener : " +
+
                                // "\nSpinner 1 : "+ String.valueOf(spinner1.getSelectedItem()) +
-                                "\nSpinner 2 : "+ String.valueOf(spinner2.getSelectedItem()),
+                                "\nNavigating you to : "+ String.valueOf(spinner2.getSelectedItem()),
                         Toast.LENGTH_SHORT).show();
                 sendGeographyCoords(this);
             }
