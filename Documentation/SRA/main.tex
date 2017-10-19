@@ -43,10 +43,10 @@ right=25mm,
 \newpage
 	\section{Architecture Requirements}
 		\subsection{Quality Requirements}
-		 To create a safe working system that will meet all the required specifications of the NavUP project, specific system requirements need to be looked at in depth. The following are the system requirements that need to be considered: Security, Reliability, Efficiency, Maintainability and Usability.
+		 To create a safe working system that will meet all the required specifications of the NavUP project, specific system requirements need to be looked at in depth. The following are the system requirements that need to be considered. Security, reliability, efficiency, maintainability and usability.
 		 
 		 \subsubsection{Security}
-		 Security is concerned with preventing unauthorized access to specific software functions. An important security measure that needs to be satisfied by the NavUP system is the confidentiality of different user details. Personal usernames will be set by each user, or their student/staff number will be used to log in. Each user will be required to set their own password. Passwords will be required to be more than 7 characters in length to decrease the likely hood of potential hackers cracking passwords successfully. In the case of a forgotten password, a users password may be reset via a link and an email with a One Time Password. If a user has entered the incorrect password more than 3 times, the account should be blocked and the user should be notified for a password reset. Passwords and any related personal information will be encrypted and safely stored in a 'Users' database.
+		 Security is concerned with unauthorized access to specific software functions. An important security measure that needs to be satisfied by the NavUP system is the confidentiality of different user level usernames and passwords. Personal usernames will be set by each user, or their student/staff number will be used to log in. Each user will be required to set their own password. Passwords will be required to be more than 7 characters in length to decrease the likely hood of potential hackers hacking passwords successfully. In the case of a forgotten password, a users password may be reset via a link and an email with a One Time Password. If a user has entered the incorrect password more than 3 times, the account should be blocked and the user should be notified for a password reset. Passwords and any related personal information will be encrypted and safely stored in a 'Users' database.
 		 
 	Security will be put in place to allow only that user or other users whom the location is shared with to see the pinned location. As different levels of user exist each user will have a specific degree of authority. Admin users will be able to add and remove locations, venues and more permanent locations that will effect the map of the NavUP database. Admin users will have the power to remove lower priority users unwanted actions.
 		 
@@ -243,15 +243,6 @@ Data and information between users and servers will communicate through the netw
  				There are many problems that can occur but the main one would be how to design the application so that it supports maintainability, extensibility, security and scalability.
 	\subsubsection{Design of the Architecture}
 		\begin{itemize}
- 				\item Class Diagram
- 				\begin{center}
-					\begin{figure}[!h]
-					\includegraphics[scale=0.5]{cdu.png}
-					\caption{User Module Class Diagram}
-					\end{figure}
-				\end{center}
-	 			\clearpage
-	 			
 	 			\item Deployment Diagram				
 	 			\begin{center}
 	 				\begin{figure}[!h]
@@ -259,44 +250,8 @@ Data and information between users and servers will communicate through the netw
 	 					\caption{Deployment Diagram}
 	 				\end{figure}
 	 			\end{center}
+		\end{itemize}
 	 			
-	 			\item Use Case Diagram
-	 			\begin{center}
-	 				\begin{figure}[!h]
-	 					\includegraphics[scale=0.5]{uuc.png}
-	 					\caption{User Module Use Case Diagram}
-	 				\end{figure}
-	 			\end{center}
-	 			\pagebreak
-	 			
-				\item Sequence Diagram				
- 				\begin{center}
- 					\begin{figure}[!h]
- 						\includegraphics[scale=0.4]{isdu.png}
- 						\caption{User Module Sequence Diagram}
- 					\end{figure}
- 				\end{center}
- 				
- 				\item Activity Diagram
- 				\begin{center}
- 					\begin{figure}[!h]
- 						\includegraphics[scale=0.4]{uad.png}
- 						\caption{User Module Activity Diagram}
- 					\end{figure}
- 				\end{center}
- 				\pagebreak
- 				
-				\item State Diagram
-				\begin{center}
-					\begin{figure}[!h]
-						\includegraphics[scale=0.5]{smdu.png}
-						\caption{User Module State Diagram}
-					\end{figure}
-				\end{center}
-			
- 		\end{itemize}
-
-
 \section{Technologies}
 		
 		\subsection{Presentation Layer}
