@@ -28,7 +28,7 @@ right=25mm,
  
  \title{ Software Requirements Specification \\ COS-301 \\ The Inevitables \\[0.5cm] \includegraphics[width=6cm]{front-page}}
  
- \author{Drew Langley \hfill 11039753 \\ Lyle Nel \hfill 29562695 \\ Dawie Pritchard \hfill 13104340 \\  Peter Rayner \hfill 14001757\\ Hendrik Jan van der Merwe \hfill 15101283 \\ [1cm]\includegraphics[width=10cm]{group.JPG}\\ [1cm] Clients: Morkel Theunissen and Maria Ramaahlo }
+ \author{Drew Langley \hfill 11039753 \\ Lyle Nel \hfill 29562695 \\ Dawie Pritchard \hfill 13104340 \\  Peter Rayner \hfill 14001757\\ Hendrik Jan van der Merwe \hfill 15101283 \\ [1cm] Clients: Morkel Theunissen and Maria Ramaahlo }
 \date{23 May 2017}
 
 
@@ -43,10 +43,10 @@ right=25mm,
 \newpage
 	\section{Architecture Requirements}
 		\subsection{Quality Requirements}
-		 To create a safe working system that will meet all the required specifications of the NavUP project, specific system requirements need to be looked at in depth. The following are the system requirements that need to be considered. Security, reliability, efficiency, maintainability and usability.
+		 To create a safe working system that will meet all the required specifications of the NavUP project, specific system requirements need to be looked at in depth. The following are the system requirements that need to be considered: Security, Reliability, Efficiency, Maintainability and Usability.
 		 
 		 \subsubsection{Security}
-		 Security is concerned with unauthorized access to specific software functions. An important security measure that needs to be satisfied by the NavUP system is the confidentiality of different user level usernames and passwords. Personal usernames will be set by each user, or their student/staff number will be used to log in. Each user will be required to set their own password. Passwords will be required to be more than 7 characters in length to decrease the likely hood of potential hackers hacking passwords successfully. In the case of a forgotten password, a users password may be reset via a link and an email with a One Time Password. If a user has entered the incorrect password more than 3 times, the account should be blocked and the user should be notified for a password reset. Passwords and any related personal information will be encrypted and safely stored in a 'Users' database.
+		 Security is concerned with preventing unauthorized access to specific software functions. An important security measure that needs to be satisfied by the NavUP system is the confidentiality of different user details. Personal usernames will be set by each user, or their student/staff number will be used to log in. Each user will be required to set their own password. Passwords will be required to be more than 7 characters in length to decrease the likely hood of potential hackers cracking passwords successfully. In the case of a forgotten password, a users password may be reset via a link and an email with a One Time Password. If a user has entered the incorrect password more than 3 times, the account should be blocked and the user should be notified for a password reset. Passwords and any related personal information will be encrypted and safely stored in a 'Users' database.
 		 
 	Security will be put in place to allow only that user or other users whom the location is shared with to see the pinned location. As different levels of user exist each user will have a specific degree of authority. Admin users will be able to add and remove locations, venues and more permanent locations that will effect the map of the NavUP database. Admin users will have the power to remove lower priority users unwanted actions.
 		 
