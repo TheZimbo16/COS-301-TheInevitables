@@ -12,7 +12,8 @@
         class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="14dp" />
 
    <!-- <AutoCompleteTextView
         android:id="@+id/startLoc"
@@ -32,50 +33,47 @@
         android:id="@+id/endLoc"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@android:color/white"
         android:drawableRight="@android:drawable/ic_menu_search"
         android:hint="Enter Destination"
         android:radius="8dp"
-        android:textColor="@android:color/black"></AutoCompleteTextView>
+        android:textColor="@android:color/black"
+        android:layout_alignRight="@+id/start_tracking"
+        android:layout_alignEnd="@+id/start_tracking"></AutoCompleteTextView>
 
     <Button
         android:id="@+id/nav"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@+id/endLoc"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorPrimaryDark"
-        android:drawableLeft="@android:drawable/ic_menu_mapmode"
-        android:drawableRight="@android:drawable/ic_menu_mapmode"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/white"
+        android:drawableLeft="@android:drawable/ic_menu_search"
         android:onClick="sendPost"
-        android:text="Navigate"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:layout_alignLeft="@+id/start_tracking"
+        android:layout_alignStart="@+id/start_tracking" />
 
 
     <Button
         android:id="@+id/start_tracking"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_above="@+id/nav"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_gravity="bottom"
-        android:layout_margin="10dp"
         android:background="@color/colorPrimaryDark"
         android:drawableBottom="@android:drawable/ic_menu_compass"
         android:gravity="center"
         android:onClick="getCurrentLocation"
         android:padding="16dp"
-        android:textColor="@color/colorIcons" />
+        android:textColor="@color/colorIcons"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 
    </RelativeLayout>
